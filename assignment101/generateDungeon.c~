@@ -1,0 +1,188 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+#include "generateDungeon.h"
+
+struct space dungeon[105][160];
+struct room rooms[18];
+
+void generateRooms(char *userInput);
+void connect(int num);
+void insertLeft(int *x, int *y);
+void insertRight(int *x, int *y);
+void insertUp(int *x, int *y);
+void insertDown(int *x, int *y);
+void printDungeon();
+
+void generateRooms(char *userInput){
+
+  //Seeds the random number generator with a specific value if there is testing required, otherwise random based on clock
+  if(userInput != NULL)
+    srand(atoi(userInput)); 
+  else
+    srand(time(NULL));
+
+  //Random hardness for all rock in dungeon
+  int i, j;
+  for(i = 0; i < 105; i++){
+    for(j = 0; j < 160 ; j++){
+      struct space aspace;
+      aspace.material = ' ';
+      dungeon[i][j] = aspace;
+      if(i == 0 || i == 104 || j == 0 || j == 159)
+	dungeon[i][j].hardness = 255;
+      else
+	dungeon[i][j].hardness = rand() % 254 + 1;
+    }
+  }
+
+  int k, p = 0;
+  //Generates 10 rooms and puts them into an array for use in connection
+  for(k = 0; k < 18; k++){
+    //Randomly picks an upper left corner x and y to place room and a random width and height
+    int leftx = rand() % 158 + 1;
+    int lefty = rand() % 103 + 1;
+    int width = rand() % 15 + 7;
+    int height = rand() % 10 + 5;
+    int wegood = 1;
+    int l, m, n, o;
+
+    //Checks to make sure rooms will not go off map or into immutable space
+    if(leftx + width >= 159 || lefty + height >= 104)
+      wegood = 0;
+    //Checks to make sure rooms will not collide with other rooms and there is at least one layer of rock between them
+    else{
+      for(l = lefty; l < lefty + height; l++){
+	for(m = leftx; m < leftx + width; m++){
+	  if(dungeon[l][m].material == '.' || dungeon[l+1][m].material == '.' || dungeon[l-1][m].material == '.' || dungeon[l][m+1].material == '.' || dungeon[l][m-1].material == '.'){
+	    wegood = 0;
+	  }
+	}
+      }
+    }
+    //Plots room in dungeon if whole area is valid, decrements k to redo room if not
+    if(wegood == 1){
+      for(n = lefty; n < lefty + height; n++){
+	for(o = leftx; o < leftx + width; o++){
+	  dungeon[n][o].material = '.';
+	  dungeon[n][o].hardness = 0;
+	}
+      }
+      struct room aroom;
+      aroom.x = leftx +( width / 2);
+      aroom.y = lefty + (height / 2);
+      rooms[p] = aroom;
+      p++;
+    }
+    else
+      k--;
+  }
+}
+
+void connect(int num){
+  int i;
+  double distance = 10000.0;
+  struct room closest;
+  closest.x = rooms[num].x;
+  closest.y = rooms[num].y;
+  //Cycles through already connected rooms and finds closest
+  for(i = 0; i < num; i++){
+    int xDis = abs(rooms[num].x - rooms[i].x);
+    int yDis = abs(rooms[num].x - rooms[i].y);
+    //Calculates distance between two rooms, sets new closest point if distance is less
+    if(sqrt(xDis * xDis + yDis * yDis) < distance){
+      distance = sqrt(xDis * xDis + yDis * yDis);
+      closest.x = rooms[i].x;
+      closest.y = rooms[i].y;
+    }
+  }
+
+  int xcpy = rooms[num].x;
+  int ycpy = rooms[num].y;
+  //Runs through this loop until the hash marks have reached the next room coordinates
+  while(xcpy != closest.x || ycpy != closest.y){
+    //Next room is down and to the right with relation to current room
+    if(xcpy < closest.x && ycpy < closest.y){
+      if(dungeon[ycpy][xcpy+1].hardness < dungeon[ycpy+1][xcpy].hardness)
+        insertRight(&xcpy, &ycpy);
+      else
+        insertDown(&xcpy, &ycpy);
+    }
+    //Next room is down and to the left with relation to current room
+    else if(xcpy > closest.x && ycpy < closest.y){
+      if(dungeon[ycpy][xcpy-1].hardness < dungeon[ycpy+1][xcpy].hardness)
+        insertLeft(&xcpy, &ycpy);
+      else
+        insertDown(&xcpy, &ycpy);
+    }
+    //Next room is left and up in relation to current room
+    else if(xcpy < closest.x && ycpy > closest.y){
+      if(dungeon[ycpy][xcpy+1].hardness < dungeon[ycpy-1][xcpy].hardness)
+        insertRight(&xcpy, &ycpy);
+      else
+        insertUp(&xcpy, &ycpy);
+    }
+    //Next room is right and up in relation to current room
+    else if(xcpy > closest.x && ycpy > closest.y){
+      if(dungeon[ycpy][xcpy-1].hardness < dungeon[ycpy-1][xcpy].hardness)
+        insertLeft(&xcpy, &ycpy);
+      else
+	insertUp(&xcpy, &ycpy);
+    }
+    //If x component is less than x component of next room, make hash mark right
+    else if(xcpy < closest.x)
+      insertRight(&xcpy, &ycpy);
+    //If x component is greater than x component of next room, make hash mark left
+    else if(xcpy > closest.x)
+      insertLeft(&xcpy, &ycpy);
+    //If y component is less than y component of next room, make hash mark down
+    else if(ycpy < closest.y)
+      insertDown(&xcpy, &ycpy);
+    //If y component is greater than y component of next room, make hash mark up
+    else
+      insertUp(&xcpy, &ycpy);
+  }
+}
+
+void insertLeft(int *x, int *y){
+  *x = *x - 1;
+  if(dungeon[*y][*x].material != '.'){
+    dungeon[*y][*x].material = '#';
+    dungeon[*y][*x].hardness = 0;
+  }
+}
+
+void insertRight(int *x, int *y){
+*x = *x + 1;
+ if(dungeon[*y][*x].material != '.'){
+    dungeon[*y][*x].material = '#';
+    dungeon[*y][*x].hardness = 0;
+  }
+}
+
+void insertUp(int *x, int *y){
+  *y = *y - 1;
+  if(dungeon[*y][*x].material != '.'){
+    dungeon[*y][*x].material = '#';
+    dungeon[*y][*x].hardness = 0;
+  }
+}
+
+void insertDown(int *x, int *y){
+*y = *y + 1;
+ if(dungeon[*y][*x].material != '.'){
+    dungeon[*y][*x].material = '#';
+    dungeon[*y][*x].hardness = 0;
+  }
+}
+
+void printDungeon(){
+  int i, j;
+  for(i = 0; i < 105; i++){
+    for(j = 0; j < 160; j++){
+      printf("%c", dungeon[i][j].material);
+    }
+    printf("\n");
+  }
+}

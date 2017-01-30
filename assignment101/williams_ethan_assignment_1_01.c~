@@ -1,0 +1,17 @@
+#include "generateDungeon.h"
+
+int main(int argc, char* argv[]){
+  //Generates 10 rooms randomly
+  generateRooms(argv[1]);
+
+  //Connects the rooms to each other
+  int i;
+  for(i = 1; i < 18; i++){
+    connect(i);
+  }
+
+  //Prints dungeon
+  printDungeon();
+
+  return 0;
+}

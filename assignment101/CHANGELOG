@@ -1,0 +1,5 @@
+1/18 Started program by generating immutable spaces and random hardness of rock, solved small mistakes with data types in arrays
+1/19 Random placement of 10 rooms in the dungeon, encountered and solved small errors with indexing
+1/22 Did random seeding and placed all room coordinates in array for use in connecting rooms
+1/23 Connected all rooms together as simply as possible with 1 or no turns, also experimented with putting code in seperate files and creating header files
+1/24 Implemented more interesting corridor connections, started Djikstra's algorithm but didn't have enough time to finish
