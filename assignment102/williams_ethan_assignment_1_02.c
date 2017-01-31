@@ -8,6 +8,7 @@
 
 void readDungeonInfo();
 void writeDungeonInfo();
+void findRoom();
 
 typedef struct{
   int upperX;
@@ -126,12 +127,60 @@ void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
 void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
   unsigned char* hardness;
   hardness = malloc(16800);
+  int *rooms;
+  rooms = malloc(100);
+  int y = 0;
   int i, j;
   int k = 0;
+  int topLeft = 0;
+  //Records the hardness and statistics for all rooms
   for(i = 0; i < 105; i++){
     for(j = 0; j < 160; j++){
       hardness[k] = dungeon->spaces[i][j].hardness;
       k++;
+      if(dungeon->spaces[i][j].material == '.' && dungeon->spaces[i-1][j].material == ' ' && dungeon->spaces[i-1][j-1].material == ' ' && dungeon->spaces[i][j-1].material == ' '){
+	findRoom(&rooms, y, i, j, &dungeon);
+        y++;
+      }
     }
   }
+  //Writes semantic marker to file in bytes 0-11
+  fseek(dungeonInfo, 0, SEEK_SET);
+  char *marker = "RLG327-S2017";
+  fwrite(marker, 1, 12, dungeonInfo);
+
+  //Writes version number 0 to bytes 12-15
+  int version = 0;
+  fwrite(version, 1, 4, dungeonInfo);
+
+  //Writes size of file to bytes 16-19
+  int size = 16800 + sizeof(rooms);
+  fwrite(size, 1, 4, dungeonInfo);
+  
+  //Writes hardness of each space in bytes 20-16819
+  fwrite(hardness, 1, 16800, dungeonInfo);
+  
+  //Write positions of rooms from byte 16820 until the last byte so that all rooms are written
+  fwrite(rooms, 1, size-16800, dungeonInfo);
+}
+
+void findRoom(int *rooms, int index, int y, int x, Dungeon *dungeon){
+  int ycpy = y;
+  int xcpy = x;
+  int width = 0;
+  int height = 0;
+  while(dungeon->spaces[ycpy][xcpy].material == '.'){
+    width++;
+    xcpy++;
+  }
+  ycpy = y;
+  xcpy = x;
+  while(dungeon->spaces[ycpy][xcpy].material == '.'){
+    height++;
+    ycpy++;
+  }
+  rooms[index] = x;
+  rooms[index+1] = y;
+  rooms[index+2] = width;
+  rooms[index+3] = height;
 }
