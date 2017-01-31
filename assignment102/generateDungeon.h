@@ -15,7 +15,7 @@ typedef struct{
   Space spaces[105][160];
 }Dungeon;
 
-void generateRooms(char *userInput, Dungeon *dungeon);
+void generateRooms(Dungeon *dungeon);
 
 void connect(int num, Dungeon *dungeon);
 

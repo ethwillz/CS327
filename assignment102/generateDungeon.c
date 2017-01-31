@@ -6,12 +6,9 @@
 
 struct room rooms[18];
 
-void generateRooms(char *userInput, Dungeon *dungeon){
+void generateRooms(Dungeon *dungeon){
 
   //Seeds the random number generator with a specific value if there is testing required, otherwise random based on clock
-  if(userInput != NULL)
-    srand(atoi(userInput)); 
-  else
     srand(time(NULL));
 
   //Random hardness for all rock in dungeon
