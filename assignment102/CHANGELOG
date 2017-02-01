@@ -4,3 +4,5 @@
 1/23 Connected all rooms together as simply as possible with 1 or no turns, also experimented with putting code in seperate files and creating header files
 1/24 Implemented more interesting corridor connections, started Djikstra's algorithm but didn't have enough time to finish
 1/28 Started assignment 1.02, set up directory in code, reconfigured dungeon generation to use pointers so I could store dungeons easier, started reading file
+1/30 Started and finished reading and displaying files correctly
+1/31 Started and finished writing dungeon to file. Save and load functionality correct. Endianness implemented.

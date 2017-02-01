@@ -30,6 +30,17 @@ int main(int argc, char *argv[]){
     generateRooms(&dungeon);
     printDungeon(&dungeon);
   }
+  else if(strcmp(argv[1], "--SAVE") == 0 && strcmp(argv[2], "--LOAD") == 0){
+    FILE *dungeonInfo = fopen(strcat(path, argv[2]), "r");
+    
+    generateRooms(&dungeon);
+
+    writeDungeonInfo(dungeonInfo, &dungeon);
+
+    printDungeon(&dungeon);
+
+    fclose(dungeonInfo);
+  }
   //If user adds load switch
   else if(strcmp(argv[1], "--LOAD") == 0 && argv[2] != NULL){
     FILE *dungeonInfo = fopen(strcat(path, argv[2]), "r");
@@ -54,8 +65,8 @@ int main(int argc, char *argv[]){
     FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "w");
 
     generateRooms(&dungeon);
+    
     writeDungeonInfo(dungeonInfo, &dungeon);
-    printDungeon(&dungeon);
 
     fclose(dungeonInfo);
   }
@@ -71,11 +82,12 @@ int main(int argc, char *argv[]){
 void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
     //Finds total bytes in document for use later
   char *buffer;
+  int bytes;
   buffer = malloc(4);
   fseek(dungeonInfo, 16, SEEK_SET);
   fread(buffer, 1, 4, dungeonInfo);
-  int bytes;
   sscanf(buffer, "%d", &bytes);
+  printf("%d\n", bytes);
   
   //Starts at byte 20 and takes all bytes which denote hardness
   unsigned char *buffer2;
@@ -125,25 +137,47 @@ void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
 
 }
 void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
-  unsigned char* hardness;
-  hardness = malloc(16800);
-  int *rooms;
-  rooms = malloc(100);
-  int y = 0;
-  int i, j;
+  unsigned char *hard;
+  hard = malloc(16800);
+  int s, t;
   int k = 0;
-  int topLeft = 0;
   //Records the hardness and statistics for all rooms
-  for(i = 0; i < 105; i++){
-    for(j = 0; j < 160; j++){
-      hardness[k] = dungeon->spaces[i][j].hardness;
+  for(s = 0; s < 105; s++){
+    for(t = 0; t < 160; t++){
+      hard[k] =  (unsigned char) dungeon->spaces[s][t].hardness;
       k++;
-      if(dungeon->spaces[i][j].material == '.' && dungeon->spaces[i-1][j].material == ' ' && dungeon->spaces[i-1][j-1].material == ' ' && dungeon->spaces[i][j-1].material == ' '){
-	findRoom(&rooms, y, i, j, &dungeon);
-        y++;
+    }
+  }
+
+  int roomStats[72];
+  int u, v;
+  int y = 0;
+  for(u = 0; u < 105; u++){
+    for(v = 0; v < 160; v++){
+      if(dungeon->spaces[u][v].material == '.' && dungeon->spaces[u-1][v].material != '.' && dungeon->spaces[u-1][v-1].material != '.' && dungeon->spaces[u][v-1].material != '.'){
+          int ycpy = u;
+	  int xcpy = v;
+	  int width = 0;
+	  int height = 0;
+	  while(dungeon->spaces[ycpy][xcpy].material == '.'){
+	    width++;
+	    xcpy++;
+	  }
+	  int ycpy2 = u;
+	  int xcpy2 = v;
+	  while(dungeon->spaces[ycpy2][xcpy2].material == '.'){
+	    height++;
+	    ycpy2++;
+	  }
+	  roomStats[y] = v; 
+	  roomStats[y+1] = u;
+	  roomStats[y+2] = width;
+	  roomStats[y+3] = height;
+	  y += 4;
       }
     }
   }
+  
   //Writes semantic marker to file in bytes 0-11
   fseek(dungeonInfo, 0, SEEK_SET);
   char *marker = "RLG327-S2017";
@@ -151,36 +185,31 @@ void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
 
   //Writes version number 0 to bytes 12-15
   int version = 0;
-  fwrite(version, 1, 4, dungeonInfo);
-
+  char *versionConvert;
+  versionConvert = malloc(4);
+  sprintf(versionConvert, "%d", version);
+  fwrite(versionConvert, 1, 4, dungeonInfo);
+  
   //Writes size of file to bytes 16-19
-  int size = 16800 + sizeof(rooms);
-  fwrite(size, 1, 4, dungeonInfo);
+  int size = 16892;
+  char *sizeConvert;
+  sizeConvert = malloc(4);
+  sizeConvert[0] = (size >> 24) & 0xFF;
+  sizeConvert[1] = (size >> 16) & 0xFF;
+  sizeConvert[2] = (size >> 8) & 0xFF;
+  sizeConvert[3] = size & 0xFF;
+  //sprintf(sizeConvert, "%d", size);
+  fwrite(sizeConvert, 1, 4, dungeonInfo);
   
   //Writes hardness of each space in bytes 20-16819
-  fwrite(hardness, 1, 16800, dungeonInfo);
+  fwrite(hard, 1, 16800, dungeonInfo);
   
   //Write positions of rooms from byte 16820 until the last byte so that all rooms are written
-  fwrite(rooms, 1, size-16800, dungeonInfo);
-}
-
-void findRoom(int *rooms, int index, int y, int x, Dungeon *dungeon){
-  int ycpy = y;
-  int xcpy = x;
-  int width = 0;
-  int height = 0;
-  while(dungeon->spaces[ycpy][xcpy].material == '.'){
-    width++;
-    xcpy++;
-  }
-  ycpy = y;
-  xcpy = x;
-  while(dungeon->spaces[ycpy][xcpy].material == '.'){
-    height++;
-    ycpy++;
-  }
-  rooms[index] = x;
-  rooms[index+1] = y;
-  rooms[index+2] = width;
-  rooms[index+3] = height;
+  char *roomInfo;
+  roomInfo = malloc(72);
+  int q;
+  for(q = 0; q < 72; q++){
+    roomInfo[q] = roomStats[q];
+   }
+  fwrite(roomInfo, 1, size-16800, dungeonInfo);
 }
