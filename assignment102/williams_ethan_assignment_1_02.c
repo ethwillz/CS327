@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
   }
   //Is user adds both save and load switches
   else if(strcmp(argv[1], "--SAVE") == 0 && strcmp(argv[2], "--LOAD") == 0){
-    FILE *dungeonInfo = fopen(strcat(path, argv[2]), "w");
+    FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "w");
     
     generateRooms(&dungeon);
 
