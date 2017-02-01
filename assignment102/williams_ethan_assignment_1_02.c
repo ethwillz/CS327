@@ -4,7 +4,6 @@
 #include <string.h>
 #include "generateDungeon.h"
 #include <endian.h>
-#include <math.h>
 
 void readDungeonInfo();
 void writeDungeonInfo();
@@ -84,13 +83,11 @@ int main(int argc, char *argv[]){
 }
 
 void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
-    //Finds total bytes in document for use later
-  char *buffer;
+  //Finds total bytes in document for use later
   int bytes;
-  buffer = malloc(4);
   fseek(dungeonInfo, 16, SEEK_SET);
-  fread(buffer, 1, 4, dungeonInfo);
-  sscanf(buffer, "%d", &bytes);
+  fread(&bytes, sizeof(bytes), 1, dungeonInfo);
+  bytes = htobe32(bytes);
   
   //Starts at byte 20 and takes all bytes which denote hardness
   unsigned char *buffer2;
@@ -188,21 +185,13 @@ void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
 
   //Writes version number 0 to bytes 12-15
   int version = 0;
-  char *versionConvert;
-  versionConvert = malloc(4);
-  sprintf(versionConvert, "%d", version);
-  fwrite(versionConvert, 1, 4, dungeonInfo);
+  version = htobe32(version);
+  fwrite(&version, sizeof(version), 1, dungeonInfo);
   
   //Writes size of file to bytes 16-19
   int size = 16892;
-  char *sizeConvert;
-  sizeConvert = malloc(4);
-  sizeConvert[0] = (size >> 24) & 0xFF;
-  sizeConvert[1] = (size >> 16) & 0xFF;
-  sizeConvert[2] = (size >> 8) & 0xFF;
-  sizeConvert[3] = size & 0xFF;
-  //sprintf(sizeConvert, "%d", size);
-  fwrite(sizeConvert, 1, 4, dungeonInfo);
+  size = htobe32(size);
+  fwrite(&size, sizeof(size), 1, dungeonInfo);
   
   //Writes hardness of each space in bytes 20-16819
   fwrite(hard, 1, 16800, dungeonInfo);
