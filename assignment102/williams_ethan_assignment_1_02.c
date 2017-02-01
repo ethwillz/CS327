@@ -25,11 +25,23 @@ int main(int argc, char *argv[]){
   char *dir = getenv("HOME");
   char *path = strcat(dir, "/.rlg327/");
   mkdir(path, 0777);
-
+  
   if(argv[1] == NULL){
     generateRooms(&dungeon);
+    
     printDungeon(&dungeon);
   }
+  //If user adds save switch only
+  else if(strcmp(argv[1], "--SAVE") == 0 && argv[2] == NULL){
+    FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "w");
+
+    generateRooms(&dungeon);
+    
+    writeDungeonInfo(dungeonInfo, &dungeon);
+
+    fclose(dungeonInfo);
+  }
+  //Is user adds both save and load switches
   else if(strcmp(argv[1], "--SAVE") == 0 && strcmp(argv[2], "--LOAD") == 0){
     FILE *dungeonInfo = fopen(strcat(path, argv[2]), "r");
     
@@ -41,7 +53,7 @@ int main(int argc, char *argv[]){
 
     fclose(dungeonInfo);
   }
-  //If user adds load switch
+  //If user adds load switch with specific file
   else if(strcmp(argv[1], "--LOAD") == 0 && argv[2] != NULL){
     FILE *dungeonInfo = fopen(strcat(path, argv[2]), "r");
 
@@ -51,6 +63,7 @@ int main(int argc, char *argv[]){
 
     fclose(dungeonInfo);
   }
+  //If user adds load switch with no file it wil default to loading dungeon
   else if(strcmp(argv[1], "--LOAD") == 0){
     FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "r");
 
@@ -60,19 +73,10 @@ int main(int argc, char *argv[]){
 
     fclose(dungeonInfo);
   }
-  //If user adds save switch
-  else if(strcmp(argv[1], "--SAVE") == 0){
-    FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "w");
-
-    generateRooms(&dungeon);
-    
-    writeDungeonInfo(dungeonInfo, &dungeon);
-
-    fclose(dungeonInfo);
-  }
   //If user adds an unrecognized switch/input, displays random dungeon and exits
   else{
     generateRooms(&dungeon);
+    
     printDungeon(&dungeon);
   }
   
@@ -87,7 +91,6 @@ void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
   fseek(dungeonInfo, 16, SEEK_SET);
   fread(buffer, 1, 4, dungeonInfo);
   sscanf(buffer, "%d", &bytes);
-  printf("%d\n", bytes);
   
   //Starts at byte 20 and takes all bytes which denote hardness
   unsigned char *buffer2;
