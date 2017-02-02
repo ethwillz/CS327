@@ -41,15 +41,20 @@ int main(int argc, char *argv[]){
   }
   //Is user adds both save and load switches
   else if(strcmp(argv[1], "--SAVE") == 0 && strcmp(argv[2], "--LOAD") == 0){
-    FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "w");
+    FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "r");
     
-    generateRooms(&dungeon);
+    //generateRooms(&dungeon);
+    readDungeonInfo(dungeonInfo, &dungeon);
 
-    writeDungeonInfo(dungeonInfo, &dungeon);
+    fclose(dungeonInfo);
+    
+    FILE *dungeonInfo2 = fopen(strcat(path, "dungeon"), "w");
+    
+    writeDungeonInfo(dungeonInfo2, &dungeon);
 
     printDungeon(&dungeon);
 
-    fclose(dungeonInfo);
+    fclose(dungeonInfo2);
   }
   //If user adds load switch with specific file
   else if(strcmp(argv[1], "--LOAD") == 0 && argv[2] != NULL){
