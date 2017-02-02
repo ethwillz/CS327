@@ -41,18 +41,19 @@ int main(int argc, char *argv[]){
   }
   //Is user adds both save and load switches
   else if(strcmp(argv[1], "--SAVE") == 0 && strcmp(argv[2], "--LOAD") == 0){
+    //Reads dungeon from disc and displays it
     FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "r");
     
-    //generateRooms(&dungeon);
     readDungeonInfo(dungeonInfo, &dungeon);
 
+    printDungeon(&dungeon);
+
     fclose(dungeonInfo);
-    
+
+    //Rewrites dungeon to disk
     FILE *dungeonInfo2 = fopen(strcat(path, "dungeon"), "w");
     
     writeDungeonInfo(dungeonInfo2, &dungeon);
-
-    printDungeon(&dungeon);
 
     fclose(dungeonInfo2);
   }
@@ -145,6 +146,7 @@ void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
   hard = malloc(16800);
   int s, t;
   int k = 0;
+  
   //Records the hardness and statistics for all rooms
   for(s = 0; s < 105; s++){
     for(t = 0; t < 160; t++){
@@ -153,6 +155,7 @@ void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
     }
   }
 
+  //Creates array of room statistics for placement in bytes 18620-end
   int roomStats[72];
   int u, v;
   int y = 0;
