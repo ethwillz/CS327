@@ -5,15 +5,15 @@
 int main(int argc, char *argv[]){
   Dungeon dungeon;
 
-  int numRooms;
+  Rooms rooms;
 
-  saveload(&dungeon, &numRooms, argv[1], argv[2]);
-
-  printf("%d\n", numRooms);
+  saveload(&dungeon, &rooms, argv[1], argv[2]);
 
   //Choose a random location in the room to place PC
 
   //Calculate distances for non-tunneling monsters
 
   //Calculate distances for tunneling monsters
+
+  return 0;
 }
