@@ -9,6 +9,10 @@ struct room{
 typedef struct{
   char material;
   int  hardness;
+  int nonTunnelDistance;
+  int tunnelDistance;
+  int y;
+  int x;
 }Space;
 
 typedef struct{

@@ -6,7 +6,7 @@
 #include "diskOperations.h"
 #include <endian.h>
 
-void saveload(Dungeon *dungeon, Rooms *rooms, char *arg1, char *arg2){
+void saveload(Dungeon *dungeon, char *arg1, char *arg2){
 
   //Checks if desired directory exists, creates directory if not
   char *dir = getenv("HOME");
@@ -19,21 +19,21 @@ void saveload(Dungeon *dungeon, Rooms *rooms, char *arg1, char *arg2){
     printDungeon(dungeon);
   }
   //If user adds save switch only
-  else if(strcmp(arg1, "--SAVE") == 0 && arg2 == NULL){
+  else if(strcmp(arg1, "--save") == 0 && arg2 == NULL){
     FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "w");
 
     generateRooms(dungeon);
     
-    writeDungeonInfo(dungeonInfo, dungeon, rooms);
+    writeDungeonInfo(dungeonInfo, dungeon);
 
     fclose(dungeonInfo);
   }
   //Is user adds both save and load switches
-  else if(strcmp(arg1, "--SAVE") == 0 && strcmp(arg2, "--LOAD") == 0){
+  else if(strcmp(arg1, "--save") == 0 && strcmp(arg2, "--load") == 0){
     //Reads dungeon from disc and displays it
     FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "r");
     
-    readDungeonInfo(dungeonInfo, dungeon, rooms);
+    readDungeonInfo(dungeonInfo, dungeon);
 
     printDungeon(dungeon);
 
@@ -42,25 +42,25 @@ void saveload(Dungeon *dungeon, Rooms *rooms, char *arg1, char *arg2){
     //Rewrites dungeon to disk
     FILE *dungeonInfo2 = fopen(strcat(path, "dungeon"), "w");
     
-    writeDungeonInfo(dungeonInfo2, dungeon, rooms);
+    writeDungeonInfo(dungeonInfo2, dungeon);
 
     fclose(dungeonInfo2);
   }
   //If user adds load switch with specific file
-  else if(strcmp(arg1, "--LOAD") == 0 && arg2 != NULL){
+  else if(strcmp(arg1, "--load") == 0 && arg2 != NULL){
     FILE *dungeonInfo = fopen(strcat(path, arg2), "r");
 
-    readDungeonInfo(dungeonInfo, dungeon, rooms);
+    readDungeonInfo(dungeonInfo, dungeon);
 
     printDungeon(dungeon);
 
     fclose(dungeonInfo);
   }
   //If user adds load switch with no file it wil default to loading dungeon
-  else if(strcmp(arg1, "--LOAD") == 0){
+  else if(strcmp(arg1, "--load") == 0){
     FILE *dungeonInfo = fopen(strcat(path, "dungeon"), "r");
 
-    readDungeonInfo(dungeonInfo, dungeon, rooms);
+    readDungeonInfo(dungeonInfo, dungeon);
 
     printDungeon(dungeon);
 
@@ -74,7 +74,7 @@ void saveload(Dungeon *dungeon, Rooms *rooms, char *arg1, char *arg2){
   }
 }
 
-void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon, Rooms *rooms){
+void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
   //Finds total bytes in document for use later
   int bytes;
   fseek(dungeonInfo, 16, SEEK_SET);
@@ -106,9 +106,6 @@ void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon, Rooms *rooms){
     roomArr[j].height = buffer3[k+3];
     k+=4;
   }
-
-  rooms->allRooms = roomArr;
-
     //If hardness is zero and not a room, changes to corridor. Otherwise, sets material to rock
   int o, p;
   for(o = 0; o < 105; o++){
@@ -131,8 +128,8 @@ void readDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon, Rooms *rooms){
     }
   }
 }
-void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon, Rooms *rooms){
-  unsigned char *hard;
+void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon){
+   unsigned char *hard;
   hard = malloc(16800);
   int s, t;
   int k = 0;
@@ -146,8 +143,7 @@ void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon, Rooms *rooms){
   }
 
   //Creates array of room statistics for placement in bytes 18620-end
-  Room *roomStats;
-  roomStats = malloc(18);
+  int roomStats[72];
   int u, v;
   int y = 0;
   for(u = 0; u < 105; u++){
@@ -167,11 +163,11 @@ void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon, Rooms *rooms){
 	    height++;
 	    ycpy2++;
 	  }
-	  roomStats[y].upperY = v; 
-	  roomStats[y].upperX = u;
-	  roomStats[y].width = width;
-	  roomStats[y].height = height;
-	  y++;
+	  roomStats[y] = v; 
+	  roomStats[y+1] = u;
+	  roomStats[y+2] = width;
+	  roomStats[y+3] = height;
+	  y += 4;
       }
     }
   }
@@ -195,16 +191,11 @@ void writeDungeonInfo(FILE *dungeonInfo, Dungeon *dungeon, Rooms *rooms){
   fwrite(hard, 1, 16800, dungeonInfo);
   
   //Write positions of rooms from byte 16820 until the last byte so that all rooms are written
-  unsigned char *roomInfo;
+  char *roomInfo;
   roomInfo = malloc(72);
   int q;
-  int yz = 0;
-  for(q = 0; q < 72; q+=4){
-    roomInfo[q] = roomStats[yz].upperY;
-    roomInfo[q+1] = roomStats[yz].upperX;
-    roomInfo[q+2] = roomStats[yz].width;
-    roomInfo[q+3] = roomStats[yz].height;
-    yz++;
+  for(q = 0; q < 72; q++){
+    roomInfo[q] = roomStats[q];
    }
   fwrite(roomInfo, 1, size-16800, dungeonInfo);
 }

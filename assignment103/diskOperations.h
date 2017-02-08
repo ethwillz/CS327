@@ -8,12 +8,8 @@ typedef struct{
   int height;
 }Room;
 
-typedef struct{
-  Room *allRooms;
-}Rooms;
-
 void readDungeonInfo();
 void writeDungeonInfo();
-void saveload(Dungeon *dungeon, Rooms *rooms, char *arg1, char *arg2);
+void saveload(Dungeon *dungeon, char *arg1, char *arg2);
 
 #endif
