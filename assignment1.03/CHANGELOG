@@ -1,0 +1,12 @@
+Assignment 1.01
+1/18 Started program by generating immutable spaces and random hardness of rock, solved small mistakes with data types in arrays
+1/19 Random placement of 10 rooms in the dungeon, encountered and solved small errors with indexing
+1/22 Did random seeding and placed all room coordinates in array for use in connecting rooms
+1/23 Connected all rooms together as simply as possible with 1 or no turns, also experimented with putting code in seperate files and creating header files
+1/24 Implemented more interesting corridor connections, started Djikstra's algorithm but didn't have enough time to finish
+Assignment 1.02
+1/28 Started assignment 1.02, set up directory in code, reconfigured dungeon generation to use pointers so I could store dungeons easier, started file read functionality.
+1/30 Started and finished reading and displaying files correctly
+1/31 Started and finished writing dungeon to file. Save and load functionality correct.
+2/1 Cleaned up small bugs and implemented endianness.
+2/7 Used 1.02 solution code to implement creation of distance maps for tunneling and non-tunneling monsters

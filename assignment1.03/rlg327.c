@@ -1289,10 +1289,15 @@ void tunneling(dungeon_t *d, int playerY, int playerX){
   while ((p = heap_remove_min(&h))) {
     p->hn = NULL;
     
-    int cost = hardnesspair(p->pos);
-    if(hardnesspair(p->pos) == 0){
+    int cost = 0;
+    if(hardnesspair(p->pos) >= 0 && hardnesspair(p->pos) <= 84){
       cost = 1;
     }
+    else if(hardnesspair(p->pos) >= 85 && hardnesspair(p->pos) <= 170){
+      cost = 2;
+    }
+    else
+      cost = 3;
 
     if ((t[p->pos[dim_y] - 1][p->pos[dim_x] - 1].hn) &&
         (t[p->pos[dim_y] - 1][p->pos[dim_x] - 1].cost >
@@ -1509,9 +1514,9 @@ int main(int argc, char *argv[])
 
   render_dungeon(&d);
 
-  tunneling(&d, playerY, playerX);
-
   non_tunneling(&d, playerY, playerX);
+  
+  tunneling(&d, playerY, playerX);
   
   if (do_save) {
     write_dungeon(&d, save_file);
