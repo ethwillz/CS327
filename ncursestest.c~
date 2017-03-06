@@ -1,0 +1,11 @@
+#include <stdio.h>
+#include <ncurses.h>
+
+int main(int argc, char argv[]){
+  initscr();
+  char c = getch();
+  endwin();
+  printf("%c\n", c);
+
+  return 0;
+}
