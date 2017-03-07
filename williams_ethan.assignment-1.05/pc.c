@@ -8,6 +8,7 @@
 #include "utils.h"
 #include "move.h"
 #include "path.h"
+#include "npc.h"
 
 void pc_delete(pc_t *pc)
 {
@@ -54,8 +55,14 @@ void config_pc(dungeon_t *d)
 uint32_t pc_next_pos(dungeon_t *d, pair_t dir)
 {
   char command = getch();
-    //change to look mode
+  if(command == 'Q'){
+    endwin();
+  }
+  else if(command == 'L'){
     while(!control_move(d, dir, command));
+    command = getch();
+  }
+  while(!control_move(d, dir, command));
   return 0;
 }
 
@@ -109,23 +116,51 @@ int control_move(dungeon_t *d, pair_t dir, char command){
       dir[dim_x] = 0;
       break;
     case '>':
-      endwin();
+      mvprintw(0, 0, "Enter stairs");
+      if(d->map[d->pc.position[dim_y]][d->pc.position[dim_x]] == '>'){
+	init_dungeon(d);
+	gen_dungeon(d);
+	config_pc(d);
+	gen_monsters(d);
+	clear();
+        render_dungeon(d, d->pc.position[dim_y], d->pc.position[dim_x]);
+	refresh();
+	return 1;
+      }
+      else{
+	return 0;
+      }
     case '<':
-      endwin();
+      mvprintw(0, 0, "Enter stairs");
+      if(d->map[d->pc.position[dim_y]][d->pc.position[dim_x]] == '<'){
+	init_dungeon(d);
+	gen_dungeon(d);
+	config_pc(d);
+	gen_monsters(d);
+	clear();
+	render_dungeon(d, d->pc.position[dim_y], d->pc.position[dim_x]);
+	refresh();
+	return 1;
+      }
+      else{
+	return 0;
+      }
     case 'L':
       center_y = d->pc.position[dim_y];
       center_x = d->pc.position[dim_x];
       while(1){
 	command = getch();
 	//if command is escape break
-	//else move view around using look_move
-	look_move(d, command, &center_y, &center_x);
+	if(command == 27){
+	  clear();
+	  render_dungeon(d, d->pc.position[dim_y], d->pc.position[dim_x]);
+	  break;
+	}
+	else{
+	  look_move(d, command, &center_y, &center_x);
+	}
       }
-      return 0;
-    case 'e':
-      d->control = 1;
-    case 'Q':
-      endwin();
+      return 1;
     }
     pair_t nextMove;
     nextMove[dim_y] = d->pc.position[dim_y] + dir[dim_y];
@@ -176,6 +211,7 @@ void look_move(dungeon_t *d, char command, int *center_y, int *center_x){
       *center_x = *center_x - 1;
       break;
     }
+    clear();
   render_dungeon(d, *center_y, *center_x);
 }
 

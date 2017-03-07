@@ -635,6 +635,14 @@ void render_dungeon(dungeon_t *d, int center_y, int center_x)
 	    c = '#';
 	    addch(c);
 	    break;
+	  case ter_stairs_up:
+	    c = '<';
+	    addch(c);
+	    break;
+	  case ter_stairs_down:
+	    c = '>';
+	    addch(c);
+	    break;
 	  case ter_debug:
 	    addch('*');
 	    fprintf(stderr, "Debug character at %d, %d\n", p[dim_y], p[dim_x]);
