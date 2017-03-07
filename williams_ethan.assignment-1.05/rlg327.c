@@ -219,17 +219,16 @@ int main(int argc, char *argv[])
 
   //Starts curses mode
   initscr();
-  //noecho();
-  char dir;
+  noecho();
+  d.control = 1;
 
   while (pc_is_alive(&d) && dungeon_has_npcs(&d)) {
     clear();
-    render_dungeon(&d);
-    refresh();
+    render_dungeon(&d, d.pc.position[dim_y], d.pc.position[dim_x]);
+    refresh();    
     do_moves(&d);
-    usleep(5000);
   }
-  render_dungeon(&d);
+  render_dungeon(&d, d.pc.position[dim_y], d.pc.position[dim_x]);
   refresh();
 
   endwin();

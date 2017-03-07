@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <ncurses.h>
 
 #include "string.h"
 
@@ -52,100 +53,130 @@ void config_pc(dungeon_t *d)
 
 uint32_t pc_next_pos(dungeon_t *d, pair_t dir)
 {
-  static uint32_t have_seen_corner = 0;
-  static uint32_t count = 0;
-
-  dir[dim_y] = dir[dim_x] = 0;
-
-  if (in_corner(d, &d->pc)) {
-    if (!count) {
-      count = 1;
-    }
-    have_seen_corner = 1;
-  }
-
-  /* First, eat anybody standing next to us. */
-  if (charxy(d->pc.position[dim_x] - 1, d->pc.position[dim_y] - 1)) {
-    dir[dim_y] = -1;
-    dir[dim_x] = -1;
-  } else if (charxy(d->pc.position[dim_x], d->pc.position[dim_y] - 1)) {
-    dir[dim_y] = -1;
-  } else if (charxy(d->pc.position[dim_x] + 1, d->pc.position[dim_y] - 1)) {
-    dir[dim_y] = -1;
-    dir[dim_x] = 1;
-  } else if (charxy(d->pc.position[dim_x] - 1, d->pc.position[dim_y])) {
-    dir[dim_x] = -1;
-  } else if (charxy(d->pc.position[dim_x] + 1, d->pc.position[dim_y])) {
-    dir[dim_x] = 1;
-  } else if (charxy(d->pc.position[dim_x] - 1, d->pc.position[dim_y] + 1)) {
-    dir[dim_y] = 1;
-    dir[dim_x] = -1;
-  } else if (charxy(d->pc.position[dim_x], d->pc.position[dim_y] + 1)) {
-    dir[dim_y] = 1;
-  } else if (charxy(d->pc.position[dim_x] + 1, d->pc.position[dim_y] + 1)) {
-    dir[dim_y] = 1;
-    dir[dim_x] = 1;
-  } else if (!have_seen_corner || count < 250) {
-    /* Head to a corner and let most of the NPCs kill each other off */
-    if (count) {
-      count++;
-    }
-    if (!against_wall(d, &d->pc) && ((rand() & 0x111) == 0x111)) {
-      dir[dim_x] = (rand() % 3) - 1;
-      dir[dim_y] = (rand() % 3) - 1;
-    } else {
-      dir_nearest_wall(d, &d->pc, dir);
-    }
-  }else {
-    /* And after we've been there, let's head toward the center of the map. */
-    if (!against_wall(d, &d->pc) && ((rand() & 0x111) == 0x111)) {
-      dir[dim_x] = (rand() % 3) - 1;
-      dir[dim_y] = (rand() % 3) - 1;
-    } else {
-      dir[dim_x] = ((d->pc.position[dim_x] > DUNGEON_X / 2) ? -1 : 1);
-      dir[dim_y] = ((d->pc.position[dim_y] > DUNGEON_Y / 2) ? -1 : 1);
-    }
-  }
-
-  /* Don't move to an unoccupied location if that places us next to a monster */
-  if (!charxy(d->pc.position[dim_x] + dir[dim_x],
-              d->pc.position[dim_y] + dir[dim_y]) &&
-      ((charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-               d->pc.position[dim_y] + dir[dim_y] - 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-                d->pc.position[dim_y] + dir[dim_y] - 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-               d->pc.position[dim_y] + dir[dim_y]) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-                d->pc.position[dim_y] + dir[dim_y]) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-               d->pc.position[dim_y] + dir[dim_y] + 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-                d->pc.position[dim_y] + dir[dim_y] + 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x],
-               d->pc.position[dim_y] + dir[dim_y] - 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x],
-                d->pc.position[dim_y] + dir[dim_y] - 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x],
-               d->pc.position[dim_y] + dir[dim_y] + 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x],
-                d->pc.position[dim_y] + dir[dim_y] + 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-               d->pc.position[dim_y] + dir[dim_y] - 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-                d->pc.position[dim_y] + dir[dim_y] - 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-               d->pc.position[dim_y] + dir[dim_y]) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-                d->pc.position[dim_y] + dir[dim_y]) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-               d->pc.position[dim_y] + dir[dim_y] + 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-                d->pc.position[dim_y] + dir[dim_y] + 1) != &d->pc)))) {
-    dir[dim_x] = dir[dim_y] = 0;
-  }
-
+  char command = getch();
+    //change to look mode
+    while(!control_move(d, dir, command));
   return 0;
+}
+
+//Moves pc around in control move, returning 0 if next pos is into wall
+int control_move(dungeon_t *d, pair_t dir, char command){
+  int center_y, center_x;
+    switch(command){
+    case '7':
+    case 'y':
+      dir[dim_y] = -1;
+      dir[dim_x] = -1;
+      break;
+    case '8':
+    case 'k':
+      dir[dim_y] = -1;
+      dir[dim_x] = 0;
+      break;
+    case '9':
+    case 'u':
+      dir[dim_y] = -1;
+      dir[dim_x] = 1;
+      break;
+    case '6':
+    case 'l':
+      dir[dim_y] = 0;
+      dir[dim_x] = 1;
+      break;
+    case '3':
+    case 'n':
+      dir[dim_y] = 1;
+      dir[dim_x] = 1;
+      break;
+    case '2':
+    case 'j':
+      dir[dim_y] = 1;
+      dir[dim_x] = 0;
+      break;
+    case '1':
+    case 'b':
+      dir[dim_y] = 1;
+      dir[dim_x] = -1;
+      break;
+    case '4':
+    case 'h':
+      dir[dim_y] = 0;
+      dir[dim_x] = -1;
+      break;
+    case '5':
+    case ' ':
+      dir[dim_y] = 0;
+      dir[dim_x] = 0;
+      break;
+    case '>':
+      endwin();
+    case '<':
+      endwin();
+    case 'L':
+      center_y = d->pc.position[dim_y];
+      center_x = d->pc.position[dim_x];
+      while(1){
+	command = getch();
+	//if command is escape break
+	//else move view around using look_move
+	look_move(d, command, &center_y, &center_x);
+      }
+      return 0;
+    case 'e':
+      d->control = 1;
+    case 'Q':
+      endwin();
+    }
+    pair_t nextMove;
+    nextMove[dim_y] = d->pc.position[dim_y] + dir[dim_y];
+    nextMove[dim_x] = d->pc.position[dim_x] + dir[dim_x];
+    if(hardnesspair(nextMove) != 0){
+      return 0;
+    }
+    return 1;
+}
+
+//Moves around in look mode based on user input
+void look_move(dungeon_t *d, char command, int *center_y, int *center_x){
+    switch(command){
+    case '7':
+    case 'y':
+      *center_y = *center_y - 1;
+      *center_x = *center_x - 1;
+      break;
+    case '8':
+    case 'k':
+      *center_y = *center_y  - 1;
+      break;
+    case '9':
+    case 'u':
+      *center_y = *center_y - 1;
+      *center_x = *center_x + 1;
+      break;
+    case '6':
+    case 'l':
+      *center_x = *center_x + 1;
+      break;
+    case '3':
+    case 'n':
+      *center_y = *center_y + 1;
+      *center_x = *center_x + 1;
+      break;
+    case '2':
+    case 'j':
+      *center_y = *center_y + 1;
+      break;
+    case '1':
+    case 'b':
+      *center_y = *center_y + 1;
+      *center_x = *center_x - 1;
+      break;
+    case '4':
+    case 'h':
+      *center_x = *center_x - 1;
+      break;
+    }
+  render_dungeon(d, *center_y, *center_x);
 }
 
 uint32_t pc_in_room(dungeon_t *d, uint32_t room)

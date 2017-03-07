@@ -91,7 +91,7 @@ void do_moves(dungeon_t *d)
 
     heap_insert(&d->events, update_event(d, e, 1000 / c->speed));
   }
-
+  
   if (pc_is_alive(d) && e->c == &d->pc) {
     c = e->c;
     d->time = e->time;
@@ -110,7 +110,7 @@ void do_moves(dungeon_t *d)
 
     dijkstra(d);
     dijkstra_tunnel(d);
-  }
+    }
 }
 
 void dir_nearest_wall(dungeon_t *d, character_t *c, pair_t dir)

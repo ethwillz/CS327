@@ -603,7 +603,7 @@ int gen_dungeon(dungeon_t *d)
   return 0;
 }
 
-void render_dungeon(dungeon_t *d)
+void render_dungeon(dungeon_t *d, int center_y, int center_x)
 {
   pair_t p;
   char c;
@@ -615,8 +615,8 @@ void render_dungeon(dungeon_t *d)
 
   for (p[dim_y] = 0; p[dim_y] < DUNGEON_Y; p[dim_y]++) {
     for (p[dim_x] = 0; p[dim_x] < DUNGEON_X; p[dim_x]++) {
-      if((p[dim_y] >= d->pc.position[dim_y] - 10 && p[dim_y] <= d->pc.position[dim_y] + 11) &&
-	 (p[dim_x] >= d->pc.position[dim_x] - 40 && p[dim_x] <= d->pc.position[dim_x] + 40)){ 
+      if((p[dim_y] >= center_y - 10 && p[dim_y] <= center_y + 11) &&
+	 (p[dim_x] >= center_x - 40 && p[dim_x] <= center_x + 40)){ 
 	if (charpair(p)) {
 	  addch(charpair(p)->symbol);
 	} else {

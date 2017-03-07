@@ -72,12 +72,13 @@ typedef struct dungeon {
    * convenience, e.g., the ability to create a new event without explicit *
    * information from the current event.                                   */
   uint32_t time;
+  uint32_t control;
 } dungeon_t;
 
 void init_dungeon(dungeon_t *d);
 void delete_dungeon(dungeon_t *d);
 int gen_dungeon(dungeon_t *d);
-void render_dungeon(dungeon_t *d);
+void render_dungeon(dungeon_t *d, int center_y, int center_x);
 int write_dungeon(dungeon_t *d, char *file);
 int read_dungeon(dungeon_t *d, char *file);
 int read_pgm(dungeon_t *d, char *pgm);

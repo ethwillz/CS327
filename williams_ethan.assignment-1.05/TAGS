@@ -61,21 +61,21 @@ static int place_rooms(509,15931
 static int make_rooms(573,18456
 int gen_dungeon(596,19017
 void render_dungeon(606,19139
-void delete_dungeon(655,20139
-void init_dungeon(662,20273
-int write_dungeon_map(669,20430
-int write_rooms(682,20659
-uint32_t calculate_dungeon_size(702,21078
-int write_dungeon(709,21300
-int read_dungeon_map(768,22685
-int read_rooms(791,23283
-int calculate_num_rooms(821,24052
-int read_dungeon(829,24292
-int read_pgm(903,25993
-void render_distance_map(986,28118
-void render_tunnel_distance_map(1017,28906
+void delete_dungeon(655,20115
+void init_dungeon(662,20249
+int write_dungeon_map(669,20406
+int write_rooms(682,20635
+uint32_t calculate_dungeon_size(702,21054
+int write_dungeon(709,21276
+int read_dungeon_map(768,22661
+int read_rooms(791,23259
+int calculate_num_rooms(821,24028
+int read_dungeon(829,24268
+int read_pgm(903,25969
+void render_distance_map(986,28094
+void render_tunnel_distance_map(1017,28882
 
-dungeon.h,1477
+dungeon.h,1505
 # define DUNGEON_H2,18
 #define DUNGEON_X 9,122
 #define DUNGEON_Y 10,157
@@ -125,7 +125,8 @@ typedef struct dungeon 48,1248
   uint16_t max_monsters;67,2203
   uint32_t character_sequence_number;68,2228
   uint32_t time;74,2652
-} dungeon_t;75,2669
+  uint32_t control;75,2669
+} dungeon_t;76,2689
 
 event.c,178
 static uint32_t next_event_number(4,43
@@ -220,10 +221,10 @@ move.c,194
 void do_combat(17,250
 void move_character(30,571
 void do_moves(46,1052
-void dir_nearest_wall(116,3233
-uint32_t against_wall(128,3648
-uint32_t in_corner(140,4136
-uint32_t move_pc(158,4764
+void dir_nearest_wall(116,3237
+uint32_t against_wall(128,3652
+uint32_t in_corner(140,4140
+uint32_t move_pc(158,4768
 
 move.h,104
 # define MOVE_H2,15
@@ -322,13 +323,15 @@ path.h,60
 # define PATH_H2,15
 typedef struct dungeon dungeon_t;4,32
 
-pc.c,157
-void pc_delete(11,135
-uint32_t pc_is_alive(18,195
-void place_pc(23,257
-void config_pc(33,684
-uint32_t pc_next_pos(53,1102
-uint32_t pc_in_room(151,5123
+pc.c,208
+void pc_delete(12,156
+uint32_t pc_is_alive(19,216
+void place_pc(24,278
+void config_pc(34,705
+uint32_t pc_next_pos(54,1123
+int control_move(63,1354
+void look_move(140,2894
+uint32_t pc_in_room(182,3766
 
 pc.h,99
 # define PC_H2,13
