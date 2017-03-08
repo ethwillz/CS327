@@ -34,7 +34,7 @@ typedef enum dim 7,190
 } dim_t;11,238
 typedef int16_t pair_t[pair_t13,248
 
-dungeon.c,1263
+dungeon.c,1299
 typedef struct corridor_path 15,242
   heap_node_t *hn;hn16,273
   uint8_t pos[pos17,292
@@ -59,21 +59,22 @@ static int smooth_hardness(331,11252
 static int empty_dungeon(489,15528
 static int place_rooms(509,15931
 static int make_rooms(573,18456
-int gen_dungeon(596,19017
-void render_dungeon(606,19139
-void delete_dungeon(663,20245
-void init_dungeon(670,20379
-int write_dungeon_map(677,20536
-int write_rooms(690,20765
-uint32_t calculate_dungeon_size(710,21184
-int write_dungeon(717,21406
-int read_dungeon_map(776,22791
-int read_rooms(799,23389
-int calculate_num_rooms(829,24158
-int read_dungeon(837,24398
-int read_pgm(911,26099
-void render_distance_map(994,28224
-void render_tunnel_distance_map(1025,29012
+static int place_stairs(596,19017
+int gen_dungeon(618,19378
+void render_dungeon(629,19519
+void delete_dungeon(686,20625
+void init_dungeon(693,20759
+int write_dungeon_map(700,20916
+int write_rooms(713,21145
+uint32_t calculate_dungeon_size(733,21564
+int write_dungeon(740,21786
+int read_dungeon_map(799,23171
+int read_rooms(822,23769
+int calculate_num_rooms(852,24538
+int read_dungeon(860,24778
+int read_pgm(934,26479
+void render_distance_map(1017,28604
+void render_tunnel_distance_map(1048,29392
 
 dungeon.h,1557
 # define DUNGEON_H2,18
@@ -331,9 +332,9 @@ uint32_t pc_is_alive(20,233
 void place_pc(25,295
 void config_pc(35,722
 uint32_t pc_next_pos(55,1140
-int control_move(70,1480
-void look_move(173,3621
-uint32_t pc_in_room(216,4506
+int control_move(62,1308
+void look_move(174,3544
+uint32_t pc_in_room(197,4001
 
 pc.h,99
 # define PC_H2,13

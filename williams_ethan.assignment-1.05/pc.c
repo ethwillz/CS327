@@ -54,20 +54,13 @@ void config_pc(dungeon_t *d)
 
 uint32_t pc_next_pos(dungeon_t *d, pair_t dir)
 {
-  char command = getch();
-  if(command == 'Q'){
-    endwin();
-  }
-  else if(command == 'L'){
-    while(!control_move(d, dir, command));
-    command = getch();
-  }
-  while(!control_move(d, dir, command));
+  while(!control_move(d, dir));
   return 0;
 }
 
 //Moves pc around in control move, returning 0 if next pos is into wall
-int control_move(dungeon_t *d, pair_t dir, char command){
+int control_move(dungeon_t *d, pair_t dir){
+  char command = getch();
   int center_y, center_x;
     switch(command){
     case '7':
@@ -116,8 +109,8 @@ int control_move(dungeon_t *d, pair_t dir, char command){
       dir[dim_x] = 0;
       break;
     case '>':
-      mvprintw(0, 0, "Enter stairs");
-      if(d->map[d->pc.position[dim_y]][d->pc.position[dim_x]] == '>'){
+      if(d->map[d->pc.position[dim_y]][d->pc.position[dim_x]] == ter_stairs_down){
+	//free(d);
 	init_dungeon(d);
 	gen_dungeon(d);
 	config_pc(d);
@@ -125,14 +118,14 @@ int control_move(dungeon_t *d, pair_t dir, char command){
 	clear();
         render_dungeon(d, d->pc.position[dim_y], d->pc.position[dim_x]);
 	refresh();
-	return 1;
+	return 0;
       }
       else{
 	return 0;
       }
     case '<':
-      mvprintw(0, 0, "Enter stairs");
-      if(d->map[d->pc.position[dim_y]][d->pc.position[dim_x]] == '<'){
+      if(d->map[d->pc.position[dim_y]][d->pc.position[dim_x]] == ter_stairs_up){
+	//free(d);
 	init_dungeon(d);
 	gen_dungeon(d);
 	config_pc(d);
@@ -140,7 +133,7 @@ int control_move(dungeon_t *d, pair_t dir, char command){
 	clear();
 	render_dungeon(d, d->pc.position[dim_y], d->pc.position[dim_x]);
 	refresh();
-	return 1;
+	return 0;
       }
       else{
 	return 0;
@@ -160,7 +153,13 @@ int control_move(dungeon_t *d, pair_t dir, char command){
 	  look_move(d, command, &center_y, &center_x);
 	}
       }
-      return 1;
+      return 0;
+    case 'Q':
+      endwin();
+      //exit(0);
+      abort();
+    default:
+      return 0;
     }
     pair_t nextMove;
     nextMove[dim_y] = d->pc.position[dim_y] + dir[dim_y];
@@ -174,37 +173,17 @@ int control_move(dungeon_t *d, pair_t dir, char command){
 //Moves around in look mode based on user input
 void look_move(dungeon_t *d, char command, int *center_y, int *center_x){
     switch(command){
-    case '7':
-    case 'y':
-      *center_y = *center_y - 1;
-      *center_x = *center_x - 1;
-      break;
     case '8':
     case 'k':
       *center_y = *center_y  - 1;
-      break;
-    case '9':
-    case 'u':
-      *center_y = *center_y - 1;
-      *center_x = *center_x + 1;
       break;
     case '6':
     case 'l':
       *center_x = *center_x + 1;
       break;
-    case '3':
-    case 'n':
-      *center_y = *center_y + 1;
-      *center_x = *center_x + 1;
-      break;
     case '2':
     case 'j':
       *center_y = *center_y + 1;
-      break;
-    case '1':
-    case 'b':
-      *center_y = *center_y + 1;
-      *center_x = *center_x - 1;
       break;
     case '4':
     case 'h':

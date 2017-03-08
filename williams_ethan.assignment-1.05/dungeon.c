@@ -593,12 +593,35 @@ static int make_rooms(dungeon_t *d)
   return 0;
 }
 
+static int place_stairs(dungeon_t *d){
+  
+  //Places 5 of each stair type
+  int q, x, y;
+  for(q = 0; q < 10; q++){
+    x = rand() % 160;
+    y = rand() % 105;
+    if(d->map[y][x] == ter_floor_room){
+      if(q < 5){
+	d->map[y][x] = ter_stairs_down;
+      }
+      else{
+	d->map[y][x] = ter_stairs_up;
+      }
+    }
+    else{
+      q--;
+    }
+  }
+  return 0;
+}
+
 int gen_dungeon(dungeon_t *d)
 {
   do {
     make_rooms(d);
   } while (place_rooms(d));
   connect_rooms(d);
+  place_stairs(d);
 
   return 0;
 }

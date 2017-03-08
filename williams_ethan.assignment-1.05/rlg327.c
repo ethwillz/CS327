@@ -217,24 +217,6 @@ int main(int argc, char *argv[])
   config_pc(&d);
   gen_monsters(&d);
 
-  //Places 5 of each stair type
-  int q, x, y;
-  for(q = 0; q < 10; q++){
-    x = rand() % 160;
-    y = rand() % 105;
-    if(d.map[y][x] == ter_floor_room){
-      if(q < 5){
-	d.map[y][x] = ter_stairs_down;
-      }
-      else{
-	d.map[y][x] = ter_stairs_up;
-      }
-    }
-    else{
-      q--;
-    }
-  }
-
   //Starts curses mode
   initscr();
   noecho();
