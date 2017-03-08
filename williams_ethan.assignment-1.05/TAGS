@@ -74,7 +74,7 @@ int calculate_num_rooms(852,24538
 int read_dungeon(860,24778
 int read_pgm(934,26479
 void render_distance_map(1017,28604
-void render_tunnel_distance_map(1048,29392
+void render_tunnel_distance_map(1050,29436
 
 dungeon.h,1557
 # define DUNGEON_H2,18

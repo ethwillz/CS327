@@ -1032,6 +1032,8 @@ void render_distance_map(dungeon_t *d)
         case ter_floor:
         case ter_floor_room:
         case ter_floor_hall:
+	case ter_stairs_up:
+	case ter_stairs_down:
           putchar('0' + d->pc_distance[p[dim_y]][p[dim_x]] % 10);
           break;
         case ter_debug:
@@ -1063,6 +1065,8 @@ void render_tunnel_distance_map(dungeon_t *d)
         case ter_floor:
         case ter_floor_room:
         case ter_floor_hall:
+	case ter_stairs_up:
+	case ter_stairs_down:
           putchar('0' + d->pc_tunnel[p[dim_y]][p[dim_x]] % 10);
           break;
         case ter_debug:
