@@ -333,8 +333,8 @@ void place_pc(25,295
 void config_pc(35,722
 uint32_t pc_next_pos(55,1140
 int control_move(62,1308
-void look_move(174,3544
-uint32_t pc_in_room(197,4001
+void look_move(180,3680
+uint32_t pc_in_room(203,4137
 
 pc.h,99
 # define PC_H2,13

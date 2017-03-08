@@ -111,6 +111,8 @@ int control_move(dungeon_t *d, pair_t dir){
     case '>':
       if(d->map[d->pc.position[dim_y]][d->pc.position[dim_x]] == ter_stairs_down){
 	//free(d);
+	pc_delete(d->pc.pc);
+	delete_dungeon(d);
 	init_dungeon(d);
 	gen_dungeon(d);
 	config_pc(d);
@@ -126,6 +128,8 @@ int control_move(dungeon_t *d, pair_t dir){
     case '<':
       if(d->map[d->pc.position[dim_y]][d->pc.position[dim_x]] == ter_stairs_up){
 	//free(d);
+	pc_delete(d->pc.pc);
+	delete_dungeon(d);
 	init_dungeon(d);
 	gen_dungeon(d);
 	config_pc(d);
@@ -155,6 +159,8 @@ int control_move(dungeon_t *d, pair_t dir){
       }
       return 0;
     case 'Q':
+      pc_delete(d->pc.pc);
+      delete_dungeon(d);
       endwin();
       //exit(0);
       abort();
