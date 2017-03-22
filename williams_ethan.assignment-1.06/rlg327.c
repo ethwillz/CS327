@@ -234,7 +234,13 @@ int main(int argc, char *argv[])
     write_dungeon(&d, save_file);
   }
 
-  printf(pc_is_alive(&d) ? victory : tombstone);
+  if(pc_is_alive(&d)){
+    printf("%s", victory);
+  }
+  else{
+    printf("%s", tombstone);
+  }
+  //printf(pc_is_alive(&d) ? victory : tombstone);
   printf("\nYou defended your life in the face of %u deadly beasts.\n"
          "You avenged the cruel and untimely murders of %u peaceful dungeon residents.\n",
          d.pc.kills[kill_direct], d.pc.kills[kill_avenged]);

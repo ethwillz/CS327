@@ -205,38 +205,45 @@ void io_display(dungeon_t *d)
   clear();
   for (y = 0; y < 21; y++) {
     for (x = 0; x < 80; x++) {
-      if (d->character[d->io_offset[dim_y] + y]
-                      [d->io_offset[dim_x] + x]) {
-        mvaddch(y + 1, x, d->character[d->io_offset[dim_y] + y]
-                                      [d->io_offset[dim_x] + x]->symbol);
-      } else {
-        switch (mapxy(d->io_offset[dim_x] + x,
-                      d->io_offset[dim_y] + y)) {
-        case ter_wall:
-        case ter_wall_immutable:
-          mvaddch(y + 1, x, ' ');
-          break;
-        case ter_floor:
-        case ter_floor_room:
-          mvaddch(y + 1, x, '.');
-          break;
-        case ter_floor_hall:
-          mvaddch(y + 1, x, '#');
-          break;
-        case ter_debug:
-          mvaddch(y + 1, x, '*');
-          break;
-        case ter_stairs_up:
-          mvaddch(y + 1, x, '<');
-          break;
-        case ter_stairs_down:
-          mvaddch(y + 1, x, '>');
-          break;
-        default:
- /* Use zero as an error symbol, since it stands out somewhat, and it's *
-  * not otherwise used.                                                 */
-          mvaddch(y + 1, x, '0');
-        }
+      if(d->pc_visible[d->io_offset[dim_y] + y]
+	 [d->io_offset[dim_x] + x]){
+	      mvprintw(24, 0, "%d", d->pc_visible[d->io_offset[dim_y] + y][d->io_offset[dim_x] + x]);
+	if (d->character[d->io_offset[dim_y] + y]
+	    [d->io_offset[dim_x] + x]) {
+	  mvaddch(y + 1, x, d->character[d->io_offset[dim_y] + y]
+		  [d->io_offset[dim_x] + x]->symbol);
+	} else {
+	  switch (mapxy(d->io_offset[dim_x] + x,
+			d->io_offset[dim_y] + y)) {
+	  case ter_wall:
+	  case ter_wall_immutable:
+	    mvaddch(y + 1, x, ' ');
+	    break;
+	  case ter_floor:
+	  case ter_floor_room:
+	    mvaddch(y + 1, x, '.');
+	    break;
+	  case ter_floor_hall:
+	    mvaddch(y + 1, x, '#');
+	    break;
+	  case ter_debug:
+	    mvaddch(y + 1, x, '*');
+	    break;
+	  case ter_stairs_up:
+	    mvaddch(y + 1, x, '<');
+	    break;
+	  case ter_stairs_down:
+	    mvaddch(y + 1, x, '>');
+	    break;
+	  default:
+	    /* Use zero as an error symbol, since it stands out somewhat, and it's *
+	     * not otherwise used.                                                 */
+	    mvaddch(y + 1, x, '0');
+	  }
+	}
+      }
+      else{
+	mvaddch(y + 1, x, ' ');
       }
     }
   }
@@ -658,4 +665,12 @@ void io_handle_input(dungeon_t *d)
       fail_code = 1;
     }
   } while (fail_code);
+  int i, j;
+  for(i = d->pc.position[dim_y] - 5; i < d->pc.position[dim_y] + 5; i++){
+    for(j = d->pc.position[dim_x] - 5; j < d->pc.position[dim_x] + 5; j++){
+      if(i > 0 && i < 105 && j > 0 && j < 160){
+	d->pc_visible[i][j] = 1;
+      }
+    }
+  }
 }

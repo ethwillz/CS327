@@ -29,6 +29,15 @@ void place_pc(dungeon_t *d)
   d->pc.position[dim_x] = rand_range(d->rooms->position[dim_x],
                                      (d->rooms->position[dim_x] +
                                       d->rooms->size[dim_x] - 1));
+  
+  int i, j;
+  for(i = d->pc.position[dim_y] - 5; i < d->pc.position[dim_y] + 5; i++){
+    for(j = d->pc.position[dim_x] - 5; j < d->pc.position[dim_x] + 5; j++){
+      if(i > 0 && i < 105 && j > 0 && j < 160){
+	d->pc_visible[i][j] = 1;
+      }
+    }
+  }
 }
 
 void config_pc(dungeon_t *d)

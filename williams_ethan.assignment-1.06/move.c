@@ -168,7 +168,6 @@ static void new_dungeon_level(dungeon_t *d, uint32_t dir)
   }
 }
 
-
 uint32_t move_pc(dungeon_t *d, uint32_t dir)
 {
   pair_t next;
