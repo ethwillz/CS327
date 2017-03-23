@@ -31,20 +31,24 @@ class character{
   
 };
 
-extern "C"{
+extern "C" {
+# else
+typedef void character;
+#endif
 
 int32_t compare_characters_by_next_turn(const void *character1,
                                         const void *character2);
-uint32_t can_see(dungeon_t *d, character_t *voyeur, character_t *exhibitionist);
+uint32_t can_see(dungeon_t *d, character *voyeur, character *exhibitionist);
 void character_delete(void *c);
 
 //Accesors and mutators for character class
-char symbol(character *c);
-uint8_t position_y(character *c);
-uin8_t position_x(character *c);
-uint32_t speed(character *c);
-uint32_t alive(character *c);
-uint32_t sequence_number(character *c);
+uint32_t get_position_y(character *c);
+void set_position_y(uint32_t newY, character *c);
+uint32_t get_position_x(character *c);
+void set_position_x(uint32_t newX, character *c);
+uint32_t get_direct_kills(character *c);
+uint32_t get_avenged_kills(character *c);
+void delete_character(character *c);
 
 # ifdef __cplusplus
 }

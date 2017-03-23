@@ -45,16 +45,28 @@ typedef struct dungeon dungeon_t;
 typedef struct character character_t;
 typedef uint32_t npc_characteristics_t;
 
-typedef struct npc {
+#ifdef __cplusplus
+
+class npc: public character{
+ public:
   npc_characteristics_t characteristics;
   uint32_t have_seen_pc;
   pair_t pc_last_known_position;
+  
+};
 
-} npc_t;
+extern "C" {
+# else
+typedef void character;
+#endif
 
 void gen_monsters(dungeon_t *d);
 void npc_delete(npc_t *n);
 void npc_next_pos(dungeon_t *d, character_t *c, pair_t next);
 uint32_t dungeon_has_npcs(dungeon_t *d);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

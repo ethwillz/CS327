@@ -12,7 +12,10 @@ typedef struct dungeon dungeon_t;
 class pc: public character{  
 };
 
-extern "C"{
+extern "C" {
+# else
+typedef void character;
+#endif
 
 void pc_delete(pc_t *pc);
 uint32_t pc_is_alive(dungeon_t *d);

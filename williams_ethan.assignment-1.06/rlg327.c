@@ -177,10 +177,13 @@ int main(int argc, char *argv[])
             usage(argv[0]);
           }
           do_place_pc = 1;
-          if ((d.pc.position[dim_y] = atoi(argv[++i])) < 1 ||
-              d.pc.position[dim_y] > DUNGEON_Y - 2         ||
-              (d.pc.position[dim_x] = atoi(argv[++i])) < 1 ||
-              d.pc.position[dim_x] > DUNGEON_X - 2) {
+	  //Set position to atoi and use get for comparison
+	  set_position_y(atoi(argv[++i]), d.pc);
+	  set_position_x(atoi(argv[++i]), d.pc);
+          if (get_position_y(d.pc) < 1 ||
+              get_position_y(d.pc) > DUNGEON_Y - 2         ||
+              get_position_x(d.pc) < 1 ||
+              get_position_x(d.pc) > DUNGEON_X - 2) {
             fprintf(stderr, "Invalid PC position.\n");
             usage(argv[0]);
           }
@@ -243,9 +246,10 @@ int main(int argc, char *argv[])
   //printf(pc_is_alive(&d) ? victory : tombstone);
   printf("\nYou defended your life in the face of %u deadly beasts.\n"
          "You avenged the cruel and untimely murders of %u peaceful dungeon residents.\n",
-         d.pc.kills[kill_direct], d.pc.kills[kill_avenged]);
+         get_direct_kills(d.pc), get_avenged_kills(d.pc));
 
-  pc_delete(d.pc.pc);
+  delete_character(d.pc);
+  //pc_delete(d.pc.pc);
 
   delete_dungeon(&d);
 

@@ -65,7 +65,7 @@ typedef struct dungeon {
   uint8_t pc_tunnel[DUNGEON_Y][DUNGEON_X];
   uint8_t pc_visible[DUNGEON_Y][DUNGEON_X];
   character_t *character[DUNGEON_Y][DUNGEON_X];
-  character_t pc;
+  character_t *pc;
   heap_t events;
   uint16_t num_monsters;
   uint16_t max_monsters;

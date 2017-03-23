@@ -106,3 +106,31 @@ uint32_t can_see(dungeon_t *d, character_t *voyeur, character_t *exhibitionist)
 
   return 1;
 }
+
+uint32_t get_position_y(character *c){
+  return c->position[dim_y];
+}
+
+void set_position_y(uint32_t newY, character *c){
+  c->position[dim_y] = newY;
+}
+
+uint32_t get_position_x(character *c){
+  return c->position[dim_x];
+}
+
+void set_position_x(uint32_t newX, character *c){
+  c->position[dim_x] = newX;
+}
+
+uint32_t get_direct_kills(character *c){
+  return c->kills[kill_direct];
+}
+
+uint32_t get_avenged_kills(character *c){
+  return c->kills[kill_avenged];
+}
+
+void delete_character(character *c){
+  delete(c);
+}

@@ -6,28 +6,6 @@
 #include "pc.h"
 #include "dungeon.h"
 
-class character{
-
-public:
-  char m_symbol;
-  pair_t m_position;
-  int32_t m_speed;
-  uint32_t m_alive;
-  uint32_t m_sequence_number;
-  npc_t *m_npc;
-  pc_t *m_pc;
-  uint32_t m_kills[num_kill_types];
-
-  void setSymbol(char symbol){
-    m_symbol = symbol:
-  }
-
-  char getSymbol(){
-    return m_symbol;
-  }
-  
-};
-
 void character_delete(void *v)
 {
   /* The PC is never malloc()ed anymore, do don't attempt to free it here. */
@@ -127,4 +105,20 @@ uint32_t can_see(dungeon_t *d, character_t *voyeur, character_t *exhibitionist)
   }
 
   return 1;
+}
+
+uint32_t get_position_y(character *c){
+  return c->position[dim_y];
+}
+
+void set_position_y(uint32_t newY, character *c){
+  c->position[dim_y] = newY;
+}
+
+uint32_t get_position_x(character *c){
+  return c->position[dim_x];
+}
+
+void set_position_x(uint32_t newX, character *c){
+  c->position[dim_x] = newX;
 }
