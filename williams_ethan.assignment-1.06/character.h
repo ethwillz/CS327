@@ -18,6 +18,8 @@ typedef enum kill_type {
 
 # ifdef __cplusplus
 
+using namespace std;
+
 class character{
  public:
   char symbol;
@@ -47,8 +49,18 @@ void set_position_y(uint32_t newY, character *c);
 uint32_t get_position_x(character *c);
 void set_position_x(uint32_t newX, character *c);
 uint32_t get_direct_kills(character *c);
+  void set_direct_kills(character *c, int num);
 uint32_t get_avenged_kills(character *c);
+void set_avenged_kills(character *c, int num);
 void delete_character(character *c);
+uint8_t is_alive(character *c);
+void set_alive(character *c, uint8_t isalive);
+  char get_symbol(character *c);
+void set_symbol(character *c, char desired);
+  int32_t get_speed(character *c);
+void set_speed(character *c, int32_t newspeed);
+void set_sequence_num(character *c, uint32_t num);
+  int16_t *get_position(character *c);
 
 # ifdef __cplusplus
 }

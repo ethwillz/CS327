@@ -12,7 +12,7 @@ void character_delete(void *v)
   character_t *c;
 
   if (v) {
-    c = v;
+    c = (character_t *)v;
 
     if (c->npc) {
       npc_delete(c->npc);
@@ -133,4 +133,44 @@ uint32_t get_avenged_kills(character *c){
 
 void delete_character(character *c){
   delete(c);
+}
+
+uint8_t is_alive(character *c){
+  return c->alive;
+}
+
+void set_symbol(character *c, char desired){
+  c->symbol = desired;
+}
+
+void set_speed(character *c, int32_t newspeed){
+  c->speed = newspeed;
+}
+
+void set_alive(character *c, uint8_t isalive){
+  c->alive = isalive;
+}
+
+void set_sequence_num(character *c, uint32_t num){
+  c->sequence_number = num;
+}
+
+void set_direct_kills(character *c, int num){
+  c->kills[kill_direct] = num;
+}
+
+void set_avenged_kills(character *c, int num){
+  c->kills[kill_avenged] = num;
+}
+
+char get_symbol(character *c){
+  return c->symbol;
+}
+
+int32_t get_speed(character *c){
+  return c->speed;
+}
+
+int16_t * get_position(character *c){
+  return c->position;
 }

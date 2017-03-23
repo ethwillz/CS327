@@ -4,6 +4,7 @@
 # include <stdint.h>
 
 # include "dims.h"
+#include "character.h"
 
 # define NPC_SMART         0x00000001
 # define NPC_TELEPATH      0x00000002
@@ -42,10 +43,11 @@
   ((character)->npc->characteristics & NPC_##bit)
 
 typedef struct dungeon dungeon_t;
-typedef struct character character_t;
 typedef uint32_t npc_characteristics_t;
 
 #ifdef __cplusplus
+
+using namespace std;
 
 class npc: public character{
  public:
@@ -57,12 +59,12 @@ class npc: public character{
 
 extern "C" {
 # else
-typedef void character;
+typedef void npc;
 #endif
 
 void gen_monsters(dungeon_t *d);
-void npc_delete(npc_t *n);
-void npc_next_pos(dungeon_t *d, character_t *c, pair_t next);
+void npc_delete(npc *n);
+void npc_next_pos(dungeon_t *d, character *c, pair_t next);
 uint32_t dungeon_has_npcs(dungeon_t *d);
 
 #ifdef __cplusplus

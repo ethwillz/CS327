@@ -495,7 +495,7 @@ static int empty_dungeon(dungeon_t *d)
   smooth_hardness(d);
   for (y = 0; y < DUNGEON_Y; y++) {
     for (x = 0; x < DUNGEON_X; x++) {
-      d->pc_visible[y][x] = 0;
+      set_visibility(d->pc, y, x, 0);
       mapxy(x, y) = ter_wall;
       if (y == 0 || y == DUNGEON_Y - 1 ||
           x == 0 || x == DUNGEON_X - 1) {

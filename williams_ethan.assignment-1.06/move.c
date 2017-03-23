@@ -17,34 +17,33 @@
 
 void do_combat(dungeon_t *d, character_t *atk, character_t *def)
 {
-  if (def->alive) {
-    def->alive = 0;
-    if (def != &d->pc) {
+  if (is_alive(def)) {
+    set_alive(def, 0);
+    if (def != d->pc) {
       d->num_monsters--;
     }
-    atk->kills[kill_direct]++;
-    atk->kills[kill_avenged] += (def->kills[kill_direct] +
-                                  def->kills[kill_avenged]);
+    set_direct_kills(atk, get_direct_kills(atk) + 1);
+    set_avenged_kills(atk, get_avenged_kills(atk) +  get_direct_kills(atk) +  get_avenged_kills(atk));
   }
 
-  if (atk == &d->pc) {
-    io_queue_message("You smite the %c", def->symbol);
+  if (atk == d->pc) {
+    io_queue_message("You smite the %c", get_symbol(def));
   }
 }
 
 void move_character(dungeon_t *d, character_t *c, pair_t next)
 {
   if (charpair(next) &&
-      ((next[dim_y] != c->position[dim_y]) ||
-       (next[dim_x] != c->position[dim_x]))) {
+      ((next[dim_y] != get_position_y(c)) ||
+       (next[dim_x] != get_position_x(c)))) {
     do_combat(d, c, charpair(next));
   } else {
     /* No character in new position. */
 
-    d->character[c->position[dim_y]][c->position[dim_x]] = NULL;
-    c->position[dim_y] = next[dim_y];
-    c->position[dim_x] = next[dim_x];
-    d->character[c->position[dim_y]][c->position[dim_x]] = c;
+    d->character[get_position_y(c)][get_position_x(c)] = NULL;
+    set_position_y(next[dim_y], c);
+    set_position_x(next[dim_x], c);
+    d->character[get_position_y(c)][get_position_x(c)] = c;
   }
 }
 
@@ -67,25 +66,25 @@ void do_moves(dungeon_t *d)
     /* The next line is buggy.  Monsters get first turn before PC.  *
      * Monster gen code always leaves PC in a monster-free room, so *
      * not a big issue, but it needs a better solution.             */
-    e->time = d->time + (1000 / d->pc.speed)
+    e->time = d->time + (1000 / get_speed(d->pc))
 ;
     e->sequence = 0;
-    e->c = &d->pc;
+    e->c = d->pc;
     heap_insert(&d->events, e);
   }
 
   while (pc_is_alive(d) &&
          (e = heap_remove_min(&d->events)) &&
-         ((e->type != event_character_turn) || (e->c != &d->pc))) {
+         ((e->type != event_character_turn) || (e->c != d->pc))) {
     d->time = e->time;
     if (e->type == event_character_turn) {
       c = e->c;
     }
-    if (!c->alive) {
-      if (d->character[c->position[dim_y]][c->position[dim_x]] == c) {
-        d->character[c->position[dim_y]][c->position[dim_x]] = NULL;
+    if (!is_alive(c)) {
+      if (d->character[get_position_y(c)][get_position_x(c)] == c) {
+        d->character[get_position_y(c)][get_position_x(c)] = NULL;
       }
-      if (c != &d->pc) {
+      if (c != d->pc) {
         event_delete(e);
       }
       continue;
@@ -94,11 +93,11 @@ void do_moves(dungeon_t *d)
     npc_next_pos(d, c, next);
     move_character(d, c, next);
 
-    heap_insert(&d->events, update_event(d, e, 1000 / c->speed));
+    heap_insert(&d->events, update_event(d, e, 1000 / get_speed(c)));
   }
 
   io_display(d);
-  if (pc_is_alive(d) && e->c == &d->pc) {
+  if (pc_is_alive(d) && e->c == d->pc) {
     c = e->c;
     d->time = e->time;
     /* Kind of kludgey, but because the PC is never in the queue when   *
@@ -114,24 +113,20 @@ void dir_nearest_wall(dungeon_t *d, character_t *c, pair_t dir)
 {
   dir[dim_x] = dir[dim_y] = 0;
 
-  if (c->position[dim_x] != 1 && c->position[dim_x] != DUNGEON_X - 2) {
-    dir[dim_x] = (c->position[dim_x] > DUNGEON_X - c->position[dim_x] ? 1 : -1);
+  if (get_position_x(c) != 1 && get_position_x(c) != DUNGEON_X - 2) {
+    dir[dim_x] = (get_position_x(c) > DUNGEON_X - get_position_x(c) ? 1 : -1);
   }
-  if (c->position[dim_y] != 1 && c->position[dim_y] != DUNGEON_Y - 2) {
-    dir[dim_y] = (c->position[dim_y] > DUNGEON_Y - c->position[dim_y] ? 1 : -1);
+  if (get_position_y(c) != 1 && get_position_y(c) != DUNGEON_Y - 2) {
+    dir[dim_y] = (get_position_y(c) > DUNGEON_Y - get_position_y(c) ? 1 : -1);
   }
 }
 
 uint32_t against_wall(dungeon_t *d, character_t *c)
 {
-  return ((mapxy(c->position[dim_x] - 1,
-                 c->position[dim_y]    ) == ter_wall_immutable) ||
-          (mapxy(c->position[dim_x] + 1,
-                 c->position[dim_y]    ) == ter_wall_immutable) ||
-          (mapxy(c->position[dim_x]    ,
-                 c->position[dim_y] - 1) == ter_wall_immutable) ||
-          (mapxy(c->position[dim_x]    ,
-                 c->position[dim_y] + 1) == ter_wall_immutable));
+  return ((mapxy(get_position_x(c) - 1, get_position_y(c)) == ter_wall_immutable) ||
+          (mapxy(get_position_x(c) + 1, get_position_y(c)) == ter_wall_immutable) ||
+          (mapxy(get_position_x(c)    , get_position_y(c) - 1) == ter_wall_immutable) ||
+          (mapxy(get_position_x(c)    , get_position_y(c) + 1) == ter_wall_immutable));
 }
 
 uint32_t in_corner(dungeon_t *d, character_t *c)
@@ -140,14 +135,14 @@ uint32_t in_corner(dungeon_t *d, character_t *c)
 
   num_immutable = 0;
 
-  num_immutable += (mapxy(c->position[dim_x] - 1,
-                          c->position[dim_y]    ) == ter_wall_immutable);
-  num_immutable += (mapxy(c->position[dim_x] + 1,
-                          c->position[dim_y]    ) == ter_wall_immutable);
-  num_immutable += (mapxy(c->position[dim_x]    ,
-                          c->position[dim_y] - 1) == ter_wall_immutable);
-  num_immutable += (mapxy(c->position[dim_x]    ,
-                          c->position[dim_y] + 1) == ter_wall_immutable);
+  num_immutable += (mapxy(get_position_x(c) - 1,
+                          get_position_y(c)    ) == ter_wall_immutable);
+  num_immutable += (mapxy(get_position_x(c) + 1,
+                          get_position_y(c)    ) == ter_wall_immutable);
+  num_immutable += (mapxy(get_position_x(c)    ,
+                          get_position_y(c) - 1) == ter_wall_immutable);
+  num_immutable += (mapxy(get_position_x(c)    ,
+                          get_position_y(c) + 1) == ter_wall_immutable);
 
   return num_immutable > 1;
 }
@@ -173,8 +168,8 @@ uint32_t move_pc(dungeon_t *d, uint32_t dir)
   pair_t next;
   uint32_t was_stairs = 0;
 
-  next[dim_y] = d->pc.position[dim_y];
-  next[dim_x] = d->pc.position[dim_x];
+  next[dim_y] = get_position_y(d->pc);
+  next[dim_x] = get_position_x(d->pc);
 
 
   switch (dir) {
@@ -209,13 +204,13 @@ uint32_t move_pc(dungeon_t *d, uint32_t dir)
     next[dim_x]++;
     break;
   case '<':
-    if (mappair(d->pc.position) == ter_stairs_up) {
+    if (mappair(get_position(d->pc)) == ter_stairs_up) {
       was_stairs = 1;
       new_dungeon_level(d, '<');
     }
     break;
   case '>':
-    if (mappair(d->pc.position) == ter_stairs_down) {
+    if (mappair(get_position(d->pc)) == ter_stairs_down) {
       was_stairs = 1;
       new_dungeon_level(d, '>');
     }
@@ -227,7 +222,7 @@ uint32_t move_pc(dungeon_t *d, uint32_t dir)
   }
 
   if ((dir != '>') && (dir != '<') && (mappair(next) >= ter_floor)) {
-    move_character(d, &d->pc, next);
+    move_character(d, d->pc, next);
     io_update_offset(d);
     dijkstra(d);
     dijkstra_tunnel(d);

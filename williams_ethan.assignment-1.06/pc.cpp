@@ -9,6 +9,14 @@
 #include "path.h"
 #include "io.h"
 
+uint8_t is_visible(pc *c, int y, int x){
+  return c->pc_visible[y][x];
+}
+
+void set_visibility(pc *c, int y, int x, int visible){
+  c->pc_visible[y][x] = visible;
+}
+
 void pc_delete(pc_t *pc)
 {
   if (pc) {
@@ -18,23 +26,23 @@ void pc_delete(pc_t *pc)
 
 uint32_t pc_is_alive(dungeon_t *d)
 {
-  return d->pc.alive;
+  return is_alive(d->pc);
 }
 
 void place_pc(dungeon_t *d)
 {
-  d->pc.position[dim_y] = rand_range(d->rooms->position[dim_y],
+  set_position_y(rand_range(d->rooms->position[dim_y],
                                      (d->rooms->position[dim_y] +
-                                      d->rooms->size[dim_y] - 1));
-  d->pc.position[dim_x] = rand_range(d->rooms->position[dim_x],
+                                      d->rooms->size[dim_y] - 1)), d->pc);
+  set_position_y(rand_range(d->rooms->position[dim_x],
                                      (d->rooms->position[dim_x] +
-                                      d->rooms->size[dim_x] - 1));
+                                      d->rooms->size[dim_x] - 1)), d->pc);
   
-  int i, j;
-  for(i = d->pc.position[dim_y] - 5; i < d->pc.position[dim_y] + 5; i++){
-    for(j = d->pc.position[dim_x] - 5; j < d->pc.position[dim_x] + 5; j++){
+  unsigned i, j;
+  for(i = get_position_y(d->pc) - 5; i < get_position_y(d->pc) + 5; i++){
+    for(j = get_position_x(d->pc) - 5; j < get_position_x(d->pc) + 5; j++){
       if(i > 0 && i < 105 && j > 0 && j < 160){
-	d->pc_visible[i][j] = 1;
+	set_visibility((pc *)d->pc, i, j, 1);
       }
     }
   }
@@ -42,19 +50,18 @@ void place_pc(dungeon_t *d)
 
 void config_pc(dungeon_t *d)
 {
-  memset(&d->pc, 0, sizeof (d->pc));
-  d->pc.symbol = '@';
+  d->pc = new pc;
+  d->pc->symbol = '@';
 
   place_pc(d);
 
-  d->pc.speed = PC_SPEED;
-  d->pc.alive = 1;
-  d->pc.sequence_number = 0;
-  d->pc.pc = calloc(1, sizeof (*d->pc.pc));
-  d->pc.npc = NULL;
-  d->pc.kills[kill_direct] = d->pc.kills[kill_avenged] = 0;
+  set_speed(d->pc, PC_SPEED);
+  set_alive(d->pc, 1);
+  set_sequence_num(d->pc, 0);
+  
+  d->pc->kills[kill_direct] = d->pc->kills[kill_avenged] = 0;
 
-  d->character[d->pc.position[dim_y]][d->pc.position[dim_x]] = &d->pc;
+  d->character[get_position_y(d->pc)][get_position_x(d->pc)] = d->pc;
 
   dijkstra(d);
   dijkstra_tunnel(d);
@@ -69,7 +76,7 @@ uint32_t pc_next_pos(dungeon_t *d, pair_t dir)
 
   dir[dim_y] = dir[dim_x] = 0;
 
-  if (in_corner(d, &d->pc)) {
+  if (in_corner(d, d->pc)) {
     if (!count) {
       count = 1;
     }
@@ -77,24 +84,24 @@ uint32_t pc_next_pos(dungeon_t *d, pair_t dir)
   }
 
   /* First, eat anybody standing next to us. */
-  if (charxy(d->pc.position[dim_x] - 1, d->pc.position[dim_y] - 1)) {
+  if (charxy(get_position_x(d->pc) - 1, get_position_y(d->pc) - 1)) {
     dir[dim_y] = -1;
     dir[dim_x] = -1;
-  } else if (charxy(d->pc.position[dim_x], d->pc.position[dim_y] - 1)) {
+  } else if (charxy(get_position_x(d->pc), get_position_y(d->pc) - 1)) {
     dir[dim_y] = -1;
-  } else if (charxy(d->pc.position[dim_x] + 1, d->pc.position[dim_y] - 1)) {
+  } else if (charxy(get_position_x(d->pc) + 1, get_position_y(d->pc) - 1)) {
     dir[dim_y] = -1;
     dir[dim_x] = 1;
-  } else if (charxy(d->pc.position[dim_x] - 1, d->pc.position[dim_y])) {
+  } else if (charxy(get_position_x(d->pc) - 1, get_position_y(d->pc))) {
     dir[dim_x] = -1;
-  } else if (charxy(d->pc.position[dim_x] + 1, d->pc.position[dim_y])) {
+  } else if (charxy(get_position_x(d->pc) + 1, get_position_y(d->pc))) {
     dir[dim_x] = 1;
-  } else if (charxy(d->pc.position[dim_x] - 1, d->pc.position[dim_y] + 1)) {
+  } else if (charxy(get_position_x(d->pc) - 1, get_position_y(d->pc) + 1)) {
     dir[dim_y] = 1;
     dir[dim_x] = -1;
-  } else if (charxy(d->pc.position[dim_x], d->pc.position[dim_y] + 1)) {
+  } else if (charxy(get_position_x(d->pc), get_position_y(d->pc) + 1)) {
     dir[dim_y] = 1;
-  } else if (charxy(d->pc.position[dim_x] + 1, d->pc.position[dim_y] + 1)) {
+  } else if (charxy(get_position_x(d->pc) + 1, get_position_y(d->pc) + 1)) {
     dir[dim_y] = 1;
     dir[dim_x] = 1;
   } else if (!have_seen_corner || count < 250) {
@@ -102,58 +109,58 @@ uint32_t pc_next_pos(dungeon_t *d, pair_t dir)
     if (count) {
       count++;
     }
-    if (!against_wall(d, &d->pc) && ((rand() & 0x111) == 0x111)) {
+    if (!against_wall(d, d->pc) && ((rand() & 0x111) == 0x111)) {
       dir[dim_x] = (rand() % 3) - 1;
       dir[dim_y] = (rand() % 3) - 1;
     } else {
-      dir_nearest_wall(d, &d->pc, dir);
+      dir_nearest_wall(d, d->pc, dir);
     }
   }else {
     /* And after we've been there, let's head toward the center of the map. */
-    if (!against_wall(d, &d->pc) && ((rand() & 0x111) == 0x111)) {
+    if (!against_wall(d, d->pc) && ((rand() & 0x111) == 0x111)) {
       dir[dim_x] = (rand() % 3) - 1;
       dir[dim_y] = (rand() % 3) - 1;
     } else {
-      dir[dim_x] = ((d->pc.position[dim_x] > DUNGEON_X / 2) ? -1 : 1);
-      dir[dim_y] = ((d->pc.position[dim_y] > DUNGEON_Y / 2) ? -1 : 1);
+      dir[dim_x] = ((get_position_x(d->pc) > DUNGEON_X / 2) ? -1 : 1);
+      dir[dim_y] = ((get_position_y(d->pc) > DUNGEON_Y / 2) ? -1 : 1);
     }
   }
 
   /* Don't move to an unoccupied location if that places us next to a monster */
-  if (!charxy(d->pc.position[dim_x] + dir[dim_x],
-              d->pc.position[dim_y] + dir[dim_y]) &&
-      ((charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-               d->pc.position[dim_y] + dir[dim_y] - 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-                d->pc.position[dim_y] + dir[dim_y] - 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-               d->pc.position[dim_y] + dir[dim_y]) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-                d->pc.position[dim_y] + dir[dim_y]) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-               d->pc.position[dim_y] + dir[dim_y] + 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] - 1,
-                d->pc.position[dim_y] + dir[dim_y] + 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x],
-               d->pc.position[dim_y] + dir[dim_y] - 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x],
-                d->pc.position[dim_y] + dir[dim_y] - 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x],
-               d->pc.position[dim_y] + dir[dim_y] + 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x],
-                d->pc.position[dim_y] + dir[dim_y] + 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-               d->pc.position[dim_y] + dir[dim_y] - 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-                d->pc.position[dim_y] + dir[dim_y] - 1) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-               d->pc.position[dim_y] + dir[dim_y]) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-                d->pc.position[dim_y] + dir[dim_y]) != &d->pc)) ||
-       (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-               d->pc.position[dim_y] + dir[dim_y] + 1) &&
-        (charxy(d->pc.position[dim_x] + dir[dim_x] + 1,
-                d->pc.position[dim_y] + dir[dim_y] + 1) != &d->pc)))) {
+  if (!charxy(get_position_x(d->pc) + dir[dim_x],
+              get_position_y(d->pc) + dir[dim_y]) &&
+      ((charxy(get_position_x(d->pc) + dir[dim_x] - 1,
+               get_position_y(d->pc) + dir[dim_y] - 1) &&
+        (charxy(get_position_x(d->pc) + dir[dim_x] - 1,
+                get_position_y(d->pc) + dir[dim_y] - 1) != d->pc)) ||
+       (charxy(get_position_x(d->pc) + dir[dim_x] - 1,
+               get_position_y(d->pc) + dir[dim_y]) &&
+        (charxy(get_position_x(d->pc) + dir[dim_x] - 1,
+                get_position_y(d->pc) + dir[dim_y]) != d->pc)) ||
+       (charxy(get_position_x(d->pc) + dir[dim_x] - 1,
+               get_position_y(d->pc) + dir[dim_y] + 1) &&
+        (charxy(get_position_x(d->pc) + dir[dim_x] - 1,
+                get_position_y(d->pc) + dir[dim_y] + 1) != d->pc)) ||
+       (charxy(get_position_x(d->pc) + dir[dim_x],
+               get_position_y(d->pc)+ dir[dim_y] - 1) &&
+        (charxy(get_position_x(d->pc) + dir[dim_x],
+               get_position_y(d->pc) + dir[dim_y] - 1) != d->pc)) ||
+       (charxy(get_position_x(d->pc) + dir[dim_x],
+               get_position_y(d->pc) + dir[dim_y] + 1) &&
+        (charxy(get_position_x(d->pc) + dir[dim_x],
+                get_position_y(d->pc) + dir[dim_y] + 1) != d->pc)) ||
+       (charxy(get_position_x(d->pc) + dir[dim_x] + 1,
+               get_position_y(d->pc) + dir[dim_y] - 1) &&
+        (charxy(get_position_x(d->pc) + dir[dim_x] + 1,
+                get_position_y(d->pc) + dir[dim_y] - 1) != d->pc)) ||
+       (charxy(get_position_x(d->pc) + dir[dim_x] + 1,
+               get_position_y(d->pc) + dir[dim_y]) &&
+        (charxy(get_position_x(d->pc) + dir[dim_x] + 1,
+                get_position_y(d->pc) + dir[dim_y]) != d->pc)) ||
+       (charxy(get_position_x(d->pc) + dir[dim_x] + 1,
+               get_position_y(d->pc) + dir[dim_y] + 1) &&
+        (charxy(get_position_x(d->pc) + dir[dim_x] + 1,
+                get_position_y(d->pc) + dir[dim_y] + 1) != d->pc)))) {
     dir[dim_x] = dir[dim_y] = 0;
   }
 
@@ -163,12 +170,12 @@ uint32_t pc_next_pos(dungeon_t *d, pair_t dir)
 uint32_t pc_in_room(dungeon_t *d, uint32_t room)
 {
   if ((room < d->num_rooms)                                     &&
-      (d->pc.position[dim_x] >= d->rooms[room].position[dim_x]) &&
-      (d->pc.position[dim_x] < (d->rooms[room].position[dim_x] +
-                                d->rooms[room].size[dim_x]))    &&
-      (d->pc.position[dim_y] >= d->rooms[room].position[dim_y]) &&
-      (d->pc.position[dim_y] < (d->rooms[room].position[dim_y] +
-                                d->rooms[room].size[dim_y]))) {
+      (get_position_x(d->pc) >= (unsigned)d->rooms[room].position[dim_x]) &&
+      (get_position_x(d->pc) < ((unsigned)d->rooms[room].position[dim_x] +
+                                (unsigned)d->rooms[room].size[dim_x]))    &&
+      (get_position_y(d->pc) >= (unsigned)d->rooms[room].position[dim_y]) &&
+      (get_position_y(d->pc) < ((unsigned)d->rooms[room].position[dim_y] +
+                                (unsigned)d->rooms[room].size[dim_y]))) {
     return 1;
   }
 
