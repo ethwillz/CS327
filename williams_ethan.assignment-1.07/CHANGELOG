@@ -29,8 +29,8 @@ Assignment 1.06
 
 Assignment 1.07
 3/26 Converted everything to C++ and dealt with casts.
-3/27
-3/28
+3/27 Wrote all code to read and siplay everything from txt file
+3/28 Added in checks for missing fields, duplicate fields, and lines over 77 characters
 
 
 
