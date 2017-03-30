@@ -1,13 +1,29 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include <sys/time.h>
+#include <sys/stat.h>
 #include <unistd.h>
+#include <fstream>
+#include <iostream>
+using namespace std;
 
 #include "dungeon.h"
 #include "pc.h"
 #include "npc.h"
 #include "move.h"
 #include "io.h"
+
+typedef struct monster_description{
+  string NAME;
+  string SYMB;
+  string COLOR;
+  string DESC;
+  string SPEED;
+  string DAM;
+  string HP;
+  string ABIL;
+}monster_description_t;
 
 const char *victory =
   "                                       o\n"
@@ -74,6 +90,123 @@ void usage(char *name)
 
 int main(int argc, char *argv[])
 {
+  //Checks to make sure path exists
+  char *dir = getenv("HOME");
+  char *path = strcat(dir, "/.rlg327/");
+  mkdir(path, 0777);
+  
+  //Opens monster description text file
+  std::ifstream monster_desc;
+  monster_desc.open(strcat(path, "/monster_desc.txt"));
+  string metadata;
+  getline(monster_desc, metadata);
+  //If metadata doesn't match, exit program
+  if(metadata != "RLG327 MONSTER DESCRIPTION 1"){
+    return 0;
+  }
+  monster_description_t tmp_monster;
+  string tmp;
+  int flag = 0;
+  while(getline(monster_desc, tmp)){
+    if(tmp == "" || tmp == "BEGIN MONSTER"){
+      continue;
+    }
+    if(tmp ==  "END"){
+      if(tmp_monster.NAME == "" || tmp_monster.SYMB == "" || tmp_monster.COLOR == "" ||
+	 tmp_monster.SPEED == "" || tmp_monster.DAM == "" || tmp_monster.HP == "" ||
+	 tmp_monster.ABIL == "" || tmp_monster.DESC == "" || flag == 1){
+        tmp_monster.NAME = tmp_monster.SYMB = tmp_monster.COLOR = tmp_monster.SPEED = tmp_monster.DAM = tmp_monster.HP = tmp_monster.ABIL = tmp_monster.DESC = "";
+	flag = 0;
+      }
+      else{
+	//monster has everything, print to console
+	cout << "Name: " << tmp_monster.NAME << '\n';
+	cout << "Symbol: " << tmp_monster.SYMB << '\n';
+	cout << "Color: " << tmp_monster.COLOR << '\n';
+	cout << "Speed: " << tmp_monster.SPEED << '\n';
+	cout << "Damage: " << tmp_monster.DAM << '\n';
+	cout << "Hit points: " << tmp_monster.HP << '\n';
+	cout << "Abillities: " << tmp_monster.ABIL << '\n';
+	cout << "Description: " << tmp_monster.DESC << '\n';;
+	cout << '\n' << '\n';
+	tmp_monster.NAME = tmp_monster.SYMB = tmp_monster.COLOR = tmp_monster.SPEED = tmp_monster.DAM = tmp_monster.HP = tmp_monster.ABIL = tmp_monster.DESC = ""; 
+      }
+    }
+    else if(tmp.substr(0, 4) == "NAME"){
+      if(tmp_monster.NAME != ""){
+	flag = 1;
+      }
+      tmp_monster.NAME = tmp.substr(5, tmp.length());
+    }
+    else if(tmp.substr(0, 4) == "SYMB"){
+      if(tmp_monster.SYMB != ""){
+	flag = 1;
+      }
+      tmp_monster.SYMB = tmp.substr(5, tmp.length());
+    }
+    else if(tmp.substr(0, 5) == "COLOR"){
+      if(tmp_monster.COLOR != ""){
+	flag = 1;
+      }
+      tmp_monster.COLOR = tmp.substr(5, tmp.length());
+    }
+    else if(tmp.substr(0, 5) == "SPEED"){
+      if(tmp_monster.SPEED != ""){
+	flag = 1;
+      }
+      tmp_monster.SPEED = tmp.substr(6, tmp.length());
+    }
+    else if(tmp.substr(0, 3) == "DAM"){
+      if(tmp_monster.DAM != ""){
+	flag = 1;
+      }
+      tmp_monster.DAM = tmp.substr(4, tmp.length());
+    }
+    else if(tmp.substr(0, 2) == "HP"){
+      if(tmp_monster.HP != ""){
+	flag = 1;
+      }
+      tmp_monster.HP = tmp.substr(3, tmp.length());
+    }
+    else if(tmp.substr(0, 4) == "ABIL"){
+      if(tmp_monster.ABIL != ""){
+	flag = 1;
+      }
+      tmp_monster.ABIL = tmp.substr(5, tmp.length());
+    }
+    else if(tmp.substr(0, 4) == "DESC"){
+      if(tmp_monster.DESC != ""){
+	flag = 1;
+      }
+      while(getline(monster_desc, tmp)){
+	if(tmp == "."){
+	  break;
+	}
+	if(tmp == "DESC"){
+	  continue;
+	}
+	else if(tmp_monster.DESC == ""){
+	  if(tmp.length() > 77){
+	    flag = 1;
+	  }
+	  tmp_monster.DESC = tmp + '\n';
+	}
+	else{
+	  if(tmp.length() > 77){
+	    flag = 1;
+	  }
+	  tmp_monster.DESC = tmp_monster.DESC + tmp + '\n';
+	}
+      }
+    }
+    else{
+      flag = 1;
+    }
+  }
+  monster_desc.close();
+  
+  return 0;
+  
   dungeon_t d;
   time_t seed;
   struct timeval tv;
@@ -106,7 +239,7 @@ int main(int argc, char *argv[])
    * And the final switch, '--image', allows me to create a dungeon *
    * from a PGM image, so that I was able to create those more      *
    * interesting test dungeons for you.                             */
- 
+  
  if (argc > 1) {
     for (i = 1, long_arg = 0; i < argc; i++, long_arg = 0) {
       if (argv[i][0] == '-') { /* All switches start with a dash */
