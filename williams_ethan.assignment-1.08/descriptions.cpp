@@ -118,14 +118,14 @@ static inline void eat_whitespace(std::ifstream &f)
 {
   while (isspace(f.peek())) {
     f.get();
-  }  
+  }
 }
 
 static inline void eat_blankspace(std::ifstream &f)
 {
   while (isblank(f.peek())) {
     f.get();
-  }  
+  }
 }
 
 static uint32_t parse_name(std::ifstream &f,
@@ -499,8 +499,6 @@ static uint32_t parse_monster_description(std::ifstream &f,
   m.set(name, desc, symb, color, speed, abil, hp, dam);
   v->push_back(m);
 
-  generate_npc(d, );
-
   return 0;
 }
 
@@ -792,7 +790,7 @@ static uint32_t parse_object_descriptions(std::ifstream &f,
   return 0;
 }
 
-uint32_t parse_descriptions(dungeon_t *setd)
+uint32_t parse_descriptions(dungeon_t *d)
 {
   std::string file;
   std::ifstream f;

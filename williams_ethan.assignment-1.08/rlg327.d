@@ -1,2 +1,2 @@
-rlg327.o: rlg327.cpp dungeon.h heap.h macros.h dims.h character.h \
- descriptions.h dice.h pc.h npc.h move.h io.h
+rlg327.o: rlg327.cpp descriptions.h dice.h object.h dims.h character.h \
+ dungeon.h heap.h macros.h utils.h npc.h io.h move.h pc.h

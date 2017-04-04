@@ -20,10 +20,8 @@ class npc : public character {
     //All characteristics from the monster description file
     string name;
     string description;
-    char symbol;
     std::vector<uint32_t> color;
     uint32_t abilities;
-    int32_t speed;
     int32_t hitpoints;
     dice damage;
 };
@@ -70,6 +68,6 @@ void gen_monsters(dungeon_t *d);
 void npc_delete(npc *n);
 void npc_next_pos(dungeon_t *d, npc *c, pair_t next);
 uint32_t dungeon_has_npcs(dungeon_t *d);
-npc generate_npcs(dungeon_t *d);
+void generate_npcs(dungeon *d, uint16_t num_npcs);
 
 #endif

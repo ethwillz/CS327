@@ -1,7 +1,3 @@
-//
-// Created by ethwillz on 3/31/17.
-//
-
 #ifndef OBJECT_H
 #define OBJECT_H
 
@@ -12,6 +8,10 @@
 # include "character.h"
 #include "dice.h"
 #include "descriptions.h"
+#include "dungeon.h"
+#include "object.h"
+#include "utils.h"
+#include "npc.h"
 
 using namespace std;
 
@@ -33,5 +33,8 @@ public:
     pair_t position;
 };
 
+//typedef struct dungeon dungeon_t;
+
+void generate_objects(dungeon *d, uint16_t num_objects);
 
 #endif //OBJECT_H

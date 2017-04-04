@@ -1,6 +1,7 @@
 #ifndef DUNGEON_H
 # define DUNGEON_H
 
+# include "object.h"
 # include "heap.h"
 # include "macros.h"
 # include "dims.h"
@@ -52,6 +53,7 @@ typedef struct room {
 } room_t;
 
 class pc;
+class object;
 
 typedef struct dungeon {
   uint32_t num_rooms;
@@ -69,6 +71,7 @@ typedef struct dungeon {
   uint8_t pc_distance[DUNGEON_Y][DUNGEON_X];
   uint8_t pc_tunnel[DUNGEON_Y][DUNGEON_X];
   character *character_map[DUNGEON_Y][DUNGEON_X];
+    object *object_map[DUNGEON_Y][DUNGEON_X];
   pc *PC;
   heap_t events;
   uint16_t num_monsters;

@@ -218,10 +218,47 @@ void io_display(dungeon_t *d)
                   character_get_pos(d->character_map[d->io_offset[dim_y] + y]
                                                     [d->io_offset[dim_x] + x]),
                   1)) {
-        mvaddch(y + 1, x,
-                character_get_symbol(d->character_map[d->io_offset[dim_y] + y]
-                                                     [d->io_offset[dim_x] + x]));
-      } else {
+          if(d->character_map[d->io_offset[dim_y] + y]
+          [d->io_offset[dim_x] + x] != d->PC){
+              uint32_t color = (((npc*)d->character_map[d->io_offset[dim_y] + y]
+              [d->io_offset[dim_x] + x])->color)[0];
+
+              attron(COLOR_PAIR(color));
+
+              mvaddch(y + 1, x,
+                      character_get_symbol(d->character_map[d->io_offset[dim_y] + y]
+                                           [d->io_offset[dim_x] + x]));
+
+              attroff(COLOR_PAIR(color));
+          }
+          else{
+              mvaddch(y + 1, x,
+                      character_get_symbol(d->character_map[d->io_offset[dim_y] + y]
+                                           [d->io_offset[dim_x] + x]));
+          }
+      }
+      else if(d->object_map[d->io_offset[dim_y] + y]
+              [d->io_offset[dim_x] + x] &&
+              can_see(d,
+                      character_get_pos(d->PC),
+                      (d->object_map[d->io_offset[dim_y] + y]
+                                        [d->io_offset[dim_x] + x])->position,
+                      1)) {
+
+          object_type_t obj_symbol = (d->object_map[d->io_offset[dim_y] + y]
+          [d->io_offset[dim_x] + x])->type;
+
+          uint32_t color = (d->object_map[d->io_offset[dim_y] + y]
+          [d->io_offset[dim_x] + x])->color;
+
+          attron(COLOR_PAIR(color));
+          mvaddch(y+1, x,
+                  object_symbol[obj_symbol]);
+
+          attroff(COLOR_PAIR(color));
+
+      }
+      else {
         switch (pc_learned_terrain(d->PC,
                                    d->io_offset[dim_y] + y,
                                    d->io_offset[dim_x] + x)) {

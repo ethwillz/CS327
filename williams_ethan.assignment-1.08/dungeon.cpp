@@ -13,6 +13,7 @@
 #include "pc.h"
 #include "npc.h"
 #include "io.h"
+# include "object.h"
 
 typedef struct corridor_path {
   heap_node_t *hn;

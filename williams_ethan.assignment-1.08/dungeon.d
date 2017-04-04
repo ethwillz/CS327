@@ -1,2 +1,2 @@
-dungeon.o: dungeon.cpp dungeon.h heap.h macros.h dims.h character.h \
- descriptions.h dice.h utils.h event.h pc.h npc.h io.h
+dungeon.o: dungeon.cpp dungeon.h object.h dims.h character.h dice.h \
+ descriptions.h utils.h npc.h heap.h macros.h event.h pc.h io.h

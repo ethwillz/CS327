@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <ncurses.h>
 
 #include "utils.h"
 #include "npc.h"
@@ -542,21 +543,22 @@ uint32_t dungeon_has_npcs(dungeon_t *d)
   return d->num_monsters;
 }
 
-npc generate_npcs(dungeon_t *d){
+void generate_npcs(dungeon *d, uint16_t num_npcs){
     uint32_t i;
     npc *m;
     uint32_t room;
     pair_t p;
-    const static char symbol[] = "0123456789abcdef";
-    uint32_t c;
 
-    if (d->max_monsters < (c = max_monster_cells(d))) {
+    unsigned long monster = rand_range(0, (d->monster_descriptions).size()-1);
+
+    if (d->max_monsters < num_npcs) {
         d->num_monsters = d->max_monsters;
     } else {
-        d->num_monsters = c;
+        d->num_monsters = num_npcs;
     }
 
-    for (i = 0; i < d->monster_descriptions.size(); i++) {
+    for (i = 0; i < num_npcs; i++) {
+        //TODO make number of npcs that is a randomly chosen npc from the file
         m = new npc;
         memset(m, 0, sizeof (*m));
 
@@ -578,14 +580,14 @@ npc generate_npcs(dungeon_t *d){
         m->have_seen_pc = 0;
         m->kills[kill_direct] = m->kills[kill_avenged] = 0;
 
-        m->name = d->monster_descriptions[i].get_name();
-        m->description = d->monster_descriptions[i].get_description();
-        m->symbol = d->monster_descriptions[i].get_symbol();
-        m->color = d->monster_descriptions[i].get_color();
-        m->abilities = d->monster_descriptions[i].get_abilities();
-        m->speed = d->monster_descriptions[i].get_speed().roll();
-        m->hitpoints = d->monster_descriptions[i].get_hitpoints().roll();
-        m->damage = d->monster_descriptions[i].get_damage();
+        m->name = d->monster_descriptions[monster].get_name();
+        m->description = d->monster_descriptions[monster].get_description();
+        m->symbol = d->monster_descriptions[monster].get_symbol();
+        m->color = d->monster_descriptions[monster].get_color();
+        m->abilities = d->monster_descriptions[monster].get_abilities();
+        m->speed = d->monster_descriptions[monster].get_speed().roll();
+        m->hitpoints = d->monster_descriptions[monster].get_hitpoints().roll();
+        m->damage = d->monster_descriptions[monster].get_damage();
 
         d->character_map[p[dim_y]][p[dim_x]] = m;
 

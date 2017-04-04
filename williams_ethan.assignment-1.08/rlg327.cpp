@@ -2,13 +2,15 @@
 #include <string.h>
 #include <sys/time.h>
 #include <unistd.h>
-
-#include "dungeon.h"
-#include "pc.h"
-#include "npc.h"
-#include "move.h"
-#include "io.h"
+#include <ncurses.h>
 #include "descriptions.h"
+#include "object.h"
+#include "npc.h"
+#include "dungeon.h"
+#include "io.h"
+#include "move.h"
+#include "pc.h"
+
 
 const char *victory =
   "                                       o\n"
@@ -75,7 +77,7 @@ void usage(char *name)
 
 int main(int argc, char *argv[])
 {
-  dungeon_t d;
+  dungeon d;
   time_t seed;
   struct timeval tv;
   int32_t i;
@@ -85,13 +87,8 @@ int main(int argc, char *argv[])
   char *load_file;
   char *pgm_file;
 
-  parse_descriptions(&d);
-    generate_npcs(&d);
-    generate_objects(&d);
   //print_descriptions(&d);
   //destroy_descriptions(&d);
-
-  return 0;
 
   memset(&d, 0, sizeof (d));
 
@@ -218,6 +215,7 @@ int main(int argc, char *argv[])
   io_init_terminal();
   init_dungeon(&d);
 
+
   if (do_load) {
     read_dungeon(&d, load_file);
   } else if (do_image) {
@@ -227,7 +225,11 @@ int main(int argc, char *argv[])
   }
 
   config_pc(&d);
-  gen_monsters(&d);
+  //gen_monsters(&d);
+    parse_descriptions(&d);
+    generate_npcs(&d, 30);
+    generate_objects(&d, 20);
+
 
   io_display(&d);
   while (pc_is_alive(&d) && dungeon_has_npcs(&d) && !d.quit) {

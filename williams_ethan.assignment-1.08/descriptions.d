@@ -1,2 +1,2 @@
-descriptions.o: descriptions.cpp descriptions.h dice.h dungeon.h heap.h \
- macros.h dims.h character.h npc.h utils.h
+descriptions.o: descriptions.cpp descriptions.h dice.h dungeon.h object.h \
+ dims.h character.h utils.h npc.h heap.h macros.h
