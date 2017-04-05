@@ -548,8 +548,7 @@ void generate_npcs(dungeon *d, uint16_t num_npcs){
     npc *m;
     uint32_t room;
     pair_t p;
-
-    unsigned long monster = rand_range(0, (d->monster_descriptions).size()-1);
+    uint64_t monster;
 
     if (d->max_monsters < num_npcs) {
         d->num_monsters = d->max_monsters;
@@ -558,7 +557,7 @@ void generate_npcs(dungeon *d, uint16_t num_npcs){
     }
 
     for (i = 0; i < num_npcs; i++) {
-        //TODO make number of npcs that is a randomly chosen npc from the file
+        monster = rand_range(0, (d->monster_descriptions).size()-1);
         m = new npc;
         memset(m, 0, sizeof (*m));
 

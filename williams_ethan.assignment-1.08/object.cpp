@@ -11,10 +11,11 @@ void generate_objects(dungeon *d, uint16_t num_objects) {
     object *m;
     uint32_t room;
     pair_t p;
+    uint64_t selected;
 
     for (i = 0; i < num_objects; i++) {
         m = new object;
-        unsigned long selected = rand_range(0, (d->object_descriptions).size()-1);
+        selected = rand_range(0, (d->object_descriptions).size()-1);
         memset(m, 0, sizeof(*m));
 
         do {
@@ -25,13 +26,10 @@ void generate_objects(dungeon *d, uint16_t num_objects) {
             p[dim_x] = rand_range(d->rooms[room].position[dim_x],
                                   (d->rooms[room].position[dim_x] +
                                    d->rooms[room].size[dim_x] - 1));
-        } while (d->character_map[p[dim_y]][p[dim_x]]);
+        } while (d->object_map[p[dim_y]][p[dim_x]]);
         m->position[dim_y] = p[dim_y];
         m->position[dim_x] = p[dim_x];
         d->object_map[p[dim_y]][p[dim_x]] = m;
-        //m->alive = 1;
-        //m->sequence_number = ++d->character_sequence_number;
-        //m->characteristics = rand() & 0x0000000f;
 
         m->name = d->object_descriptions[selected].get_name();
         m->description = d->object_descriptions[selected].get_description();
@@ -45,5 +43,7 @@ void generate_objects(dungeon *d, uint16_t num_objects) {
         m->speed = d->object_descriptions[selected].get_speed().roll();
         m->attribute = d->object_descriptions[selected].get_attribute().roll();
         m->value= d->object_descriptions[selected].get_value().roll();
+
+        d->object_map[p[dim_y]][p[dim_x]] = m;
     }
 }

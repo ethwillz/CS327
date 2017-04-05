@@ -669,8 +669,11 @@ void render_dungeon(dungeon_t *d)
 void delete_dungeon(dungeon_t *d)
 {
   free(d->rooms);
+  d->monster_descriptions.clear();
+  d->object_descriptions.clear();
   heap_delete(&d->events);
   memset(d->character_map, 0, sizeof (d->character_map));
+  memset(d->object_map, 0, sizeof (d->object_map));
 }
 
 void init_dungeon(dungeon_t *d)

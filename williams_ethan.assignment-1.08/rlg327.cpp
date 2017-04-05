@@ -227,7 +227,7 @@ int main(int argc, char *argv[])
   config_pc(&d);
   //gen_monsters(&d);
     parse_descriptions(&d);
-    generate_npcs(&d, 30);
+    generate_npcs(&d, d.max_monsters);
     generate_objects(&d, 20);
 
 
