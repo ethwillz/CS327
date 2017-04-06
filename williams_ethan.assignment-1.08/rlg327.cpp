@@ -268,6 +268,17 @@ int main(int argc, char *argv[])
     character_delete(d.PC);
   }
 
+    //Deletes all of the objects I made
+    uint w, x;
+    for(w = 0; w < DUNGEON_Y; w++){
+        for(x = 0; x < DUNGEON_X; x++){
+            if(sizeof(d.object_map[w][x] == 0)) {
+                delete (d.object_map[w][x]);
+            }
+        }
+    }
+
+    destroy_descriptions(&d);
   delete_dungeon(&d);
 
   return 0;

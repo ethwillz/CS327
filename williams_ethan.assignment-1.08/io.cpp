@@ -221,7 +221,7 @@ void io_display(dungeon_t *d)
           if(d->character_map[d->io_offset[dim_y] + y]
           [d->io_offset[dim_x] + x] != d->PC){
               uint32_t color = (((npc*)d->character_map[d->io_offset[dim_y] + y]
-              [d->io_offset[dim_x] + x])->color)[0];
+              [d->io_offset[dim_x] + x])->color);
 
               attron(COLOR_PAIR(color));
 

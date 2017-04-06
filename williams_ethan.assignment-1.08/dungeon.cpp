@@ -1082,5 +1082,6 @@ void new_dungeon(dungeon_t *d)
   d->character_map[character_get_y(d->PC)][character_get_x(d->PC)] = d->PC;
   io_calculate_offset(d);
 
-  gen_monsters(d);
+  generate_npcs(d, d->max_monsters);
+  generate_objects(d, 20);
 }

@@ -867,31 +867,6 @@ void monster_description::set(const std::string &name,
   this->damage = damage;
 }
 
-std::string monster_description::get_name(){
-  return this->name;
-}
-
-std::string monster_description::get_description(){
-  return this->name;
-}
-
-std::vector<uint32_t> monster_description::get_color(){
-  return this->color;
-}
-
-dice monster_description::get_speed(){
-  return this->speed;
-}
-uint32_t monster_description::get_abilities(){
-  return this->abilities;
-}
-dice monster_description::get_hitpoints(){
-  return this->hitpoints;
-}
-dice monster_description::get_damage(){
-  return this->damage;
-}
-
 std::ostream &monster_description::print(std::ostream& o)
 {
   uint32_t i;

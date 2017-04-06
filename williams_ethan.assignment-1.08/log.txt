@@ -1,0 +1,51 @@
+==21265== Memcheck, a memory error detector
+==21265== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==21265== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==21265== Command: ./rlg327
+==21265== Parent PID: 7662
+==21265== 
+==21265== 
+==21265== HEAP SUMMARY:
+==21265==     in use at exit: 520,340 bytes in 591 blocks
+==21265==   total heap usage: 459,527 allocs, 458,936 frees, 22,104,234 bytes allocated
+==21265== 
+==21265== 148 bytes in 25 blocks are definitely lost in loss record 15 of 43
+==21265==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21265==    by 0x412AC3: __gnu_cxx::new_allocator<unsigned int>::allocate(unsigned long, void const*) (new_allocator.h:104)
+==21265==    by 0x412947: __gnu_cxx::__alloc_traits<std::allocator<unsigned int> >::allocate(std::allocator<unsigned int>&, unsigned long) (alloc_traits.h:182)
+==21265==    by 0x41274F: std::_Vector_base<unsigned int, std::allocator<unsigned int> >::_M_allocate(unsigned long) (stl_vector.h:170)
+==21265==    by 0x4124D5: unsigned int* std::vector<unsigned int, std::allocator<unsigned int> >::_M_allocate_and_copy<__gnu_cxx::__normal_iterator<unsigned int const*, std::vector<unsigned int, std::allocator<unsigned int> > > >(unsigned long, __gnu_cxx::__normal_iterator<unsigned int const*, std::vector<unsigned int, std::allocator<unsigned int> > >, __gnu_cxx::__normal_iterator<unsigned int const*, std::vector<unsigned int, std::allocator<unsigned int> > >) (stl_vector.h:1224)
+==21265==    by 0x4121D4: std::vector<unsigned int, std::allocator<unsigned int> >::operator=(std::vector<unsigned int, std::allocator<unsigned int> > const&) (vector.tcc:195)
+==21265==    by 0x411D7A: generate_npcs(dungeon*, unsigned short) (npc.cpp:585)
+==21265==    by 0x403413: main (rlg327.cpp:230)
+==21265== 
+==21265== 324 bytes in 25 blocks are definitely lost in loss record 18 of 43
+==21265==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21265==    by 0x53A43DE: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==21265==    by 0x53A46E8: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::operator=(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==21265==    by 0x411CA9: generate_npcs(dungeon*, unsigned short) (npc.cpp:582)
+==21265==    by 0x403413: main (rlg327.cpp:230)
+==21265== 
+==21265== 4,815 bytes in 25 blocks are definitely lost in loss record 36 of 43
+==21265==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21265==    by 0x53A43DE: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_assign(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==21265==    by 0x53A46E8: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::operator=(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+==21265==    by 0x411CFB: generate_npcs(dungeon*, unsigned short) (npc.cpp:583)
+==21265==    by 0x403413: main (rlg327.cpp:230)
+==21265== 
+==21265== 6,644 (2,400 direct, 4,244 indirect) bytes in 20 blocks are definitely lost in loss record 37 of 43
+==21265==    at 0x4C2E0EF: operator new(unsigned long) (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==21265==    by 0x41C3A7: generate_objects(dungeon*, unsigned short) (object.cpp:17)
+==21265==    by 0x403427: main (rlg327.cpp:231)
+==21265== 
+==21265== LEAK SUMMARY:
+==21265==    definitely lost: 7,687 bytes in 95 blocks
+==21265==    indirectly lost: 4,244 bytes in 40 blocks
+==21265==      possibly lost: 0 bytes in 0 blocks
+==21265==    still reachable: 508,409 bytes in 456 blocks
+==21265==         suppressed: 0 bytes in 0 blocks
+==21265== Reachable blocks (those to which a pointer was found) are not shown.
+==21265== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==21265== 
+==21265== For counts of detected and suppressed errors, rerun with: -v
+==21265== ERROR SUMMARY: 4 errors from 4 contexts (suppressed: 0 from 0)

@@ -8,8 +8,6 @@
 # include "character.h"
 #include "dice.h"
 
-using namespace std;
-
 typedef uint32_t npc_characteristics_t;
 
 class npc : public character {
@@ -18,9 +16,9 @@ class npc : public character {
   uint32_t have_seen_pc;
   pair_t pc_last_known_position;
     //All characteristics from the monster description file
-    string name;
-    string description;
-    std::vector<uint32_t> color;
+    std::string name;
+    std::string description;
+    uint32_t color;
     uint32_t abilities;
     int32_t hitpoints;
     dice damage;

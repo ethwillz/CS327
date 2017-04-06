@@ -6,6 +6,7 @@
 # include <vector>
 # include <string>
 # include "dice.h"
+#include "npc.h"
 
 typedef struct dungeon dungeon_t;
 
@@ -58,15 +59,27 @@ class monster_description {
            const uint32_t abilities,
            const dice &hitpoints,
            const dice &damage);
-    std::string get_name();
-    std::string get_description();
-    std::vector<uint32_t> get_color();
-    dice get_speed();
-    uint32_t get_abilities();
-    dice get_hitpoints();
-    dice get_damage();
   std::ostream &print(std::ostream &o);
+    inline const std::string get_name() const { return name; }
+    inline const std::string get_description() const { return description; }
+    inline const dice &get_speed() const { return speed; }
+    inline const uint32_t get_color() const { return color[0]; }
+    inline const dice &get_hitpoints() const { return hitpoints; }
+    inline const dice &get_damage() const { return damage; }
+    inline const uint32_t get_abilities() const { return abilities; }
   char get_symbol() { return symbol; }
+    npc* genMonster(){
+        npc* n = new npc;
+        n->name = this->name; //Valgrind says leak is happening here
+        n->description = this->description; //Valgrind says leak is happening here
+        n->symbol = this->symbol;
+        n->color = this->color[0];
+        n->abilities = this->abilities;
+        n->speed = this->speed.roll();
+        n->hitpoints =this->hitpoints.roll();
+        n->damage = this->damage;
+        return n;
+    }
 };
 
 class object_description {

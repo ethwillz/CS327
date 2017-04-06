@@ -15,69 +15,77 @@ class character 14,173
   uint32_t kills[character::kills28,844
 typedef struct dungeon dungeon_t;31,882
 
-descriptions.h,3114
+descriptions.h,3732
 # define DESCRIPTIONS_H2,23
 # undef swap5,69
-typedef struct dungeon dungeon_t;10,140
-typedef enum object_type 16,307
-  objtype_no_type,17,334
-  objtype_WEAPON,18,353
-  objtype_OFFHAND,19,371
-  objtype_RANGED,20,390
-  objtype_LIGHT,21,408
-  objtype_ARMOR,22,425
-  objtype_HELMET,23,442
-  objtype_CLOAK,24,460
-  objtype_GLOVES,25,477
-  objtype_BOOTS,26,495
-  objtype_AMULET,27,512
-  objtype_RING,28,530
-  objtype_SCROLL,29,546
-  objtype_BOOK,30,564
-  objtype_FLASK,31,580
-  objtype_GOLD,32,597
-  objtype_AMMUNITION,33,613
-  objtype_FOOD,34,635
-  objtype_WAND,35,651
-  objtype_CONTAINER36,667
-} object_type_t;37,687
-class monster_description 41,741
-  std::string name,monster_description::name43,779
-  std::string name, description;monster_description::description43,779
-  char symbol;monster_description::symbol44,812
-  std::vector<uint32_t> color;monster_description::color45,827
-  uint32_t abilities;monster_description::abilities46,858
-  dice speed,monster_description::speed47,880
-  dice speed, hitpoints,monster_description::hitpoints47,880
-  dice speed, hitpoints, damage;monster_description::damage47,880
-  monster_description(monster_description::monster_description49,922
-  char get_symbol(monster_description::get_symbol69,1617
-class object_description 72,1660
-  std::string name,object_description::name74,1697
-  std::string name, description;object_description::description74,1697
-  object_type_t type;object_description::type75,1730
-  uint32_t color;object_description::color76,1752
-  dice hit,object_description::hit77,1770
-  dice hit, damage,object_description::damage77,1770
-  dice hit, damage, dodge,object_description::dodge77,1770
-  dice hit, damage, dodge, defence,object_description::defence77,1770
-  dice hit, damage, dodge, defence, weight,object_description::weight77,1770
-  dice hit, damage, dodge, defence, weight, speed,object_description::speed77,1770
-  dice hit, damage, dodge, defence, weight, speed, attribute,object_description::attribute77,1770
-  dice hit, damage, dodge, defence, weight, speed, attribute, value;object_description::value77,1770
-  object_description(object_description::object_description79,1848
-  inline const std::string &get_name(object_description::get_name100,2670
-  inline const std::string &get_description(object_description::get_description101,2732
-  inline const object_type_t get_type(object_description::get_type102,2808
-  inline const uint32_t get_color(object_description::get_color103,2871
-  inline const dice &get_hit(object_description::get_hit104,2931
-  inline const dice &get_damage(object_description::get_damage105,2984
-  inline const dice &get_dodge(object_description::get_dodge106,3043
-  inline const dice &get_defence(object_description::get_defence107,3100
-  inline const dice &get_weight(object_description::get_weight108,3161
-  inline const dice &get_speed(object_description::get_speed109,3220
-  inline const dice &get_attribute(object_description::get_attribute110,3277
-  inline const dice &get_value(object_description::get_value111,3342
+typedef struct dungeon dungeon_t;11,157
+typedef enum object_type 17,324
+  objtype_no_type,18,351
+  objtype_WEAPON,19,370
+  objtype_OFFHAND,20,388
+  objtype_RANGED,21,407
+  objtype_LIGHT,22,425
+  objtype_ARMOR,23,442
+  objtype_HELMET,24,459
+  objtype_CLOAK,25,477
+  objtype_GLOVES,26,494
+  objtype_BOOTS,27,512
+  objtype_AMULET,28,529
+  objtype_RING,29,547
+  objtype_SCROLL,30,563
+  objtype_BOOK,31,581
+  objtype_FLASK,32,597
+  objtype_GOLD,33,614
+  objtype_AMMUNITION,34,630
+  objtype_FOOD,35,652
+  objtype_WAND,36,668
+  objtype_CONTAINER37,684
+} object_type_t;38,704
+class monster_description 42,758
+  std::string name,monster_description::name44,796
+  std::string name, description;monster_description::description44,796
+  char symbol;monster_description::symbol45,829
+  std::vector<uint32_t> color;monster_description::color46,844
+  uint32_t abilities;monster_description::abilities47,875
+  dice speed,monster_description::speed48,897
+  dice speed, hitpoints,monster_description::hitpoints48,897
+  dice speed, hitpoints, damage;monster_description::damage48,897
+  monster_description(monster_description::monster_description50,939
+    inline const std::string get_name(monster_description::get_name63,1431
+    inline const std::string get_description(monster_description::get_description64,1494
+    inline const dice &get_speed(monster_description::get_speed65,1571
+    inline const uint32_t get_color(monster_description::get_color66,1630
+    inline const dice &get_hitpoints(monster_description::get_hitpoints67,1695
+    inline const dice &get_damage(monster_description::get_damage68,1762
+    inline const uint32_t get_abilities(monster_description::get_abilities69,1823
+  char get_symbol(monster_description::get_symbol70,1893
+    npc* genMonster(monster_description::genMonster71,1932
+class object_description 85,2393
+  std::string name,object_description::name87,2430
+  std::string name, description;object_description::description87,2430
+  object_type_t type;object_description::type88,2463
+  uint32_t color;object_description::color89,2485
+  dice hit,object_description::hit90,2503
+  dice hit, damage,object_description::damage90,2503
+  dice hit, damage, dodge,object_description::dodge90,2503
+  dice hit, damage, dodge, defence,object_description::defence90,2503
+  dice hit, damage, dodge, defence, weight,object_description::weight90,2503
+  dice hit, damage, dodge, defence, weight, speed,object_description::speed90,2503
+  dice hit, damage, dodge, defence, weight, speed, attribute,object_description::attribute90,2503
+  dice hit, damage, dodge, defence, weight, speed, attribute, value;object_description::value90,2503
+  object_description(object_description::object_description92,2581
+  inline const std::string &get_name(object_description::get_name113,3403
+  inline const std::string &get_description(object_description::get_description114,3465
+  inline const object_type_t get_type(object_description::get_type115,3541
+  inline const uint32_t get_color(object_description::get_color116,3604
+  inline const dice &get_hit(object_description::get_hit117,3664
+  inline const dice &get_damage(object_description::get_damage118,3717
+  inline const dice &get_dodge(object_description::get_dodge119,3776
+  inline const dice &get_defence(object_description::get_defence120,3833
+  inline const dice &get_weight(object_description::get_weight121,3894
+  inline const dice &get_speed(object_description::get_speed122,3953
+  inline const dice &get_attribute(object_description::get_attribute123,4010
+  inline const dice &get_value(object_description::get_value124,4075
 
 dice.h,539
 # define DICE_H2,15
@@ -223,54 +231,53 @@ move.h,61
 # define MOVE_H2,15
 typedef struct dungeon dungeon_t;10,92
 
-npc.h,1543
+npc.h,1512
 # define NPC_H2,14
-using namespace std;11,132
-typedef uint32_t npc_characteristics_t;13,154
-class npc 15,195
-  npc_characteristics_t characteristics;npc::characteristics17,235
-  uint32_t have_seen_pc;npc::have_seen_pc18,276
-  pair_t pc_last_known_position;npc::pc_last_known_position19,301
-    string name;npc::name21,394
-    string description;npc::description22,411
-    std::vector<uint32_t> color;npc::color23,435
-    uint32_t abilities;npc::abilities24,468
-    int32_t hitpoints;npc::hitpoints25,492
-    dice damage;npc::damage26,515
-# define NPC_SMART 29,536
-# define NPC_TELEPATH 30,574
-# define NPC_TUNNEL 31,612
-# define NPC_ERRATIC 32,650
-# define NPC_PASS_WALL 33,688
-# define NPC_DESTROY_OBJ 34,726
-# define NPC_PICKUP_OBJ 35,764
-# define NPC_BIT07 36,802
-# define NPC_BIT08 37,840
-# define NPC_BIT09 38,878
-# define NPC_BIT10 39,916
-# define NPC_BIT11 40,954
-# define NPC_BIT12 41,992
-# define NPC_BIT13 42,1030
-# define NPC_BIT14 43,1068
-# define NPC_BIT15 44,1106
-# define NPC_BIT16 45,1144
-# define NPC_BIT17 46,1182
-# define NPC_BIT18 47,1220
-# define NPC_BIT19 48,1258
-# define NPC_BIT20 49,1296
-# define NPC_BIT21 50,1334
-# define NPC_BIT22 51,1372
-# define NPC_BIT23 52,1410
-# define NPC_BIT24 53,1448
-# define NPC_BIT25 54,1486
-# define NPC_BIT26 55,1524
-# define NPC_BIT27 56,1562
-# define NPC_BIT28 57,1600
-# define NPC_BIT29 58,1638
-# define NPC_BIT30 59,1676
-# define NPC_BIT31 60,1714
-# define has_characteristic(62,1753
-typedef struct dungeon dungeon_t;65,1863
+typedef uint32_t npc_characteristics_t;11,132
+class npc 13,173
+  npc_characteristics_t characteristics;npc::characteristics15,213
+  uint32_t have_seen_pc;npc::have_seen_pc16,254
+  pair_t pc_last_known_position;npc::pc_last_known_position17,279
+    std::string name;npc::name19,372
+    std::string description;npc::description20,394
+    uint32_t color;npc::color21,423
+    uint32_t abilities;npc::abilities22,443
+    int32_t hitpoints;npc::hitpoints23,467
+    dice damage;npc::damage24,490
+# define NPC_SMART 27,511
+# define NPC_TELEPATH 28,549
+# define NPC_TUNNEL 29,587
+# define NPC_ERRATIC 30,625
+# define NPC_PASS_WALL 31,663
+# define NPC_DESTROY_OBJ 32,701
+# define NPC_PICKUP_OBJ 33,739
+# define NPC_BIT07 34,777
+# define NPC_BIT08 35,815
+# define NPC_BIT09 36,853
+# define NPC_BIT10 37,891
+# define NPC_BIT11 38,929
+# define NPC_BIT12 39,967
+# define NPC_BIT13 40,1005
+# define NPC_BIT14 41,1043
+# define NPC_BIT15 42,1081
+# define NPC_BIT16 43,1119
+# define NPC_BIT17 44,1157
+# define NPC_BIT18 45,1195
+# define NPC_BIT19 46,1233
+# define NPC_BIT20 47,1271
+# define NPC_BIT21 48,1309
+# define NPC_BIT22 49,1347
+# define NPC_BIT23 50,1385
+# define NPC_BIT24 51,1423
+# define NPC_BIT25 52,1461
+# define NPC_BIT26 53,1499
+# define NPC_BIT27 54,1537
+# define NPC_BIT28 55,1575
+# define NPC_BIT29 56,1613
+# define NPC_BIT30 57,1651
+# define NPC_BIT31 58,1689
+# define has_characteristic(60,1728
+typedef struct dungeon dungeon_t;63,1838
 
 object.h,625
 #define OBJECT_H2,17

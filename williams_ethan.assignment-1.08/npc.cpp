@@ -558,8 +558,7 @@ void generate_npcs(dungeon *d, uint16_t num_npcs){
 
     for (i = 0; i < num_npcs; i++) {
         monster = rand_range(0, (d->monster_descriptions).size()-1);
-        m = new npc;
-        memset(m, 0, sizeof (*m));
+        m = d->monster_descriptions[monster].genMonster();
 
         do {
             room = rand_range(1, d->num_rooms - 1);
@@ -578,15 +577,6 @@ void generate_npcs(dungeon *d, uint16_t num_npcs){
         //m->characteristics = rand() & 0x0000000f;
         m->have_seen_pc = 0;
         m->kills[kill_direct] = m->kills[kill_avenged] = 0;
-
-        m->name = d->monster_descriptions[monster].get_name();
-        m->description = d->monster_descriptions[monster].get_description();
-        m->symbol = d->monster_descriptions[monster].get_symbol();
-        m->color = d->monster_descriptions[monster].get_color();
-        m->abilities = d->monster_descriptions[monster].get_abilities();
-        m->speed = d->monster_descriptions[monster].get_speed().roll();
-        m->hitpoints = d->monster_descriptions[monster].get_hitpoints().roll();
-        m->damage = d->monster_descriptions[monster].get_damage();
 
         d->character_map[p[dim_y]][p[dim_x]] = m;
 
