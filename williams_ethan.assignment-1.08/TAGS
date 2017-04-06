@@ -60,32 +60,32 @@ class monster_description 42,758
     inline const uint32_t get_abilities(monster_description::get_abilities69,1823
   char get_symbol(monster_description::get_symbol70,1893
     npc* genMonster(monster_description::genMonster71,1932
-class object_description 85,2393
-  std::string name,object_description::name87,2430
-  std::string name, description;object_description::description87,2430
-  object_type_t type;object_description::type88,2463
-  uint32_t color;object_description::color89,2485
-  dice hit,object_description::hit90,2503
-  dice hit, damage,object_description::damage90,2503
-  dice hit, damage, dodge,object_description::dodge90,2503
-  dice hit, damage, dodge, defence,object_description::defence90,2503
-  dice hit, damage, dodge, defence, weight,object_description::weight90,2503
-  dice hit, damage, dodge, defence, weight, speed,object_description::speed90,2503
-  dice hit, damage, dodge, defence, weight, speed, attribute,object_description::attribute90,2503
-  dice hit, damage, dodge, defence, weight, speed, attribute, value;object_description::value90,2503
-  object_description(object_description::object_description92,2581
-  inline const std::string &get_name(object_description::get_name113,3403
-  inline const std::string &get_description(object_description::get_description114,3465
-  inline const object_type_t get_type(object_description::get_type115,3541
-  inline const uint32_t get_color(object_description::get_color116,3604
-  inline const dice &get_hit(object_description::get_hit117,3664
-  inline const dice &get_damage(object_description::get_damage118,3717
-  inline const dice &get_dodge(object_description::get_dodge119,3776
-  inline const dice &get_defence(object_description::get_defence120,3833
-  inline const dice &get_weight(object_description::get_weight121,3894
-  inline const dice &get_speed(object_description::get_speed122,3953
-  inline const dice &get_attribute(object_description::get_attribute123,4010
-  inline const dice &get_value(object_description::get_value124,4075
+class object_description 85,2389
+  std::string name,object_description::name87,2426
+  std::string name, description;object_description::description87,2426
+  object_type_t type;object_description::type88,2459
+  uint32_t color;object_description::color89,2481
+  dice hit,object_description::hit90,2499
+  dice hit, damage,object_description::damage90,2499
+  dice hit, damage, dodge,object_description::dodge90,2499
+  dice hit, damage, dodge, defence,object_description::defence90,2499
+  dice hit, damage, dodge, defence, weight,object_description::weight90,2499
+  dice hit, damage, dodge, defence, weight, speed,object_description::speed90,2499
+  dice hit, damage, dodge, defence, weight, speed, attribute,object_description::attribute90,2499
+  dice hit, damage, dodge, defence, weight, speed, attribute, value;object_description::value90,2499
+  object_description(object_description::object_description92,2577
+  inline const std::string &get_name(object_description::get_name113,3399
+  inline const std::string &get_description(object_description::get_description114,3461
+  inline const object_type_t get_type(object_description::get_type115,3537
+  inline const uint32_t get_color(object_description::get_color116,3600
+  inline const dice &get_hit(object_description::get_hit117,3660
+  inline const dice &get_damage(object_description::get_damage118,3713
+  inline const dice &get_dodge(object_description::get_dodge119,3772
+  inline const dice &get_defence(object_description::get_defence120,3829
+  inline const dice &get_weight(object_description::get_weight121,3890
+  inline const dice &get_speed(object_description::get_speed122,3949
+  inline const dice &get_attribute(object_description::get_attribute123,4006
+  inline const dice &get_value(object_description::get_value124,4071
 
 dice.h,539
 # define DICE_H2,15
