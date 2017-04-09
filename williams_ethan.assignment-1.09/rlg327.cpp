@@ -251,7 +251,12 @@ int main(int argc, char *argv[])
     write_dungeon(&d, save_file);
   }
 
-  printf(pc_is_alive(&d) ? victory : tombstone);
+  if(pc_is_alive(&d)){
+    printf("%s", victory);
+  }
+  else{
+    printf("%s", tombstone);
+  }
   printf("\nYou defended your life in the face of %u deadly beast%s.\n"
          "You avenged the cruel and untimely murders of %u "
          "peaceful dungeon resident%s.\n",

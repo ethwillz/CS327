@@ -17,6 +17,11 @@
 
 void do_combat(dungeon_t *d, character *atk, character *def)
 {
+  if(atk != d->PC && def != d->PC){
+    //If both are monsters nothing happens
+    return;
+  }
+
   if (character_is_alive(def)) {
     character_die(def);
     if (def != d->PC) {

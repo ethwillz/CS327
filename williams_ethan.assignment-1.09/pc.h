@@ -6,11 +6,13 @@
 # include "dims.h"
 # include "character.h"
 # include "dungeon.h"
+#include "object.h"
 
 class pc : public character {
  public:
   terrain_type_t known_terrain[DUNGEON_Y][DUNGEON_X];
   unsigned char visible[DUNGEON_Y][DUNGEON_X];
+    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8, *c9;
 };
 
 void pc_delete(pc *pc);

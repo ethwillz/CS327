@@ -56,6 +56,7 @@ void config_pc(dungeon_t *d)
   d->PC->color.push_back(COLOR_WHITE);
   d->PC->damage = &pc_dice;
   d->PC->name = "Isabella Garcia-Shapiro";
+  d->PC->hp = 1000;
 
   d->character_map[character_get_y(d->PC)][character_get_x(d->PC)] = d->PC;
 
