@@ -22,18 +22,44 @@ void do_combat(dungeon_t *d, character *atk, character *def)
     return;
   }
 
-  if (character_is_alive(def)) {
-    character_die(def);
-    if (def != d->PC) {
-      d->num_monsters--;
+    if (atk == d->PC) {
+        int32_t atk_damage = d->PC->damage->roll();
+        //Adds damage values of all equipped items
+        int i;
+        for(i = 0; i < 12; i++){
+            if(d->PC->equipment[i] != NULL) {
+                atk_damage += d->PC->equipment[i]->roll_dice();
+            }
+        }
+        def->hp -= atk_damage;
+        if(def->hp < 0){
+            character_die(def);
+            if (def != d->PC) {
+                d->num_monsters--;
+            }
+            character_increment_dkills(atk);
+            character_increment_ikills(atk, (character_get_dkills(def) +
+                                             character_get_ikills(def)));
+            io_queue_message("You smite the %s", character_get_name(def));
+        }
+        //TODO STOP CHARACTER FROM ADVANCING
+        return;
     }
-    character_increment_dkills(atk);
-    character_increment_ikills(atk, (character_get_dkills(def) +
-                                     character_get_ikills(def)));
-  }
 
-  if (atk == d->PC) {
-    io_queue_message("You smite the %s", character_get_name(def));
+    //If atk is monster
+  if (character_is_alive(def)) {
+      int32_t atk_damage = atk->damage->roll();
+      def->hp -= atk_damage;
+      if(def->hp < 0){
+          character_die(def);
+          if (def != d->PC) {
+              d->num_monsters--;
+          }
+          character_increment_dkills(atk);
+          character_increment_ikills(atk, (character_get_dkills(def) +
+                                           character_get_ikills(def)));
+      }
+      //TODO STOP CHARACTER FROM ADVANCING
   }
 }
 

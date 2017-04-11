@@ -887,6 +887,42 @@ void equip(dungeon_t *d, int inventory_index){
 
 }
 
+void display_description(dungeon_t *d, object *obj){
+    //Clears screen for printing of inventory
+    int i, j;
+    for(i = 0; i < DUNGEON_Y + 2; i++){
+        for(j = 0; j < DUNGEON_X + 2; j++){
+            mvaddch(i, j, ' ');
+        }
+    }
+    uint x = 10, y = 10, counter = 0, desc_index = 0;
+    while(desc_index < strlen(obj->get_desc())){
+        mvaddch(y, x, obj->get_desc()[desc_index]);
+        desc_index++;
+        x++;
+        counter ++;
+        if(counter > 39){
+            counter = 0;
+            y++;
+            x = 10;
+        }
+    }
+    getch();
+}
+
+void add_to_inventory(dungeon_t *d, int index){
+    int i, placed = 0;
+    for(i = 0; i < 10; i++){
+        if(d->PC->inventory[i] == NULL){
+            d->PC->inventory[i] = d->PC->equipment[index];
+            placed = 1;
+        }
+    }
+    if(placed == 0){
+        mvprintw(19, 15, "No free space in inventory, drop or expunge to unequip                                                ");
+    }
+}
+
 void io_display_inventory(dungeon_t *d){
   //Clears screen for printing of inventory
   int i, j;
@@ -1171,7 +1207,60 @@ void io_display_inventory(dungeon_t *d){
           }
       break;
     case 'I':
-
+        mvprintw(19, 15, "Choose an item to inspect                                                ");
+          mvprintw(20, 15, "                                                  ");
+          switch (key = getch()) {
+              case '0':
+                  if(d->PC->inventory[0] != NULL){
+                      display_description(d, d->PC->inventory[0]);
+                  }
+                  break;
+              case '1':
+                  if(d->PC->inventory[1] != NULL){
+                      display_description(d, d->PC->inventory[1]);
+                  }
+                  break;
+              case '2':
+                  if(d->PC->inventory[2] != NULL){
+                      display_description(d, d->PC->inventory[2]);
+                  }
+                  break;
+              case '3':
+                  if(d->PC->inventory[3] != NULL){
+                      display_description(d, d->PC->inventory[3]);
+                  }
+                  break;
+              case '4':
+                  if(d->PC->inventory[4] != NULL){
+                      display_description(d, d->PC->inventory[4]);
+                  }
+                  break;
+              case '5':
+                  if(d->PC->inventory[5] != NULL){
+                      display_description(d, d->PC->inventory[5]);
+                  }
+                  break;
+              case '6':
+                  if(d->PC->inventory[6] != NULL){
+                      display_description(d, d->PC->inventory[6]);
+                  }
+                  break;
+              case '7':
+                  if(d->PC->inventory[7] != NULL){
+                      display_description(d, d->PC->inventory[7]);
+                  }
+                  break;
+              case '8':
+                  if(d->PC->inventory[8] != NULL){
+                      display_description(d, d->PC->inventory[8]);
+                  }
+                  break;
+              case '9':
+                  if(d->PC->inventory[9] != NULL){
+                      display_description(d, d->PC->inventory[9]);
+                  }
+                  break;
+          }
       break;
     default:
       break;
@@ -1290,7 +1379,70 @@ void io_display_equipment(dungeon_t *d){
   int key;
   switch (key = getch()) {
     case 't':
-
+        mvprintw(19, 15, "Choose an item to take off                                                ");
+          mvprintw(20, 15, "                                                  ");
+          switch (key = getch()) {
+              case 'a':
+                  if(d->PC->inventory[0] != NULL){
+                      add_to_inventory(d, 0);
+                  }
+                  break;
+              case 'b':
+                  if(d->PC->inventory[1] != NULL){
+                      add_to_inventory(d, 1);
+                  }
+                  break;
+              case 'c':
+                  if(d->PC->inventory[2] != NULL){
+                      add_to_inventory(d, 2);
+                  }
+                  break;
+              case 'd':
+                  if(d->PC->inventory[3] != NULL){
+                      add_to_inventory(d, 3);
+                  }
+                  break;
+              case 'e':
+                  if(d->PC->inventory[4] != NULL){
+                      add_to_inventory(d, 4);
+                  }
+                  break;
+              case 'f':
+                  if(d->PC->inventory[5] != NULL){
+                      add_to_inventory(d, 5);
+                  }
+                  break;
+              case 'g':
+                  if(d->PC->inventory[6] != NULL){
+                      add_to_inventory(d, 6);
+                  }
+                  break;
+              case 'h':
+                  if(d->PC->inventory[7] != NULL){
+                      add_to_inventory(d, 7);
+                  }
+                  break;
+              case 'i':
+                  if(d->PC->inventory[8] != NULL){
+                      add_to_inventory(d, 8);
+                  }
+                  break;
+              case 'j':
+                  if(d->PC->inventory[9] != NULL){
+                      add_to_inventory(d, 9);
+                  }
+                  break;
+              case 'k':
+                  if(d->PC->inventory[10] != NULL){
+                      add_to_inventory(d, 10);
+                  }
+                  break;
+              case 'l':
+                  if(d->PC->inventory[11] != NULL){
+                      add_to_inventory(d, 11);
+                  }
+                  break;
+          }
       break;
     default:
       break;

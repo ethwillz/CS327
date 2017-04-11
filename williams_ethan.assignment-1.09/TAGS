@@ -163,7 +163,7 @@ int32_t compare(335,6580
 char *print_int(print_int340,6679
 int main(349,6797
 
-io.cpp,1258
+io.cpp,1294
 static dungeon_t *dungeon;dungeon15,248
 typedef struct io_message 17,276
   char msg[io_message::msg20,457
@@ -194,19 +194,20 @@ static int compare_monster_distance(700,21900
 static void io_list_monsters(709,22228
 void shift_inventory(738,22944
 void equip(749,23259
-void io_display_inventory(890,28720
-void io_display_equipment(1181,38029
-void io_handle_input(1300,40714
+void display_description(890,28720
+void io_display_inventory(913,29295
+void io_display_equipment(1257,40705
+void io_handle_input(1376,43390
 
-move.cpp,234
+move.cpp,235
 void do_combat(18,266
-void move_character(40,806
-void do_moves(72,1760
-void dir_nearest_wall(133,3797
-uint32_t against_wall(145,4210
-uint32_t in_corner(157,4696
-static void new_dungeon_level(176,5323
-uint32_t move_pc(192,5615
+void move_character(66,1754
+void do_moves(98,2708
+void dir_nearest_wall(159,4745
+uint32_t against_wall(171,5158
+uint32_t in_corner(183,5644
+static void new_dungeon_level(202,6271
+uint32_t move_pc(218,6563
 
 npc.cpp,1827
 void npc_delete(12,173
@@ -260,7 +261,7 @@ void npc_next_pos(708,19578
 uint32_t dungeon_has_npcs(716,19771
 npc::npc(721,19842
 
-object.cpp,354
+object.cpp,409
 object::object(8,99
 object::~object(28,619
 void gen_object(35,677
@@ -268,10 +269,11 @@ void gen_objects(56,1374
 char object::get_symbol(69,1570
 uint32_t object::get_color(74,1644
 const char *object::get_name(object::get_name79,1694
-int32_t object::get_speed(84,1753
-int32_t object::roll_dice(89,1802
-void destroy_objects(94,1859
-int32_t object::get_type(108,2099
+const char *object::get_desc(object::get_desc84,1753
+int32_t object::get_speed(88,1818
+int32_t object::roll_dice(93,1867
+void destroy_objects(98,1924
+int32_t object::get_type(112,2164
 
 path.cpp,314
 static dungeon_t *dungeon;dungeon12,633
@@ -603,9 +605,9 @@ class object 9,103
   inline int32_t get_damage_base(object::get_damage_base23,448
   inline int32_t get_damage_number(object::get_damage_number27,527
   inline int32_t get_damage_sides(object::get_damage_sides31,610
-  bool have_seen(object::have_seen41,830
-  void has_been_seen(object::has_been_seen42,866
-  int16_t *get_position(object::get_position43,906
+  bool have_seen(object::have_seen42,858
+  void has_been_seen(object::has_been_seen43,894
+  int16_t *get_position(object::get_position44,934
 
 path.h,60
 # define PATH_H2,15
