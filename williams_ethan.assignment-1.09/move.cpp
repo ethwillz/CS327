@@ -53,6 +53,17 @@ void move_character(dungeon_t *d, character *c, pair_t next)
   }
 
   if (c == d->PC) {
+    //If there's an object in the space the PC picks it up and puts it in inventory
+    if(d->objmap[next[dim_y]][next[dim_x]] != NULL){
+      int i;
+      for(i = 0; i < 10; i++){
+        if(d->PC->inventory[i] == NULL){
+          d->PC->inventory[i] = d->objmap[next[dim_y]][next[dim_x]];
+            d->objmap[next[dim_y]][next[dim_x]] = NULL;
+        }
+      }
+    }
+
     pc_reset_visibility((pc *) c);
     pc_observe_terrain((pc *) c, d);
   }

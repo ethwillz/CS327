@@ -23,80 +23,34 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="rlg327.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rlg327.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="964">
-              <caret line="276" column="13" lean-forward="false" selection-start-line="276" selection-start-column="13" selection-end-line="276" selection-end-column="13" />
-              <folding>
-                <element signature="e#0#18#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="object.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/object.cpp">
+      <file leaf-file-name="io.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/io.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="195">
-              <caret line="16" column="23" lean-forward="false" selection-start-line="16" selection-start-column="23" selection-end-line="16" selection-end-column="23" />
+              <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="descriptions.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/descriptions.cpp">
+      <file leaf-file-name="io.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/io.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12990">
-              <caret line="866" column="24" lean-forward="false" selection-start-line="866" selection-start-column="24" selection-end-line="866" selection-end-column="24" />
+            <state relative-caret-position="334">
+              <caret line="595" column="18" lean-forward="true" selection-start-line="595" selection-start-column="18" selection-end-line="595" selection-end-column="18" />
+              <folding>
+                <element signature="e#16706#17376#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="move.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/move.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="50" column="83" lean-forward="false" selection-start-line="50" selection-start-column="83" selection-end-line="50" selection-end-column="83" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="npc.h" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/npc.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-              <folding>
-                <element signature="e#30#50#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="npc.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/npc.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2419">
-              <caret line="560" column="58" lean-forward="false" selection-start-line="560" selection-start-column="58" selection-end-line="560" selection-end-column="58" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="dungeon.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dungeon.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="16185">
-              <caret line="1079" column="0" lean-forward="false" selection-start-line="1079" selection-start-column="0" selection-end-line="1079" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="descriptions.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/descriptions.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1095">
-              <caret line="73" column="33" lean-forward="false" selection-start-line="73" selection-start-column="33" selection-end-line="73" selection-end-column="33" />
-              <folding>
-                <element signature="e#82#100#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +87,6 @@
         <option value="$PROJECT_DIR$/object.h" />
         <option value="$PROJECT_DIR$/object.cpp" />
         <option value="$PROJECT_DIR$/descriptions.cpp" />
-        <option value="$PROJECT_DIR$/io.cpp" />
         <option value="$PROJECT_DIR$/character.h" />
         <option value="$PROJECT_DIR$/character.cpp" />
         <option value="$PROJECT_DIR$/npc.h" />
@@ -141,6 +94,9 @@
         <option value="$PROJECT_DIR$/descriptions.h" />
         <option value="$PROJECT_DIR$/dungeon.cpp" />
         <option value="$PROJECT_DIR$/rlg327.cpp" />
+        <option value="$PROJECT_DIR$/io.h" />
+        <option value="$PROJECT_DIR$/move.cpp" />
+        <option value="$PROJECT_DIR$/io.cpp" />
       </list>
     </option>
   </component>
@@ -417,12 +373,12 @@
       <workItem from="1491428487555" duration="4169000" />
       <workItem from="1491443141831" duration="8274000" />
       <workItem from="1491764852906" duration="72000" />
-      <workItem from="1491774825795" duration="146000" />
+      <workItem from="1491774825795" duration="1741000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38211000" />
+    <option name="totallyTimeSpent" value="39806000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-1" width="1920" height="1046" extended-state="6" />
@@ -462,19 +418,12 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/object.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="18" lean-forward="false" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/npc.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1050">
           <caret line="70" column="48" lean-forward="false" selection-start-line="70" selection-start-column="48" selection-end-line="70" selection-end-column="48" />
           <folding>
-            <element signature="e#30#50#0" expanded="true" />
+            <element signature="e#30#50#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -484,7 +433,7 @@
         <state relative-caret-position="8370">
           <caret line="558" column="82" lean-forward="false" selection-start-line="558" selection-start-column="82" selection-end-line="558" selection-end-column="82" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -558,7 +507,7 @@
         <state relative-caret-position="420">
           <caret line="28" column="2" lean-forward="false" selection-start-line="28" selection-start-column="2" selection-end-line="28" selection-end-column="2" />
           <folding>
-            <element signature="e#30#50#0" expanded="true" />
+            <element signature="e#30#50#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -568,7 +517,7 @@
         <state relative-caret-position="8310">
           <caret line="554" column="28" lean-forward="false" selection-start-line="554" selection-start-column="28" selection-end-line="554" selection-end-column="28" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -610,7 +559,7 @@
         <state relative-caret-position="45">
           <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="20" />
           <folding>
-            <element signature="e#30#50#0" expanded="true" />
+            <element signature="e#30#50#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -620,7 +569,7 @@
         <state relative-caret-position="8310">
           <caret line="554" column="28" lean-forward="false" selection-start-line="554" selection-start-column="28" selection-end-line="554" selection-end-column="28" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -658,7 +607,7 @@
         <state relative-caret-position="270">
           <caret line="18" column="23" lean-forward="true" selection-start-line="18" selection-start-column="23" selection-end-line="18" selection-end-column="23" />
           <folding>
-            <element signature="e#30#50#0" expanded="true" />
+            <element signature="e#30#50#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -675,7 +624,7 @@
         <state relative-caret-position="8325">
           <caret line="555" column="28" lean-forward="true" selection-start-line="555" selection-start-column="28" selection-end-line="555" selection-end-column="28" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -692,7 +641,7 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#30#50#0" expanded="true" />
+            <element signature="e#30#50#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -712,7 +661,7 @@
         <state relative-caret-position="210">
           <caret line="14" column="12" lean-forward="false" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -745,13 +694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pc.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pc.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -766,31 +708,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/io.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/io.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="223" column="48" lean-forward="false" selection-start-line="223" selection-start-column="48" selection-end-line="223" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/object.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="29" column="18" lean-forward="false" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/move.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="20" column="12" lean-forward="true" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -872,7 +793,7 @@
         <state relative-caret-position="2419">
           <caret line="560" column="58" lean-forward="false" selection-start-line="560" selection-start-column="58" selection-end-line="560" selection-end-column="58" />
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#19#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -882,7 +803,49 @@
         <state relative-caret-position="120">
           <caret line="8" column="17" lean-forward="false" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
           <folding>
-            <element signature="e#30#50#0" expanded="true" />
+            <element signature="e#30#50#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pc.d">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pc.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2726">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/move.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="50" column="83" lean-forward="false" selection-start-line="50" selection-start-column="83" selection-end-line="50" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/io.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/io.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="334">
+          <caret line="595" column="18" lean-forward="true" selection-start-line="595" selection-start-column="18" selection-end-line="595" selection-end-column="18" />
+          <folding>
+            <element signature="e#16706#17376#0" expanded="true" />
           </folding>
         </state>
       </provider>

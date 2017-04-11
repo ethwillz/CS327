@@ -163,7 +163,7 @@ int32_t compare(335,6580
 char *print_int(print_int340,6679
 int main(349,6797
 
-io.cpp,1128
+io.cpp,1258
 static dungeon_t *dungeon;dungeon15,248
 typedef struct io_message 17,276
   char msg[io_message::msg20,457
@@ -192,17 +192,21 @@ static bool is_vowel(645,20072
 static void io_list_monsters_display(651,20251
 static int compare_monster_distance(700,21900
 static void io_list_monsters(709,22228
-void io_handle_input(737,22875
+void shift_inventory(738,22944
+void equip(749,23259
+void io_display_inventory(890,28720
+void io_display_equipment(1181,38029
+void io_handle_input(1300,40714
 
 move.cpp,234
 void do_combat(18,266
 void move_character(40,806
-void do_moves(61,1388
-void dir_nearest_wall(122,3425
-uint32_t against_wall(134,3838
-uint32_t in_corner(146,4324
-static void new_dungeon_level(165,4951
-uint32_t move_pc(181,5243
+void do_moves(72,1760
+void dir_nearest_wall(133,3797
+uint32_t against_wall(145,4210
+uint32_t in_corner(157,4696
+static void new_dungeon_level(176,5323
+uint32_t move_pc(192,5615
 
 npc.cpp,1827
 void npc_delete(12,173
@@ -607,33 +611,13 @@ path.h,60
 # define PATH_H2,15
 typedef struct dungeon dungeon_t;4,32
 
-pc.h,1742
+pc.h,225
 # define PC_H2,13
 class pc 11,136
   terrain_type_t known_terrain[pc::known_terrain13,175
   unsigned char visible[pc::visible14,229
-    object *a,pc::a15,276
-    object *a, *b,pc::b15,276
-    object *a, *b, *c,pc::c15,276
-    object *a, *b, *c, *d,pc::d15,276
-    object *a, *b, *c, *d, *e,pc::e15,276
-    object *a, *b, *c, *d, *e, *f,pc::f15,276
-    object *a, *b, *c, *d, *e, *f, *g,pc::g15,276
-    object *a, *b, *c, *d, *e, *f, *g, *h,pc::h15,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i,pc::i15,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j,pc::j15,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k,pc::k15,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l,pc::l15,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0,pc::c015,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1,pc::c115,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2,pc::c215,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2, *c3,pc::c315,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2, *c3, *c4,pc::c415,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2, *c3, *c4, *c5,pc::c515,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2, *c3, *c4, *c5, *c6,pc::c615,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2, *c3, *c4, *c5, *c6, *c7,pc::c715,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8,pc::c815,276
-    object *a, *b, *c, *d, *e, *f, *g, *h, *i, *j, *k, *l, *c0, *c1, *c2, *c3, *c4, *c5, *c6, *c7, *c8, *c9;pc::c915,276
+    object *inventory[pc::inventory15,276
+    object *equipment[pc::equipment16,303
 
 utils.h,77
 # define UTILS_H2,16

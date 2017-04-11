@@ -734,6 +734,569 @@ static void io_list_monsters(dungeon_t *d)
   io_display(d);
 }
 
+//Shifts inventory items to cover equipped, dropped, or deleted item
+void shift_inventory(dungeon_t *d){
+    int i;
+    for(i = 0; i < 9; i++){
+        if(d->PC->inventory[i] == NULL && d->PC->inventory[i+1] != NULL){
+            d->PC->inventory[i] = d->PC->inventory[i+1];
+            d->PC->inventory[i+1] = NULL;
+        }
+    }
+}
+
+//Equips item in appropriate slot based on type
+void equip(dungeon_t *d, int inventory_index){
+    if(d->PC->inventory[inventory_index]->get_type() == objtype_WEAPON){
+        if(d->PC->equipment[0] == NULL){
+            d->PC->equipment[0] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[0];
+            d->PC->equipment[0] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_OFFHAND){
+        if(d->PC->equipment[1] == NULL){
+            d->PC->equipment[1] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[1];
+            d->PC->equipment[1] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_RANGED){
+        if(d->PC->equipment[2] == NULL){
+            d->PC->equipment[2] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[2];
+            d->PC->equipment[2] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_ARMOR){
+        if(d->PC->equipment[3] == NULL){
+            d->PC->equipment[3] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[3];
+            d->PC->equipment[3] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_HELMET){
+        if(d->PC->equipment[4] == NULL){
+            d->PC->equipment[4] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[4];
+            d->PC->equipment[4] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_CLOAK){
+        if(d->PC->equipment[5] == NULL){
+            d->PC->equipment[5] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[5];
+            d->PC->equipment[5] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_GLOVES){
+        if(d->PC->equipment[6] == NULL){
+            d->PC->equipment[6] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[6];
+            d->PC->equipment[6] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_BOOTS){
+        if(d->PC->equipment[7] == NULL){
+            d->PC->equipment[7] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[7];
+            d->PC->equipment[7] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_AMULET){
+        if(d->PC->equipment[8] == NULL){
+            d->PC->equipment[8] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[8];
+            d->PC->equipment[8] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else if(d->PC->inventory[inventory_index]->get_type() == objtype_LIGHT){
+        if(d->PC->equipment[9] == NULL){
+            d->PC->equipment[9] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[9];
+            d->PC->equipment[9] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+    else{
+        if(d->PC->equipment[10] == NULL){
+            d->PC->equipment[10] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else if(d->PC->equipment[11] == NULL){
+            d->PC->equipment[11] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+        }
+        else{
+            object *a = d->PC->equipment[11];
+            d->PC->equipment[11] = d->PC->inventory[inventory_index];
+            d->PC->inventory[inventory_index] = a;
+        }
+    }
+
+}
+
+void io_display_inventory(dungeon_t *d){
+  //Clears screen for printing of inventory
+  int i, j;
+  for(i = 0; i < DUNGEON_Y + 2; i++){
+    for(j = 0; j < DUNGEON_X + 2; j++){
+      mvaddch(i, j, ' ');
+    }
+  }
+  mvprintw(4, 15, "INVENTORY");
+
+  if(d->PC->inventory[0] == NULL) {
+    mvprintw(6, 15, "0)");
+  }
+  else{
+    mvprintw(6, 15, "0)");
+      mvprintw(6, 18, d->PC->inventory[0]->get_name());
+  }
+
+  if(d->PC->inventory[1] == NULL) {
+    mvprintw(7, 15, "1)");
+  }
+  else{
+    mvprintw(7, 15, "1)");
+      mvprintw(7, 18, d->PC->inventory[1]->get_name());
+  }
+
+  if(d->PC->inventory[2] == NULL) {
+    mvprintw(8, 15, "2)");
+  }
+  else{
+    mvprintw(8, 15, "2)");
+      mvprintw(8, 18, d->PC->inventory[2]->get_name());
+  }
+
+  if(d->PC->inventory[3] == NULL) {
+    mvprintw(9, 15, "3)");
+  }
+  else{
+    mvprintw(9, 15, "3)");
+      mvprintw(9, 18, d->PC->inventory[3]->get_name());
+  }
+
+  if(d->PC->inventory[4] == NULL) {
+    mvprintw(10, 15, "4)");
+  }
+  else{
+    mvprintw(10, 15, "4)");
+      mvprintw(10, 18, d->PC->inventory[4]->get_name());
+  }
+
+  if(d->PC->inventory[5] == NULL) {
+    mvprintw(11, 15, "5)");
+  }
+  else{
+    mvprintw(11, 15, "5)");
+      mvprintw(11, 18, d->PC->inventory[5]->get_name());
+  }
+
+  if(d->PC->inventory[6] == NULL) {
+    mvprintw(12, 15, "6)");
+  }
+  else{
+    mvprintw(12, 15, "6)");
+      mvprintw(12, 18, d->PC->inventory[6]->get_name());
+  }
+
+  if(d->PC->inventory[7] == NULL) {
+    mvprintw(13, 15, "7)");
+  }
+  else{
+    mvprintw(13, 15, "7)");
+      mvprintw(13, 18, d->PC->inventory[7]->get_name());
+  }
+
+  if(d->PC->inventory[8] == NULL) {
+    mvprintw(14, 15, "8)");
+  }
+  else{
+    mvprintw(14, 15, "8)");
+      mvprintw(14, 18, d->PC->inventory[8]->get_name());
+  }
+
+  if(d->PC->inventory[9] == NULL) {
+    mvprintw(15, 15, "9)");
+  }
+  else{
+    mvprintw(15, 15, "9)");
+      mvprintw(15, 18, d->PC->inventory[9]->get_name());
+  }
+
+  mvprintw(19, 15, "Select [w]ear item, [d]rop item, e[x]punge item, [I]nspect item");
+  mvprintw(20, 15, "OR press any other key to exit inventory");
+
+  int key;
+  switch (key = getch()) {
+    case 'w':
+        mvprintw(19, 15, "Choose an item to equip                                                ");
+          mvprintw(20, 15, "                                                  ");
+        switch (key = getch()) {
+            case '0':
+                if(d->PC->inventory[0] != NULL){
+                    equip(d, 0);
+                }
+                break;
+            case '1':
+                if(d->PC->inventory[1] != NULL){
+                    equip(d, 1);
+                }
+                break;
+            case '2':
+                if(d->PC->inventory[2] != NULL){
+                    equip(d, 2);
+                }
+                break;
+            case '3':
+                if(d->PC->inventory[3] != NULL){
+                    equip(d, 3);
+                }
+                break;
+            case '4':
+                if(d->PC->inventory[4] != NULL){
+                    equip(d, 4);
+                }
+                break;
+            case '5':
+                if(d->PC->inventory[5] != NULL){
+                    equip(d, 5);
+                }
+                break;
+            case '6':
+                if(d->PC->inventory[6] != NULL){
+                    equip(d, 6);
+                }
+                break;
+            case '7':
+                if(d->PC->inventory[7] != NULL){
+                    equip(d, 7);
+                }
+                break;
+            case '8':
+                if(d->PC->inventory[8] != NULL){
+                    equip(d, 8);
+                }
+                break;
+            case '9':
+                if(d->PC->inventory[9] != NULL){
+                    equip(d, 9);
+                }
+                break;
+        }
+      break;
+    case 'd':
+        mvprintw(19, 15, "Choose an item to drop                                                    ");
+          mvprintw(20, 15, "                                                  ");
+          switch (key = getch()) {
+              case '0':
+                  if(d->PC->inventory[0] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[0];
+                      d->PC->inventory[0] = NULL;
+                  }
+                  break;
+              case '1':
+                  if(d->PC->inventory[1] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[1];
+                      d->PC->inventory[1] = NULL;
+                  }
+                  break;
+              case '2':
+                  if(d->PC->inventory[2] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[2];
+                      d->PC->inventory[2] = NULL;
+                  }
+                  break;
+              case '3':
+                  if(d->PC->inventory[3] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[3];
+                      d->PC->inventory[3] = NULL;
+                  }
+                  break;
+              case '4':
+                  if(d->PC->inventory[4] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[4];
+                      d->PC->inventory[4] = NULL;
+                  }
+                  break;
+              case '5':
+                  if(d->PC->inventory[5] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[5];
+                      d->PC->inventory[5] = NULL;
+                  }
+                  break;
+              case '6':
+                  if(d->PC->inventory[6] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[6];
+                      d->PC->inventory[6] = NULL;
+                  }
+                  break;
+              case '7':
+                  if(d->PC->inventory[7] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[7];
+                      d->PC->inventory[7] = NULL;
+                  }
+                  break;
+              case '8':
+                  if(d->PC->inventory[8] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[8];
+                      d->PC->inventory[8] = NULL;
+                  }
+                  break;
+              case '9':
+                  if(d->PC->inventory[9] != NULL){
+                      d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[9];
+                      d->PC->inventory[9] = NULL;
+                  }
+                  break;
+          }
+          break;
+    case 'x':
+        mvprintw(19, 15, "Choose an item to expunge                                                ");
+          mvprintw(20, 15, "                                                  ");
+          switch (key = getch()) {
+              case '0':
+                  if(d->PC->inventory[0] != NULL){
+                      delete(d->PC->inventory[0]);
+                      d->PC->inventory[0] = NULL;
+                  }
+                  break;
+              case '1':
+                  if(d->PC->inventory[1] != NULL){
+                      delete(d->PC->inventory[1]);
+                      d->PC->inventory[1] = NULL;
+                  }
+                  break;
+              case '2':
+                  if(d->PC->inventory[2] != NULL){
+                      delete(d->PC->inventory[2]);
+                      d->PC->inventory[2] = NULL;
+                  }
+                  break;
+              case '3':
+                  if(d->PC->inventory[3] != NULL){
+                      delete(d->PC->inventory[3]);
+                      d->PC->inventory[3] = NULL;
+                  }
+                  break;
+              case '4':
+                  if(d->PC->inventory[4] != NULL){
+                      delete(d->PC->inventory[4]);
+                      d->PC->inventory[4] = NULL;
+                  }
+                  break;
+              case '5':
+                  if(d->PC->inventory[5] != NULL){
+                      delete(d->PC->inventory[5]);
+                      d->PC->inventory[5] = NULL;
+                  }
+                  break;
+              case '6':
+                  if(d->PC->inventory[6] != NULL){
+                      delete(d->PC->inventory[6]);
+                      d->PC->inventory[6] = NULL;
+                  }
+                  break;
+              case '7':
+                  if(d->PC->inventory[7] != NULL){
+                      delete(d->PC->inventory[7]);
+                      d->PC->inventory[7] = NULL;
+                  }
+                  break;
+              case '8':
+                  if(d->PC->inventory[8] != NULL){
+                      delete(d->PC->inventory[8]);
+                      d->PC->inventory[8] = NULL;
+                  }
+                  break;
+              case '9':
+                  if(d->PC->inventory[9] != NULL){
+                      delete(d->PC->inventory[9]);
+                      d->PC->inventory[9] = NULL;
+                  }
+                  break;
+          }
+      break;
+    case 'I':
+
+      break;
+    default:
+      break;
+  }
+}
+
+void io_display_equipment(dungeon_t *d){
+    //Clears screen for printing of inventory
+    int i, j;
+    for(i = 0; i < DUNGEON_Y + 2; i++){
+        for(j = 0; j < DUNGEON_X + 2; j++){
+            mvaddch(i, j, ' ');
+        }
+    }
+    mvprintw(4, 15, "EQUIPMENT");
+
+    if(d->PC->equipment[0] == NULL) {
+        mvprintw(6, 15, "a)");
+    }
+    else{
+        mvprintw(6, 15, "a)");
+        mvprintw(6, 18, d->PC->equipment[0]->get_name());
+    }
+
+    if(d->PC->equipment[1] == NULL) {
+        mvprintw(7, 15, "b)");
+    }
+    else{
+        mvprintw(7, 15, "b)");
+        mvprintw(7, 18, d->PC->equipment[1]->get_name());
+    }
+
+    if(d->PC->equipment[2] == NULL) {
+        mvprintw(8, 15, "c)");
+    }
+    else{
+        mvprintw(8, 15, "c)");
+        mvprintw(8, 18, d->PC->equipment[2]->get_name());
+    }
+
+    if(d->PC->equipment[3] == NULL) {
+        mvprintw(9, 15, "d)");
+    }
+    else{
+        mvprintw(9, 15, "d)");
+        mvprintw(9, 18, d->PC->equipment[3]->get_name());
+    }
+
+    if(d->PC->equipment[4] == NULL) {
+        mvprintw(10, 15, "e)");
+    }
+    else{
+        mvprintw(10, 15, "e)");
+        mvprintw(10, 18, d->PC->equipment[4]->get_name());
+    }
+
+    if(d->PC->equipment[5] == NULL) {
+        mvprintw(11, 15, "f)");
+    }
+    else{
+        mvprintw(11, 15, "f)");
+        mvprintw(11, 18, d->PC->equipment[5]->get_name());
+    }
+
+    if(d->PC->equipment[6] == NULL) {
+        mvprintw(12, 15, "g)");
+    }
+    else{
+        mvprintw(12, 15, "g)");
+        mvprintw(12, 18, d->PC->equipment[6]->get_name());
+    }
+
+    if(d->PC->equipment[7] == NULL) {
+        mvprintw(13, 15, "h)");
+    }
+    else{
+        mvprintw(13, 15, "h)");
+        mvprintw(13, 18, d->PC->equipment[7]->get_name());
+    }
+
+    if(d->PC->equipment[8] == NULL) {
+        mvprintw(14, 15, "i)");
+    }
+    else{
+        mvprintw(14, 15, "i)");
+        mvprintw(14, 18, d->PC->equipment[8]->get_name());
+    }
+
+    if(d->PC->equipment[9] == NULL) {
+        mvprintw(15, 15, "j)");
+    }
+    else{
+        mvprintw(15, 15, "j)");
+        mvprintw(15, 18, d->PC->equipment[9]->get_name());
+    }
+
+    if(d->PC->equipment[10] == NULL) {
+        mvprintw(15, 15, "k)");
+    }
+    else{
+        mvprintw(15, 15, "k)");
+        mvprintw(15, 18, d->PC->equipment[10]->get_name());
+    }
+
+    if(d->PC->equipment[11] == NULL) {
+        mvprintw(15, 15, "l)");
+    }
+    else{
+        mvprintw(15, 15, "l)");
+        mvprintw(15, 18, d->PC->equipment[11]->get_name());
+    }
+
+    mvprintw(19, 15, "Select [t]ake off an item");
+    mvprintw(20, 15, "OR press any other key to exit equipment");
+
+  int key;
+  switch (key = getch()) {
+    case 't':
+
+      break;
+    default:
+      break;
+  }
+}
+
 void io_handle_input(dungeon_t *d)
 {
   uint32_t fail_code;
@@ -808,6 +1371,12 @@ void io_handle_input(dungeon_t *d)
       d->quit = 1;
       fail_code = 0;
       break;
+      case 'i':
+        io_display_inventory(d);
+            break;
+      case 'e':
+        io_display_equipment(d);
+            break;
 #if 0
     case 'T':
       /* New command.  Display the distances for tunnelers.             */

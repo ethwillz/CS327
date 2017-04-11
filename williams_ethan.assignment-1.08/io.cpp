@@ -580,6 +580,45 @@ static void io_list_monsters(dungeon_t *d)
   io_display(d);
 }
 
+void io_display_inventory(dungeon *d){
+    //Clears screen for printing of inventory
+    int i, j;
+    for(i = 0; i < DUNGEON_Y + 2; i++){
+        for(j = 0; j < DUNGEON_X + 2; j++){
+            mvaddch(i, j, ' ');
+        }
+    }
+    mvprintw(5, 15, "INVENTORY");
+    int key;
+    switch (key = getch()) {
+        case 'w':
+
+            break;
+        case 'd':
+
+            break;
+        case 'x':
+
+            break;
+        case 'I':
+
+            break;
+        default:
+            break;
+    }
+}
+
+void io_display_equipment(dungeon *d){
+    int key;
+    switch (key = getch()) {
+        case 't':
+
+            break;
+        default:
+            break;
+    }
+}
+
 void io_handle_input(dungeon_t *d)
 {
   uint32_t fail_code;
@@ -642,6 +681,12 @@ void io_handle_input(dungeon_t *d)
       d->quit = 1;
       fail_code = 0;
       break;
+        case 'i':
+            io_display_inventory(d);
+            break;
+        case 'e':
+            io_display_equipment(d);
+            break;
 #if 0
     case 'T':
       /* New command.  Display the distances for tunnelers.             */
