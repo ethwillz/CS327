@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <ncurses.h>
 
 #include "dungeon.h"
 #include "heap.h"
@@ -17,13 +18,20 @@
 
 void do_combat(dungeon_t *d, character *atk, character *def)
 {
+    //Switches positions if both characters are npcs
   if(atk != d->PC && def != d->PC){
-    //If both are monsters nothing happens
+    character *temp = def;
+      int atk_y = character_get_y(atk);
+      int atk_x = character_get_x(atk);
+      d->character_map[character_get_y(def)][character_get_x(def)] = atk;
+      d->character_map[atk_y][atk_x] = temp;
+      //free(temp);
     return;
   }
 
-    if (atk == d->PC) {
-        int32_t atk_damage = d->PC->damage->roll();
+    //If pc is attacking tracks stats and such on kill
+    if (atk == d->PC && character_is_alive(def)) {
+        uint32_t atk_damage = d->PC->damage->roll();
         //Adds damage values of all equipped items
         int i;
         for(i = 0; i < 12; i++){
@@ -31,8 +39,8 @@ void do_combat(dungeon_t *d, character *atk, character *def)
                 atk_damage += d->PC->equipment[i]->roll_dice();
             }
         }
-        def->hp -= atk_damage;
-        if(def->hp < 0){
+        io_queue_message("You deal %d damage", atk_damage);
+        if(def->hp < atk_damage){
             character_die(def);
             if (def != d->PC) {
                 d->num_monsters--;
@@ -42,15 +50,15 @@ void do_combat(dungeon_t *d, character *atk, character *def)
                                              character_get_ikills(def)));
             io_queue_message("You smite the %s", character_get_name(def));
         }
-        //TODO STOP CHARACTER FROM ADVANCING
-        return;
+        else{
+            def->hp -= atk_damage;
+        }
     }
 
-    //If atk is monster
-  if (character_is_alive(def)) {
-      int32_t atk_damage = atk->damage->roll();
-      def->hp -= atk_damage;
-      if(def->hp < 0){
+    //If atk is npc, kills are handled normally
+  if (atk != d->PC && character_is_alive(def)) {
+      uint32_t atk_damage = atk->damage->roll();
+      if(def->hp < atk_damage){
           character_die(def);
           if (def != d->PC) {
               d->num_monsters--;
@@ -59,7 +67,9 @@ void do_combat(dungeon_t *d, character *atk, character *def)
           character_increment_ikills(atk, (character_get_dkills(def) +
                                            character_get_ikills(def)));
       }
-      //TODO STOP CHARACTER FROM ADVANCING
+      else{
+          def->hp -= atk_damage;
+      }
   }
 }
 

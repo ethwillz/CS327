@@ -447,6 +447,8 @@ void io_display(dungeon_t *d)
            character_get_x(d->PC), character_get_y(d->PC),
            d->io_offset[dim_x], d->io_offset[dim_y]);
 
+    mvprintw(24, 0, "HP: %d   Speed: %d", d->PC->hp, d->PC->speed);
+
   io_print_message_queue(0, 0);
 
   refresh();
@@ -757,7 +759,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[0];
             d->PC->equipment[0] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[0]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_OFFHAND){
         if(d->PC->equipment[1] == NULL){
@@ -769,7 +773,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[1];
             d->PC->equipment[1] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[1]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_RANGED){
         if(d->PC->equipment[2] == NULL){
@@ -781,7 +787,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[2];
             d->PC->equipment[2] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[2]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_ARMOR){
         if(d->PC->equipment[3] == NULL){
@@ -793,7 +801,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[3];
             d->PC->equipment[3] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[3]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_HELMET){
         if(d->PC->equipment[4] == NULL){
@@ -805,7 +815,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[4];
             d->PC->equipment[4] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[4]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_CLOAK){
         if(d->PC->equipment[5] == NULL){
@@ -817,7 +829,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[5];
             d->PC->equipment[5] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[5]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_GLOVES){
         if(d->PC->equipment[6] == NULL){
@@ -829,7 +843,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[6];
             d->PC->equipment[6] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[6]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_BOOTS){
         if(d->PC->equipment[7] == NULL){
@@ -841,7 +857,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[7];
             d->PC->equipment[7] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[7]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_AMULET){
         if(d->PC->equipment[8] == NULL){
@@ -853,7 +871,9 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[8];
             d->PC->equipment[8] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[8]->get_speed();
     }
     else if(d->PC->inventory[inventory_index]->get_type() == objtype_LIGHT){
         if(d->PC->equipment[9] == NULL){
@@ -865,24 +885,31 @@ void equip(dungeon_t *d, int inventory_index){
             object *a = d->PC->equipment[9];
             d->PC->equipment[9] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            free(a);
         }
+        d->PC->speed += d->PC->equipment[9]->get_speed();
     }
     else{
         if(d->PC->equipment[10] == NULL){
             d->PC->equipment[10] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = NULL;
+            d->PC->speed += d->PC->equipment[10]->get_speed();
             shift_inventory(d);
         }
         else if(d->PC->equipment[11] == NULL){
             d->PC->equipment[11] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = NULL;
+            d->PC->speed += d->PC->equipment[11]->get_speed();
             shift_inventory(d);
         }
         else{
             object *a = d->PC->equipment[11];
             d->PC->equipment[11] = d->PC->inventory[inventory_index];
             d->PC->inventory[inventory_index] = a;
+            d->PC->speed += d->PC->equipment[11]->get_speed();
+            free(a);
         }
+
     }
 
 }
@@ -1383,62 +1410,74 @@ void io_display_equipment(dungeon_t *d){
           mvprintw(20, 15, "                                                  ");
           switch (key = getch()) {
               case 'a':
-                  if(d->PC->inventory[0] != NULL){
+                  if(d->PC->equipment[0] != NULL){
+                      d->PC->speed -= d->PC->equipment[0]->get_speed();
                       add_to_inventory(d, 0);
                   }
                   break;
               case 'b':
-                  if(d->PC->inventory[1] != NULL){
+                  if(d->PC->equipment[1] != NULL){
+                      d->PC->speed -= d->PC->equipment[1]->get_speed();
                       add_to_inventory(d, 1);
                   }
                   break;
               case 'c':
-                  if(d->PC->inventory[2] != NULL){
+                  if(d->PC->equipment[2] != NULL){
+                      d->PC->speed -= d->PC->equipment[2]->get_speed();
                       add_to_inventory(d, 2);
                   }
                   break;
               case 'd':
-                  if(d->PC->inventory[3] != NULL){
+                  if(d->PC->equipment[3] != NULL){
+                      d->PC->speed -= d->PC->equipment[3]->get_speed();
                       add_to_inventory(d, 3);
                   }
                   break;
               case 'e':
-                  if(d->PC->inventory[4] != NULL){
+                  if(d->PC->equipment[4] != NULL){
+                      d->PC->speed -= d->PC->equipment[4]->get_speed();
                       add_to_inventory(d, 4);
                   }
                   break;
               case 'f':
-                  if(d->PC->inventory[5] != NULL){
+                  if(d->PC->equipment[5] != NULL){
+                      d->PC->speed -= d->PC->equipment[5]->get_speed();
                       add_to_inventory(d, 5);
                   }
                   break;
               case 'g':
-                  if(d->PC->inventory[6] != NULL){
+                  if(d->PC->equipment[6] != NULL){
+                      d->PC->speed -= d->PC->equipment[6]->get_speed();
                       add_to_inventory(d, 6);
                   }
                   break;
               case 'h':
-                  if(d->PC->inventory[7] != NULL){
+                  if(d->PC->equipment[7] != NULL){
+                      d->PC->speed -= d->PC->equipment[7]->get_speed();
                       add_to_inventory(d, 7);
                   }
                   break;
               case 'i':
-                  if(d->PC->inventory[8] != NULL){
+                  if(d->PC->equipment[8] != NULL){
+                      d->PC->speed -= d->PC->equipment[8]->get_speed();
                       add_to_inventory(d, 8);
                   }
                   break;
               case 'j':
-                  if(d->PC->inventory[9] != NULL){
+                  if(d->PC->equipment[9] != NULL){
+                      d->PC->speed -= d->PC->equipment[9]->get_speed();
                       add_to_inventory(d, 9);
                   }
                   break;
               case 'k':
-                  if(d->PC->inventory[10] != NULL){
+                  if(d->PC->equipment[10] != NULL){
+                      d->PC->speed -= d->PC->equipment[10]->get_speed();
                       add_to_inventory(d, 10);
                   }
                   break;
               case 'l':
-                  if(d->PC->inventory[11] != NULL){
+                  if(d->PC->equipment[11] != NULL){
+                      d->PC->speed -= d->PC->equipment[11]->get_speed();
                       add_to_inventory(d, 11);
                   }
                   break;
@@ -1525,9 +1564,11 @@ void io_handle_input(dungeon_t *d)
       break;
       case 'i':
         io_display_inventory(d);
+            fail_code = 1;
             break;
       case 'e':
         io_display_equipment(d);
+            fail_code = 1;
             break;
 #if 0
     case 'T':
