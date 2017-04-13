@@ -274,6 +274,17 @@ int main(int argc, char *argv[])
 
   delete_dungeon(&d);
   destroy_descriptions(&d);
+    int ew;
+    for(ew = 0; ew < 12; ew++){
+        if(ew < 10){
+            if(d.PC->inventory[ew] != NULL){
+                delete(d.PC->inventory[ew]);
+            }
+        }
+        if(d.PC->equipment[ew] != NULL){
+            delete(d.PC->equipment[ew]);
+        }
+    }
 
   return 0;
 }

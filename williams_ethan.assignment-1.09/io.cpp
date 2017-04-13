@@ -749,6 +749,7 @@ void shift_inventory(dungeon_t *d){
 
 //Equips item in appropriate slot based on type
 void equip(dungeon_t *d, int inventory_index){
+    int k;
     if(d->PC->inventory[inventory_index]->get_type() == objtype_WEAPON){
         if(d->PC->equipment[0] == NULL){
             d->PC->equipment[0] = d->PC->inventory[inventory_index];
@@ -758,8 +759,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[0];
             d->PC->equipment[0] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[0]->get_speed();
     }
@@ -772,8 +779,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[1];
             d->PC->equipment[1] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[1]->get_speed();
     }
@@ -786,8 +799,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[2];
             d->PC->equipment[2] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[2]->get_speed();
     }
@@ -800,8 +819,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[3];
             d->PC->equipment[3] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[3]->get_speed();
     }
@@ -814,8 +839,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[4];
             d->PC->equipment[4] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[4]->get_speed();
     }
@@ -828,8 +859,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[5];
             d->PC->equipment[5] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[5]->get_speed();
     }
@@ -842,8 +879,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[6];
             d->PC->equipment[6] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[6]->get_speed();
     }
@@ -856,8 +899,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[7];
             d->PC->equipment[7] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[7]->get_speed();
     }
@@ -870,8 +919,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[8];
             d->PC->equipment[8] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[8]->get_speed();
     }
@@ -884,8 +939,14 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[9];
             d->PC->equipment[9] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
-            free(a);
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
         }
         d->PC->speed += d->PC->equipment[9]->get_speed();
     }
@@ -905,9 +966,15 @@ void equip(dungeon_t *d, int inventory_index){
         else{
             object *a = d->PC->equipment[11];
             d->PC->equipment[11] = d->PC->inventory[inventory_index];
-            d->PC->inventory[inventory_index] = a;
+            d->PC->inventory[inventory_index] = NULL;
+            shift_inventory(d);
+            for(k = 0; k < 10; k++){
+                if(d->PC->inventory[k] == NULL){
+                    d->PC->inventory[k] = a;
+                    break;
+                }
+            }
             d->PC->speed += d->PC->equipment[11]->get_speed();
-            free(a);
         }
 
     }
@@ -942,11 +1009,13 @@ void add_to_inventory(dungeon_t *d, int index){
     for(i = 0; i < 10; i++){
         if(d->PC->inventory[i] == NULL){
             d->PC->inventory[i] = d->PC->equipment[index];
+            d->PC->equipment[index] = NULL;
             placed = 1;
+            break;
         }
     }
     if(placed == 0){
-        mvprintw(19, 15, "No free space in inventory, drop or expunge to unequip                                                ");
+        io_queue_message("No free space in inventory, drop or expunge to unequip");
     }
 }
 
@@ -1107,62 +1176,73 @@ void io_display_inventory(dungeon_t *d){
           switch (key = getch()) {
               case '0':
                   if(d->PC->inventory[0] != NULL){
+                      
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[0];
                       d->PC->inventory[0] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '1':
                   if(d->PC->inventory[1] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[1];
                       d->PC->inventory[1] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '2':
                   if(d->PC->inventory[2] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[2];
                       d->PC->inventory[2] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '3':
                   if(d->PC->inventory[3] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[3];
                       d->PC->inventory[3] = NULL;
+
                   }
                   break;
               case '4':
                   if(d->PC->inventory[4] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[4];
                       d->PC->inventory[4] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '5':
                   if(d->PC->inventory[5] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[5];
                       d->PC->inventory[5] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '6':
                   if(d->PC->inventory[6] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[6];
                       d->PC->inventory[6] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '7':
                   if(d->PC->inventory[7] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[7];
                       d->PC->inventory[7] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '8':
                   if(d->PC->inventory[8] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[8];
                       d->PC->inventory[8] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '9':
                   if(d->PC->inventory[9] != NULL){
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[9];
                       d->PC->inventory[9] = NULL;
+                      shift_inventory(d);
                   }
                   break;
           }
@@ -1175,60 +1255,70 @@ void io_display_inventory(dungeon_t *d){
                   if(d->PC->inventory[0] != NULL){
                       delete(d->PC->inventory[0]);
                       d->PC->inventory[0] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '1':
                   if(d->PC->inventory[1] != NULL){
                       delete(d->PC->inventory[1]);
                       d->PC->inventory[1] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '2':
                   if(d->PC->inventory[2] != NULL){
                       delete(d->PC->inventory[2]);
                       d->PC->inventory[2] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '3':
                   if(d->PC->inventory[3] != NULL){
                       delete(d->PC->inventory[3]);
                       d->PC->inventory[3] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '4':
                   if(d->PC->inventory[4] != NULL){
                       delete(d->PC->inventory[4]);
                       d->PC->inventory[4] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '5':
                   if(d->PC->inventory[5] != NULL){
                       delete(d->PC->inventory[5]);
                       d->PC->inventory[5] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '6':
                   if(d->PC->inventory[6] != NULL){
                       delete(d->PC->inventory[6]);
                       d->PC->inventory[6] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '7':
                   if(d->PC->inventory[7] != NULL){
                       delete(d->PC->inventory[7]);
                       d->PC->inventory[7] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '8':
                   if(d->PC->inventory[8] != NULL){
                       delete(d->PC->inventory[8]);
                       d->PC->inventory[8] = NULL;
+                      shift_inventory(d);
                   }
                   break;
               case '9':
                   if(d->PC->inventory[9] != NULL){
                       delete(d->PC->inventory[9]);
                       d->PC->inventory[9] = NULL;
+                      shift_inventory(d);
                   }
                   break;
           }
@@ -1292,6 +1382,11 @@ void io_display_inventory(dungeon_t *d){
     default:
       break;
   }
+    for(i = 0; i < DUNGEON_Y + 2; i++){
+        for(j = 0; j < DUNGEON_X + 2; j++){
+            mvaddch(i, j, ' ');
+        }
+    }
 }
 
 void io_display_equipment(dungeon_t *d){
@@ -1385,29 +1480,29 @@ void io_display_equipment(dungeon_t *d){
     }
 
     if(d->PC->equipment[10] == NULL) {
-        mvprintw(15, 15, "k)");
+        mvprintw(16, 15, "k)");
     }
     else{
-        mvprintw(15, 15, "k)");
-        mvprintw(15, 18, d->PC->equipment[10]->get_name());
+        mvprintw(16, 15, "k)");
+        mvprintw(16, 18, d->PC->equipment[10]->get_name());
     }
 
     if(d->PC->equipment[11] == NULL) {
-        mvprintw(15, 15, "l)");
+        mvprintw(17, 15, "l)");
     }
     else{
-        mvprintw(15, 15, "l)");
-        mvprintw(15, 18, d->PC->equipment[11]->get_name());
+        mvprintw(17, 15, "l)");
+        mvprintw(17, 18, d->PC->equipment[11]->get_name());
     }
 
-    mvprintw(19, 15, "Select [t]ake off an item");
-    mvprintw(20, 15, "OR press any other key to exit equipment");
+    mvprintw(20, 15, "Select [t]ake off an item");
+    mvprintw(21, 15, "OR press any other key to exit equipment");
 
   int key;
   switch (key = getch()) {
     case 't':
-        mvprintw(19, 15, "Choose an item to take off                                                ");
-          mvprintw(20, 15, "                                                  ");
+        mvprintw(20, 15, "Choose an item to take off                                                ");
+          mvprintw(21, 15, "                                                  ");
           switch (key = getch()) {
               case 'a':
                   if(d->PC->equipment[0] != NULL){
@@ -1482,10 +1577,17 @@ void io_display_equipment(dungeon_t *d){
                   }
                   break;
           }
+          if(d->PC->speed < 1)
+              d->PC->speed = 0;
       break;
     default:
       break;
   }
+    for(i = 0; i < DUNGEON_Y + 2; i++){
+        for(j = 0; j < DUNGEON_X + 2; j++){
+            mvaddch(i, j, ' ');
+        }
+    }
 }
 
 void io_handle_input(dungeon_t *d)

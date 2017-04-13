@@ -18,8 +18,8 @@ object::object(const object_description &o, pair_t p, object *next) :
   speed(o.get_speed().roll()),
   attribute(o.get_attribute().roll()),
   value(o.get_value().roll()),
-  seen(false),
-  next(next)
+  seen(false)
+  //next(next)
 {
   position[dim_x] = p[dim_x];
   position[dim_y] = p[dim_y];
@@ -27,9 +27,9 @@ object::object(const object_description &o, pair_t p, object *next) :
 
 object::~object()
 {
-  if (next) {
-    delete next;
-  }
+  //if (next) {
+    //delete next;
+  //}
 }
 
 void gen_object(dungeon_t *d)
@@ -68,7 +68,7 @@ void gen_objects(dungeon_t *d)
 
 char object::get_symbol()
 {
-  return next ? '&' : object_symbol[type];
+  return object_symbol[type];
 }
 
 uint32_t object::get_color()

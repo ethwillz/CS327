@@ -16,7 +16,7 @@ class object {
   const dice &damage;
   int32_t hit, dodge, defence, weight, speed, attribute, value;
   bool seen;
-  object *next;
+  //object *next;
  public:
   object(const object_description &o, pair_t p, object *next);
   ~object();

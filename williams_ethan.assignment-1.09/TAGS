@@ -163,7 +163,7 @@ int32_t compare(335,6580
 char *print_int(print_int340,6679
 int main(349,6797
 
-io.cpp,1327
+io.cpp,1329
 static dungeon_t *dungeon;dungeon15,248
 typedef struct io_message 17,276
   char msg[io_message::msg20,457
@@ -194,11 +194,11 @@ static int compare_monster_distance(702,21969
 static void io_list_monsters(711,22297
 void shift_inventory(740,23013
 void equip(751,23328
-void display_description(917,29790
-void add_to_inventory(940,30365
-void io_display_inventory(953,30767
-void io_display_equipment(1297,42177
-void io_handle_input(1491,47956
+void display_description(984,32045
+void add_to_inventory(1007,32620
+void io_display_inventory(1022,33037
+void io_display_equipment(1391,45378
+void io_handle_input(1592,51352
 
 move.cpp,236
 void do_combat(19,287
@@ -264,17 +264,17 @@ npc::npc(721,19842
 
 object.cpp,409
 object::object(8,99
-object::~object(28,619
-void gen_object(35,677
-void gen_objects(56,1374
-char object::get_symbol(69,1570
-uint32_t object::get_color(74,1644
-const char *object::get_name(object::get_name79,1694
-const char *object::get_desc(object::get_desc84,1753
-int32_t object::get_speed(88,1818
-int32_t object::roll_dice(93,1867
-void destroy_objects(98,1924
-int32_t object::get_type(112,2164
+object::~object(28,620
+void gen_object(35,684
+void gen_objects(56,1381
+char object::get_symbol(69,1577
+uint32_t object::get_color(74,1638
+const char *object::get_name(object::get_name79,1688
+const char *object::get_desc(object::get_desc84,1747
+int32_t object::get_speed(88,1812
+int32_t object::roll_dice(93,1861
+void destroy_objects(98,1918
+int32_t object::get_type(112,2158
 
 path.cpp,314
 static dungeon_t *dungeon;dungeon12,633
@@ -585,7 +585,7 @@ class npc 12,164
 # define has_characteristic(54,1602
 typedef struct dungeon dungeon_t;57,1712
 
-object.h,1162
+object.h,1126
 # define OBJECT_H2,17
 class object 9,103
   const std::string &name;object::name11,128
@@ -602,13 +602,12 @@ class object 9,103
   int32_t hit, dodge, defence, weight, speed, attribute,object::attribute17,270
   int32_t hit, dodge, defence, weight, speed, attribute, value;object::value17,270
   bool seen;object::seen18,334
-  object *next;object::next19,347
-  inline int32_t get_damage_base(object::get_damage_base23,448
-  inline int32_t get_damage_number(object::get_damage_number27,527
-  inline int32_t get_damage_sides(object::get_damage_sides31,610
-  bool have_seen(object::have_seen42,858
-  void has_been_seen(object::has_been_seen43,894
-  int16_t *get_position(object::get_position44,934
+  inline int32_t get_damage_base(object::get_damage_base23,450
+  inline int32_t get_damage_number(object::get_damage_number27,529
+  inline int32_t get_damage_sides(object::get_damage_sides31,612
+  bool have_seen(object::have_seen42,860
+  void has_been_seen(object::has_been_seen43,896
+  int16_t *get_position(object::get_position44,936
 
 path.h,60
 # define PATH_H2,15
