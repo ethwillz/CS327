@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="williams_ethan_assignment_1_10"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="williams_ethan_assignment_1_10">
+				<Option output="/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/williams_ethan_assignment_1_10" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 williams_ethan_assignment_1_10"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="williams_ethan_assignment_1_10/fast">
+				<Option output="/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/williams_ethan_assignment_1_10" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 williams_ethan_assignment_1_10/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ethwillz/coms327/williams_ethan.assignment-1.10/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/character.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/character.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/descriptions.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/descriptions.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/dice.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/dice.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/dims.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/dungeon.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/dungeon.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/event.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/event.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/heap.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/heap.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/io.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/io.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/macros.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/move.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/move.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/npc.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/npc.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/object.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/object.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/path.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/path.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/pc.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/pc.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/rlg327.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/utils.cpp">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/utils.h">
+			<Option target="williams_ethan_assignment_1_10"/>
+		</Unit>
+		<Unit filename="/home/ethwillz/coms327/williams_ethan.assignment-1.10/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -1176,7 +1176,7 @@ void io_display_inventory(dungeon_t *d){
           switch (key = getch()) {
               case '0':
                   if(d->PC->inventory[0] != NULL){
-                      
+
                       d->objmap[d->PC->position[dim_y]][d->PC->position[dim_x]] = d->PC->inventory[0];
                       d->PC->inventory[0] = NULL;
                       shift_inventory(d);
