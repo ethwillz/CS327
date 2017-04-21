@@ -28,7 +28,7 @@ void do_combat(dungeon_t *d, character *atk, character *def)
       for (i = damage = 0; i < num_eq_slots; i++) {
         if (i == eq_slot_weapon && !d->PC->eq[i]) {
           damage += atk->damage->roll();
-        } else if (d->PC->eq[i]) {
+        } else if (d->PC->eq[i] && i != 2) {
           damage += d->PC->eq[i]->roll_dice();
         }
       }

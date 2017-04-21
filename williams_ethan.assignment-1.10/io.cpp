@@ -389,7 +389,28 @@ void io_display(dungeon_t *d)
                                         d->io_offset[dim_x] + pos[dim_x]))) {
         attron(A_BOLD);
       }
-      if (d->character_map[d->io_offset[dim_y] + pos[dim_y]]
+        if(d->map[d->io_offset[dim_y] + pos[dim_y]][d->io_offset[dim_x] + pos[dim_x]] == ter_projectile){
+            attron(COLOR_PAIR(COLOR_CYAN));
+            mvaddch(pos[dim_y] + 1, pos[dim_x], '*');
+            attroff(COLOR_PAIR(COLOR_CYAN));
+        }
+
+        else if(d->map[d->io_offset[dim_y] + pos[dim_y]][d->io_offset[dim_x] + pos[dim_x]] == ter_spell){
+            if ((illuminated = is_illuminated(d->PC,
+                                              d->io_offset[dim_y] + pos[dim_y],
+                                              d->io_offset[dim_x] + pos[dim_x]))) {
+                attroff(A_BOLD);
+            }
+            attron(COLOR_PAIR(COLOR_GREEN));
+            mvaddch(pos[dim_y] + 1, pos[dim_x], '*');
+            attroff(COLOR_PAIR(COLOR_GREEN));
+            if ((illuminated = is_illuminated(d->PC,
+                                              d->io_offset[dim_y] + pos[dim_y],
+                                              d->io_offset[dim_x] + pos[dim_x]))) {
+                attron(A_BOLD);
+            }
+        }
+      else if (d->character_map[d->io_offset[dim_y] + pos[dim_y]]
                           [d->io_offset[dim_x] + pos[dim_x]] &&
           can_see(d,
                   character_get_pos(d->PC),
@@ -448,18 +469,14 @@ void io_display(dungeon_t *d)
           mvaddch(pos[dim_y] + 1, pos[dim_x], '>');
           break;
           case ter_water:
-              attron(A_BOLD);
             attron(COLOR_PAIR(COLOR_BLUE));
                 mvaddch(pos[dim_y] + 1, pos[dim_x], '!');
             attroff(COLOR_PAIR(COLOR_BLUE));
-                attroff(A_BOLD);
             break;
           case ter_lava:
-              attron(A_BOLD);
             attron(COLOR_PAIR(COLOR_RED));
                 mvaddch(pos[dim_y] + 1, pos[dim_x], '!');
             attroff(COLOR_PAIR(COLOR_RED));
-                attroff(A_BOLD);
                 break;
         default:
  /* Use zero as an error symbol, since it stands out somewhat, and it's *
@@ -1339,6 +1356,227 @@ void io_handle_input(dungeon_t *d)
       io_queue_message("Have fun!  And happy printing!");
       fail_code = 0;
       break;
+        case 'a':
+            if(d->PC->eq[2] == NULL){
+                io_queue_message("You do not have a ranged object equipped");
+                fail_code = 1;
+            }
+            else {
+                //io_queue_message("Choose a character letter to attack");
+                key = getch();
+                int i, j, attacked = 0;
+                for (i = d->PC->position[dim_y] - 10; i < d->PC->position[dim_y] + 10; i++) {
+                    for (j = d->PC->position[dim_x] - 10; j < d->PC->position[dim_x] + 10; j++) {
+
+                        //If character matches user input and is in illuminated area
+                        if (i >= 0 || j >= 0) {
+                            if (d->character_map[i][j] != NULL) {
+                                if (d->character_map[i][j]->symbol == key && is_illuminated(d->PC, i, j) && attacked == 0) {
+                                    uint dam = d->PC->eq[2]->roll_dice();
+                                    character *c = d->character_map[i][j];
+
+                                    int proj_y = d->PC->position[dim_y], proj_x = d->PC->position[dim_x];
+                                    terrain_type_t temp = d->map[proj_y][proj_x];
+                                    d->map[proj_y][proj_x] = ter_projectile;
+                                    while (proj_y != i || proj_x != j) {
+                                        d->map[proj_y][proj_x] = temp;
+                                        if (proj_y < i && proj_x < j) {
+                                            proj_y++;
+                                            proj_x++;
+                                        } else if (proj_y < i && proj_x > j) {
+                                            proj_y++;
+                                            proj_x--;
+                                        } else if (proj_y > i && proj_x < j) {
+                                            proj_y--;
+                                            proj_x++;
+                                        } else if (proj_y > i && proj_x > j) {
+                                            proj_y--;
+                                            proj_x--;
+                                        } else if (proj_y < i) {
+                                            proj_y++;
+                                        } else if (proj_y > i) {
+                                            proj_y--;
+                                        } else if (proj_x < j) {
+                                            proj_x++;
+                                        } else {
+                                            proj_x--;
+                                        }
+                                        temp = d->map[proj_y][proj_x];
+                                        d->map[proj_y][proj_x] = ter_projectile;
+                                        io_display(d);
+                                        usleep(83333);
+                                    }
+                                    d->map[proj_y][proj_x] = temp;
+
+                                    if (d->character_map[i][j]->hp <= dam) {
+                                        io_queue_message("The %s dies.", c->name);
+                                        c->hp = 0;
+                                        c->alive = 0;
+                                        character_increment_dkills(d->PC);
+                                        character_increment_ikills(d->PC, (character_get_dkills(c) +
+                                                                           character_get_ikills(c)));
+                                        if (c != d->PC) {
+                                            d->num_monsters--;
+                                        }
+                                        charpair(c->position) = NULL;
+                                        fail_code = 0;
+                                    } else {
+                                        io_queue_message("You deal %d damage to the %s", dam, c->name);
+                                        d->character_map[i][j]->hp = d->character_map[i][j]->hp - dam;
+                                        fail_code = 0;
+                                    }
+                                    attacked = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            break;
+        case 's':
+            //io_queue_message("Choose a character letter to attack");
+            key = getch();
+            int i, j, attacked, target_y, target_x;
+            attacked = 0;
+            //Find the main target and deal full damage of spell
+            for (i = d->PC->position[dim_y] - 10; i < d->PC->position[dim_y] + 10; i++) {
+                for (j = d->PC->position[dim_x] - 10; j < d->PC->position[dim_x] + 10; j++) {
+
+                    //If character matches user input and is in illuminated area
+                    if (i >= 0 || j >= 0) {
+                        if (d->character_map[i][j] != NULL) {
+                            if (d->character_map[i][j]->symbol == key && is_illuminated(d->PC, i, j) && attacked == 0) {
+                                uint dam = rand() % 120 + 40;
+                                character *c = d->character_map[i][j];
+
+                                int proj_y = d->PC->position[dim_y], proj_x = d->PC->position[dim_x];
+                                terrain_type_t temp = d->map[proj_y][proj_x];
+                                d->map[proj_y][proj_x] = ter_spell;
+                                while (proj_y != i || proj_x != j) {
+                                    d->map[proj_y][proj_x] = temp;
+                                    if (proj_y < i && proj_x < j) {
+                                        proj_y++;
+                                        proj_x++;
+                                    } else if (proj_y < i && proj_x > j) {
+                                        proj_y++;
+                                        proj_x--;
+                                    } else if (proj_y > i && proj_x < j) {
+                                        proj_y--;
+                                        proj_x++;
+                                    } else if (proj_y > i && proj_x > j) {
+                                        proj_y--;
+                                        proj_x--;
+                                    } else if (proj_y < i) {
+                                        proj_y++;
+                                    } else if (proj_y > i) {
+                                        proj_y--;
+                                    } else if (proj_x < j) {
+                                        proj_x++;
+                                    } else {
+                                        proj_x--;
+                                    }
+
+
+                                    temp = d->map[proj_y][proj_x];
+                                    d->map[proj_y][proj_x] = ter_spell;
+                                    io_display(d);
+                                    usleep(83333);
+                                }
+                                d->map[proj_y][proj_x] = temp;
+
+                                if (d->character_map[i][j]->hp <= dam) {
+                                    io_queue_message("The %s dies.", c->name);
+                                    c->hp = 0;
+                                    c->alive = 0;
+                                    character_increment_dkills(d->PC);
+                                    character_increment_ikills(d->PC, (character_get_dkills(c) +
+                                                                       character_get_ikills(c)));
+                                    if (c != d->PC) {
+                                        d->num_monsters--;
+                                    }
+                                    charpair(c->position) = NULL;
+                                    fail_code = 0;
+                                } else {
+                                    io_queue_message("You deal %d damage to the %s", dam, c->name);
+                                    d->character_map[i][j]->hp = d->character_map[i][j]->hp - dam;
+                                    fail_code = 0;
+                                }
+                                attacked = 1;
+                                target_y = i;
+                                target_x = j;
+                            }
+                            else {
+                                uint dam = rand() % 60 + 40;
+                                character *c = d->character_map[i][j];
+
+                                if (d->character_map[i][j]->hp <= dam) {
+                                    c->hp = 0;
+                                    c->alive = 0;
+                                    character_increment_dkills(d->PC);
+                                    character_increment_ikills(d->PC, (character_get_dkills(c) +
+                                                                       character_get_ikills(c)));
+                                    if (c != d->PC) {
+                                        d->num_monsters--;
+                                    }
+                                    charpair(c->position) = NULL;
+                                    fail_code = 0;
+                                } else {
+                                    d->character_map[i][j]->hp = d->character_map[i][j]->hp - dam;
+                                    fail_code = 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            terrain_type_t temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8;
+            //Damage at half for monsters in a two cell radius of main target
+            if(target_y + 2 <= DUNGEON_Y && target_y - 2 >= 0 && target_x + 2 <= DUNGEON_X && target_x - 2 >= 0) {
+                for (i = 0; i < 2; i++) {
+                    if (i == 0) {
+                        temp1 = d->map[target_y + 1][target_x];
+                        temp2 = d->map[target_y - 1][target_x];
+                        temp3 = d->map[target_y][target_x + 1];
+                        temp4 = d->map[target_y][target_x - 1];
+                        d->map[target_y + 1][target_x] = ter_spell;
+                        d->map[target_y - 1][target_x] = ter_spell;
+                        d->map[target_y][target_x + 1] = ter_spell;
+                        d->map[target_y][target_x - 1] = ter_spell;
+                    } else {
+                        d->map[target_y + 1][target_x] = temp1;
+                        d->map[target_y - 1][target_x] = temp2;
+                        d->map[target_y][target_x + 1] = temp3;
+                        d->map[target_y][target_x - 1] = temp4;
+                        temp1 = d->map[target_y - 2][target_x];
+                        temp2 = d->map[target_y - 1][target_x + 1];
+                        temp3 = d->map[target_y][target_x + 2];
+                        temp4 = d->map[target_y + 1][target_x + 1];
+                        temp5 = d->map[target_y + 2][target_x];
+                        temp6 = d->map[target_y + 1][target_x - 1];
+                        temp7 = d->map[target_y][target_x - 2];
+                        temp8 = d->map[target_y - 1][target_x - 1];
+                        d->map[target_y - 2][target_x] = ter_spell;
+                        d->map[target_y - 1][target_x + 1] = ter_spell;
+                        d->map[target_y][target_x + 2] = ter_spell;
+                        d->map[target_y + 1][target_x + 1] = ter_spell;
+                        d->map[target_y + 2][target_x] = ter_spell;
+                        d->map[target_y + 1][target_x - 1] = ter_spell;
+                        d->map[target_y][target_x - 2] = ter_spell;
+                        d->map[target_y - 1][target_x - 1] = ter_spell;
+                    }
+                    io_display(d);
+                    usleep(120000);
+                }
+                d->map[target_y - 2][target_x] = temp1;
+                d->map[target_y - 1][target_x + 1] = temp2;
+                d->map[target_y][target_x + 2] = temp3;
+                d->map[target_y + 1][target_x + 1] = temp4;
+                d->map[target_y + 2][target_x] = temp5;
+                d->map[target_y + 1][target_x - 1] = temp6;
+                d->map[target_y][target_x - 2] = temp7;
+                d->map[target_y - 1][target_x - 1] = temp8;
+            }
+            break;
     default:
       /* Also not in the spec.  It's not always easy to figure out what *
        * key code corresponds with a given keystroke.  Print out any    *

@@ -46,8 +46,8 @@
       <file leaf-file-name="rlg327.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rlg327.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="257" column="28" lean-forward="true" selection-start-line="257" selection-start-column="28" selection-end-line="257" selection-end-column="28" />
+            <state relative-caret-position="3855">
+              <caret line="257" column="28" lean-forward="false" selection-start-line="257" selection-start-column="28" selection-end-line="257" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -56,8 +56,8 @@
       <file leaf-file-name="io.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/io.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="39" column="51" lean-forward="true" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
+            <state relative-caret-position="-6945">
+              <caret line="568" column="0" lean-forward="true" selection-start-line="568" selection-start-column="0" selection-end-line="568" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
                 <element signature="e#52966#53636#0" expanded="true" />
@@ -140,7 +140,6 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="-1" />
     <option name="width" value="1920" />
     <option name="height" value="1046" />
   </component>
@@ -407,14 +406,15 @@
       <workItem from="1492055041254" duration="1092000" />
       <workItem from="1492397327792" duration="32000" />
       <workItem from="1492448374009" duration="789000" />
+      <workItem from="1492482371443" duration="24000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26414000" />
+    <option name="totallyTimeSpent" value="26438000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-1" width="1920" height="1046" extended-state="6" />
+    <frame x="0" y="0" width="1920" height="1046" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -875,16 +875,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rlg327.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="257" column="28" lean-forward="true" selection-start-line="257" selection-start-column="28" selection-end-line="257" selection-end-column="28" />
+        <state relative-caret-position="3855">
+          <caret line="257" column="28" lean-forward="false" selection-start-line="257" selection-start-column="28" selection-end-line="257" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/io.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="39" column="51" lean-forward="true" selection-start-line="39" selection-start-column="51" selection-end-line="39" selection-end-column="51" />
+        <state relative-caret-position="-6945">
+          <caret line="568" column="0" lean-forward="true" selection-start-line="568" selection-start-column="0" selection-end-line="568" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
             <element signature="e#52966#53636#0" expanded="true" />
